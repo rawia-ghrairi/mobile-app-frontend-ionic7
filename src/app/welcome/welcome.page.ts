@@ -28,9 +28,9 @@ import {
 })
 export class WelcomePage implements OnInit {
   onboardingScreens = [
-    { image: '1.jpg' },
-    { image: '2.jpg' },
-    { image: '3.jpg' },
+    { image: '11.png' },
+    { image: '22.png' },
+    { image: '33.jpg' },
   ];
   swiperModules = [IonicSlides];
 
