@@ -29,6 +29,7 @@
     "@capacitor/keyboard": "6.0.1",
     "@capacitor/status-bar": "6.0.0",
     "@ionic/angular": "^8.0.0",
+    "@mobiscroll/angular-lite": "^4.10.9",
     "ionicons": "^7.2.1",
     "rxjs": "~7.8.0",
     "swiper": "^11.1.5",
@@ -36,7 +37,7 @@
     "zone.js": "~0.14.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^18.0.0",
+    "@angular-devkit/build-angular": "^18.2.14",
     "@angular-eslint/builder": "^18.0.0",
     "@angular-eslint/eslint-plugin": "^18.0.0",
     "@angular-eslint/eslint-plugin-template": "^18.0.0",

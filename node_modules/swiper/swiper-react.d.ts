@@ -69,9 +69,6 @@ type SwiperProps = Omit<
    * Event will be fired on key press
    */
   onKeyPress?: (swiper: SwiperClass, keyCode: string) => void;/**
-   * Event will be fired on mousewheel scroll
-   */
-  onScroll?: (swiper: SwiperClass, event: WheelEvent) => void;/**
    * Event will be fired on navigation hide
    */
   onNavigationHide?: (swiper: SwiperClass) => void;
@@ -87,6 +84,9 @@ type SwiperProps = Omit<
    * Event will be fired on navigation next button click
    */
   onNavigationNext?: (swiper: SwiperClass) => void;/**
+   * Event will be fired on mousewheel scroll
+   */
+  onScroll?: (swiper: SwiperClass, event: WheelEvent) => void;/**
    * Event will be fired after pagination rendered
    */
   onPaginationRender?: (swiper: SwiperClass, paginationEl: HTMLElement) => void;

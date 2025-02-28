@@ -8,4 +8,6 @@ export interface Event {
   performers?: string[];
   category_id: string;
   description: string;
+  speciality:string;
+  imageDoctor:string;
 }

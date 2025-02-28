@@ -24,15 +24,13 @@ import {
   locateOutline,
   locationOutline,
   notificationsOutline,
-  optionsOutline,
-} from 'ionicons/icons';
+  optionsOutline, heartOutline, menuOutline } from 'ionicons/icons';
 import { Category } from '../interfaces/category.interface';
 import { Event } from '../interfaces/event.interface';
 import { events } from '../data/events';
+import { services } from '../data/services';
 import { categories } from '../data/categories';
 import { RouterLink } from '@angular/router';
-import { DatePipe } from '@angular/common';
-
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -41,7 +39,6 @@ import { DatePipe } from '@angular/common';
   imports: [
     IonCard,
     IonList,
-    IonListHeader,
     IonSearchbar,
     IonCol,
     IonRow,
@@ -53,11 +50,9 @@ import { DatePipe } from '@angular/common';
     IonItem,
     IonHeader,
     IonToolbar,
-    IonTitle,
     IonContent,
-    RouterLink,
-    DatePipe,
-  ],
+    RouterLink
+],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class HomePage implements OnInit {
@@ -67,17 +62,11 @@ export class HomePage implements OnInit {
   categories: Category[] = [];
 
   constructor() {
-    addIcons({
-      locateOutline,
-      notificationsOutline,
-      optionsOutline,
-      locationOutline,
-      arrowForwardOutline
-    });
+    addIcons({menuOutline,locateOutline,notificationsOutline,optionsOutline,locationOutline,arrowForwardOutline,heartOutline});
   }
 
   ngOnInit(): void {
-    this.currentEvents = [...events];
+    this.currentEvents = [...services];
     console.log('current', this.currentEvents);
     this.upcomingEvents = events.sort((a, b) => {
       // Convert id to number for comparison

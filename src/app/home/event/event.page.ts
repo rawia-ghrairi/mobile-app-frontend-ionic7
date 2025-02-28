@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { IonDatetime } from '@ionic/angular/standalone';
 import {
   IonContent,
   IonHeader,
@@ -16,13 +17,15 @@ import { addIcons } from 'ionicons';
 import { calendarOutline, heartOutline, locationOutline } from 'ionicons/icons';
 import { events } from 'src/app/data/events';
 import { Event } from 'src/app/interfaces/event.interface';
+import { DateComponent } from "../../date/date.component";
+
 
 @Component({
   selector: 'app-event',
   templateUrl: './event.page.html',
   styleUrls: ['./event.page.scss'],
   standalone: true,
-  imports: [IonFabButton, IonButton, IonFooter, IonText, IonAvatar, IonList, IonListHeader, IonCard, 
+  imports: [IonFabButton, IonButton, IonFooter, IonText, IonAvatar, IonList, IonListHeader, IonCard,
     IonIcon,
     IonCol,
     IonRow,
@@ -33,8 +36,7 @@ import { Event } from 'src/app/interfaces/event.interface';
     IonToolbar,
     IonHeader,
     IonContent,
-    DatePipe
-  ],
+    DateComponent],
 })
 export class EventPage implements OnInit {
   event!: Event;

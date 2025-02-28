@@ -3,23 +3,23 @@ import { Category } from "../interfaces/category.interface";
 export const categories: Category[] = [
     {
       id: '1',
-      name: 'Music',
-      image: 'assets/imgs/music.png',
+      name: 'Pediatric',
+      image: 'assets/imgs/music2.png',
     },
     {
       id: '2',
-      name: 'Film',
-      image: 'assets/imgs/film.png',
+      name: 'Dentistry',
+      image: 'assets/imgs/dentistry.png',
     },
     {
       id: '3',
-      name: 'Comedy',
-      image: 'assets/imgs/comedy.png',
+      name: 'Audio',
+      image: 'assets/imgs/comedy2.png',
     },
     {
       id: '4',
-      name: 'Books',
-      image: 'assets/imgs/book.png',
+      name: 'Surgery',
+      image: 'assets/imgs/book2.png',
     },
   ];
   

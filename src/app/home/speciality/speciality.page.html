@@ -1,0 +1,102 @@
+<ion-content [fullscreen]="true" color="light">
+  <ion-header class="ion-no-border" slot="fixed">
+    <ion-toolbar>
+      <ion-buttons slot="start" mode="md">
+        <ion-back-button color="light" defaultHref="/home"></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="bg-container">
+    <div [style.backgroundImage]="'url(' + service.image + ')'" class="bg"></div>
+  </div>
+
+  <ion-item lines="none">
+    <div slot="end" align="center">
+      <div class="image-container">
+      <ion-img [src]="service.imageDoctor"></ion-img>
+    </div></div>
+    <ion-label class="eventInfo"> 
+  <p>  
+    <ion-icon name="location-outline" class="loc"></ion-icon>
+     {{service.location}}</p>
+   <div class="name">   
+    {{service.name}} 
+    <div class="icons">
+      <div slot="end1" align="center">
+      <ion-icon name="call-outline"></ion-icon></div>
+      <div slot="end2" align="center">
+      <ion-icon name="chatbox-ellipses-outline"></ion-icon></div>
+      </div></div>
+     <p>  
+      <ion-icon name="medkit-outline"></ion-icon>
+      {{service.speciality}}</p>
+    </ion-label>
+  </ion-item>
+  <ion-card>
+    <ion-list>
+    <ion-list-header> About Me </ion-list-header>
+   <div class="description-container">   
+    <p class="ion-margin-horizontal">{{getShortDescription()}} </p> 
+      <ion-button fill="clear" (click)="toggleDescription()" class="read-more-btn">
+      {{ isExpanded ? 'Read Less' : 'Read More' }}
+      </ion-button>
+    </div>
+      <ion-row>
+        <ion-col class="ion-align-items-center">
+          <ion-avatar>
+            <img src="assets/imgs/avatar1.png" />
+          </ion-avatar>
+          <ion-avatar class="participant">
+            <img src="assets/imgs/avatar2.png" />
+          </ion-avatar>
+          <ion-avatar class="participant">
+            <img src="assets/imgs/avatar3.jpg" />
+          </ion-avatar>
+          <ion-avatar class="ion-text-center participant bg-avatar">
+            <ion-text color="dark">+20</ion-text>
+          </ion-avatar>
+        </ion-col>
+
+        <ion-col class="ion-align-items-center participant-text">
+          <ion-label>
+            <ion-text color="dark"><strong>Patient</strong></ion-text>
+            <p>Local patient feedback</p>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+
+      <ion-list-header class="ion-align-items-center">
+        Location
+      </ion-list-header>
+
+      <div class="map">
+        <img src="assets/imgs/maps.png">
+      </div>
+
+    </ion-list>
+  </ion-card>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-row>
+    <ion-col size="10">
+      <ion-button
+        expand="block"
+        shape="round"
+        color="primary"
+        size="large"
+        [strong]="true"
+      >
+        <ion-text>Book Appointment</ion-text>
+      </ion-button>
+    </ion-col>
+    <ion-col size="2">
+      <ion-fab-button color="light">
+        <ion-icon color="primary" name="heart-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-col>
+  </ion-row>
+  <!-- <ion-toolbar>
+  </ion-toolbar> -->
+</ion-footer>

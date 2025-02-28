@@ -39,9 +39,6 @@ interface SwiperContainerEventMap extends Omit<HTMLElementEventMap, 'click' | 'p
    * Event will be fired on key press
    */
   keypress: CustomEvent<[swiper: Swiper, keyCode: string]>;/**
-   * Event will be fired on mousewheel scroll
-   */
-  scroll: CustomEvent<[swiper: Swiper, event: WheelEvent]>;/**
    * Event will be fired on navigation hide
    */
   navigationhide: CustomEvent<[swiper: Swiper]>;
@@ -57,6 +54,9 @@ interface SwiperContainerEventMap extends Omit<HTMLElementEventMap, 'click' | 'p
    * Event will be fired on navigation next button click
    */
   navigationnext: CustomEvent<[swiper: Swiper]>;/**
+   * Event will be fired on mousewheel scroll
+   */
+  scroll: CustomEvent<[swiper: Swiper, event: WheelEvent]>;/**
    * Event will be fired after pagination rendered
    */
   paginationrender: CustomEvent<[swiper: Swiper, paginationEl: HTMLElement]>;

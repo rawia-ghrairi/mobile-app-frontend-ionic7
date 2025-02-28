@@ -1,11 +1,16 @@
 ion-header {
   background: var(--ion-color-light);
   ion-toolbar.wrapper {
-    --background: url('../../assets/imgs/header.png') no-repeat center center/cover;
+    --background: url('../../assets/imgs/header3.png') no-repeat center center/cover;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
     ion-item, ion-toolbar.srchBar {
       --background: transparent;
+    }
+    ion-buttons {
+      position: absolute;
+      left: 0px;
+      top: 0px; /* Positionne le bouton menu en haut */
     }
 
     ion-item {
@@ -16,10 +21,11 @@ ion-header {
           margin-right: 3px;
         }
         div {
-          display: flex;
-          align-items: center;
-          justify-content: flex-start;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: flex-start !important;
         }
+        
         p {
           margin-top: 3px;
           font-size: 1.8rem;
@@ -79,8 +85,8 @@ ion-content {
       }
       img {
         margin-left: 5px;
-        height: 1rem;
-        width: 1rem;
+        height: 1.2rem;
+        width: 1.2rem;
       }
     }
   }
@@ -166,3 +172,5 @@ ion-content {
     }
   }
 }
+
+

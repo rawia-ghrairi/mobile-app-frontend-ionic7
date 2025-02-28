@@ -1,12 +1,12 @@
 <ion-header class="ion-no-border">
+  
   <ion-toolbar class="wrapper">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-item lines="none">
       <ion-label color="light">
-        <div>
-          <ion-icon name="locate-outline"></ion-icon>
-          <ion-text>Events near me</ion-text>
-        </div>
-        <p>Delhi, India</p>
+        <p>Tunis, Tunisia</p>
       </ion-label>
 
       <ion-fab-button size="small">
@@ -18,7 +18,7 @@
     <ion-toolbar class="srchBar" mode="ios">
       <ion-row>
         <ion-col size="10">
-          <ion-searchbar placeholder="Search events"></ion-searchbar>
+          <ion-searchbar placeholder="Find a doctor near you"></ion-searchbar>
         </ion-col>
         <ion-col size="2">
           <ion-fab-button size="small" color="light">
@@ -31,8 +31,12 @@
 </ion-header>
 
 <ion-content color="light">
+  
   <ion-list class="ion-margin-top">
-    <ion-list-header mode="ios"> Upcoming Events </ion-list-header>
+    <ion-item-divider mode="ios" color="light">
+       Doctors
+      <img src="assets/imgs/doctor2.png" />
+    </ion-item-divider>
 
     <swiper-container
       #event_upcoming
@@ -51,18 +55,17 @@
             <ion-thumbnail slot="start">
               <ion-img [src]="event.image"></ion-img>
             </ion-thumbnail>
-
             <ion-label>
-              <ion-text class="date">
-                {{ event?.date | date: 'MMM d, y' }}
-              </ion-text>
-              <p class="title">
-                <ion-text color="dark"> {{ event?.name }} </ion-text>
-              </p>
               <p class="location">
                 <ion-icon name="location-outline"></ion-icon>
                 {{ event?.location }}
+              </p>    
+              <p class="title">
+                <ion-text color="dark"> {{ event?.name }} </ion-text>
               </p>
+              <ion-text class="date">
+                {{ event?.speciality }}
+              </ion-text>              
             </ion-label>
           </ion-item>
         </ion-card>
@@ -73,8 +76,8 @@
 
   <ion-list class="ion-margin-top">
     <ion-item-divider mode="ios" color="light">
-      Top Picks
-      <img src="assets/imgs/fire.png" />
+      Categories
+      <img src="assets/imgs/fire2.png" />
       <ion-button slot="end" fill="clear" color="medium"> View All </ion-button>
     </ion-item-divider>
 
@@ -89,7 +92,7 @@
         <ion-card class="category">
           <ion-item lines="none">
             <ion-avatar slot="start">
-              <ion-img [src]="'assets/imgs/all.png'"></ion-img>
+              <ion-img [src]="'assets/imgs/select-all.png'"></ion-img>
             </ion-avatar>
 
             <ion-label> All </ion-label>
@@ -114,15 +117,15 @@
 
   @for(event of currentEvents; track $index) {
   <ion-card
-    [routerLink]="['/', 'home', 'events', event?.id]"
+    [routerLink]="['/', 'home', 'services', event?.id]"
     class="event2"
     [style.backgroundImage]="'url('+ event.image +')'"
   >
   <ion-item lines="none">
     <ion-label>
-      {{ event?.date | date: 'MMM d, y' }}
+      {{ event.speciality}}
       <p>
-        {{ event?.name }}
+        {{event?.name }}
       </p>
     </ion-label>
 
@@ -130,6 +133,14 @@
       <ion-icon name="arrow-forward-outline"></ion-icon>
     </ion-fab-button>
   </ion-item>
+  
   </ion-card>
+  
   }
 </ion-content>
+
+
+
+  
+
+
