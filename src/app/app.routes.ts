@@ -12,6 +12,11 @@ export const routes: Routes = [
       import('./welcome/welcome.page').then((m) => m.WelcomePage),
   },
   {
+    path: 'auth',
+    loadComponent: () =>
+      import('./auth-component/auth-component.component').then((m) => m.AuthComponentComponent),
+  },
+  {
     path: 'tabs',
     loadComponent: () =>
       import('./tabs/tabs.component').then((m) => m.TabsComponent),
