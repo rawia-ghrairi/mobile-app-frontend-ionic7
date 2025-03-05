@@ -16,4 +16,15 @@ export class AuthService {
   userRegister(req: any){
     return this.http.post(`${this.API_URL}register`,req);
   }
+
+  userResetPassword(payload: any) {
+    return this.http.post(`${this.API_URL}reset-password`, payload);
+  }
+
+  userUpdatePassword(token: string, payload: any) {
+    return this.http.post(`${this.API_URL}reset-password/${token}`, payload);
+  }
+  
+  
+  
 }

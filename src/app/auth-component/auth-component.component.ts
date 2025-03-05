@@ -15,6 +15,7 @@ export class AuthComponentComponent implements OnInit {
   loginForm: FormGroup;
   signupForm: FormGroup;
   isLoading: boolean = false;
+  resetForm: FormGroup;
 
   constructor(private fb: FormBuilder, private auth: AuthService) {
     this.loginForm = this.fb.group({
@@ -26,6 +27,10 @@ export class AuthComponentComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
+    this.resetForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]]
+    });
+    
   }
 
   ngOnInit() {}
@@ -81,4 +86,27 @@ export class AuthComponentComponent implements OnInit {
       console.log('Signup form is invalid', this.signupForm.value);
     }
   }
+
+  resetPassword() {
+    if (this.resetForm.valid) {
+      this.isLoading = true;
+      const payload = {
+        email: this.resetForm.get('email')!.value
+      };
+      console.log('Reset password payload:', payload);
+      this.auth.userResetPassword(payload).subscribe(
+        (data: any) => {
+          console.log('Reset password email sent:', data);
+          this.isLoading = false;
+        },
+        error => {
+          console.error('Reset password error:', error);
+          this.isLoading = false;
+        }
+      );
+    } else {
+      console.log('Reset password form is invalid', this.resetForm.value);
+    }
+  }
+  
 }  

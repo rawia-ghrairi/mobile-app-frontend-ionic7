@@ -54,18 +54,25 @@
   </div>
 
   <!-- Forget password page -->
-  <div class="container"  *ngIf="screen == 'forget'">
-    <h1 class="heading">Forget Password?<br><br></h1>
-    <p class="para">Enter email to reset</p>
+<div class="container" *ngIf="screen == 'forget'">
+  <h1 class="heading">Forget Password?<br><br></h1>
+  <p class="para">Enter your email to reset your password</p>
+  <form [formGroup]="resetForm">
     <ion-item lines="none" class="ion-item">
-      <fieldset  class="input-item">
-        <legend>Email Id</legend> 
-        <ion-input type="email" placeholder="name@domain.com"></ion-input>
+      <fieldset class="input-item">
+        <legend>Email Id</legend>
+        <ion-input formControlName="email" type="email" placeholder="name@domain.com"></ion-input>
       </fieldset>
     </ion-item>
-    <p class="signup-text">Rememberd Password&nbsp;<a (click)="change('signin')">Sign In?</a></p>
-    <ion-button class="login-button" expand="block">Reset Password</ion-button>
-  </div>
+    <p class="signup-text">
+      Remember your password?&nbsp;<a (click)="change('signin')">Sign In?</a>
+    </p>
+    <ion-button class="login-button" (click)="resetPassword()" expand="block">
+      Reset Password
+    </ion-button>
+  </form>
+</div>
+
 
 
 </ion-content>
