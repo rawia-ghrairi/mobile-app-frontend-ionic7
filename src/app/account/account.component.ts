@@ -4,29 +4,21 @@ import { FormsModule } from '@angular/forms';
 import { IonFabButton, IonFooter,  IonButton, IonList, IonText, IonLabel, IonItem, IonIcon, IonAvatar,IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { Router } from '@angular/router';
-import { arrowForwardOutline,pencilOutline, callOutline, chevronBackOutline, locationOutline, lockOpenOutline, mailOutline, schoolOutline, trophy, water, keyOutline } from 'ionicons/icons';
-
-
+import { arrowForwardOutline,pencilOutline, callOutline, chevronBackOutline, locationOutline, lockOpenOutline, mailOutline, schoolOutline, trophy, water, keyOutline, arrowBackOutline } from 'ionicons/icons';
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss'],
   standalone: true,
-  imports: [IonFabButton, IonFooter,  IonButton, IonList, IonText, IonLabel, IonItem, IonIcon, IonAvatar,
-    IonContent, IonHeader,CommonModule, FormsModule]
-})
+  imports:  [IonFabButton, IonFooter,  IonButton, IonList, IonText, IonLabel, IonItem, IonIcon, IonAvatar,
+      IonContent, IonHeader,CommonModule, FormsModule]})
 export class AccountComponent  implements OnInit {
-
-  profile = {
+ profile = {
     name: 'Nikki Thakur',
     email: 'nikki786@gmail.com',
   };
- addAllIcons() {
-    addIcons({
-      locationOutline,mailOutline,schoolOutline,trophy,water
-    })}
   constructor(private router: Router) {
-      addIcons({chevronBackOutline,keyOutline,schoolOutline,mailOutline,locationOutline,callOutline,pencilOutline,lockOpenOutline,arrowForwardOutline,water,trophy}); 
+      addIcons({arrowBackOutline,schoolOutline,mailOutline,locationOutline,callOutline,keyOutline,pencilOutline,lockOpenOutline,arrowForwardOutline,water,trophy}); 
       }
       ngOnInit(){}
 

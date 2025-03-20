@@ -1,18 +1,13 @@
 <ion-app>
   <ion-menu contentId="main-content">
-
     <ion-header class="ion-no-border">
-
       <div class="bg"></div>
-
-      <ion-item lines="none">
+      <ion-item lines="none"  >
         <ion-avatar slot="start">
           <img src="assets/imgs/avatar.jpg">
         </ion-avatar>
-
         <ion-label color="light">
           {{ profile.name }}
-
           <p>
             <ion-text color="light">
               {{ profile.email }}
@@ -20,11 +15,8 @@
           </p>
         </ion-label>
       </ion-item>
-
     </ion-header>
-
     <ion-content>
-
       @for(page of pages; track $index) {
         <ion-menu-toggle class="menu-items" [autoHide]="false">
           <ion-item 
@@ -37,15 +29,12 @@
               slot="start"
               [ios]="page.icon + '-outline'"
               [md]="page.icon + '-sharp'">
-            </ion-icon>
-  
+            </ion-icon> 
             <ion-label>{{ page.title }}</ion-label>
           </ion-item>
         </ion-menu-toggle>
       }
-
     </ion-content>
-
   </ion-menu>
   <ion-router-outlet id="main-content"></ion-router-outlet>
 </ion-app>

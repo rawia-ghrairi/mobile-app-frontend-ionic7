@@ -1,16 +1,11 @@
 <ion-header class="ion-no-border">
   <div class="bg"></div>
-  <ion-item lines="none" class="avatar"  >
-    <ion-avatar slot="start">
-      <img src="assets/imgs/avatar.jpg">
-    </ion-avatar>
-  </ion-item>
-  <ion-item class="back">
+  <ion-item lines="none" class="back">
     <ion-fab-button slot="end"  size="small"(click)="goToHomePage()">
-      <ion-icon name="chevron-back-outline" color="black"></ion-icon>
+      <ion-icon name="arrow-back-outline" color="black"></ion-icon>
   </ion-fab-button>
 </ion-item> 
-  <ion-item>
+  <ion-item lines="none" class="profile-info">
     <ion-label color="light">
     {{ profile.name }}
     <p>
@@ -20,6 +15,11 @@
     </p>
   </ion-label>
   </ion-item> 
+  <ion-item lines="none" class="avatar"  >
+    <ion-avatar slot="start">
+      <img src="assets/imgs/avatar.jpg">
+    </ion-avatar>
+  </ion-item>
 </ion-header>
 <ion-content [fullscreen]="true">
 <div class="spacing"></div>

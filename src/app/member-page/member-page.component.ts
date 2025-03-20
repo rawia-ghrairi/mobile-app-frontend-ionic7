@@ -43,8 +43,8 @@ import { MembersComponent } from "../members/members.component";
     IonSelectOption,
     IonList,
     IonItemDivider,
-    MembersComponent,
     IonMenuButton,
+    MembersComponent
 ],
 })
 export class MemberPageComponent  implements OnInit {

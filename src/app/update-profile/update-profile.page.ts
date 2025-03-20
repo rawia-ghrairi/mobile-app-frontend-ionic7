@@ -11,19 +11,19 @@ import { arrowBackOutline, cameraOutline, chevronBackOutline, schoolOutline } fr
   templateUrl: './update-profile.page.html',
   styleUrls: ['./update-profile.page.scss'],
   standalone: true,
-  imports:  [IonFooter, IonButton, IonLabel, IonInput,
-    IonList, IonItem, IonAvatar, IonIcon, IonContent, IonHeader, IonTitle,
+  imports: [IonFabButton, IonFooter, IonButton, IonLabel, IonInput,
+    IonList, IonItem, IonAvatar, IonIcon, IonContent, IonHeader, IonTitle, 
     IonToolbar, CommonModule, FormsModule]
 })
 export class UpdateProfilePage implements OnInit {
-
-  constructor(private router: Router) {
-    addIcons({arrowBackOutline,chevronBackOutline,cameraOutline,schoolOutline}); }
-         
-  
-         goToProfilePage(){
-           this.router.navigate(['/tabs/account']); 
-         }
-  ngOnInit() {}
+constructor(private router: Router) {
+     addIcons({arrowBackOutline,chevronBackOutline,cameraOutline,schoolOutline}); 
+          }
+   
+          goToProfilePage(){
+            this.router.navigate(['/tabs/account']); 
+          }
+  ngOnInit() {
+  }
 
 }
