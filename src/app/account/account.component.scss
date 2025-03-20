@@ -1,0 +1,137 @@
+/* Conteneur des icônes */
+.icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; // Taille du conteneur
+    height: 40px; // Taille du conteneur
+    background-color: white; // Fond blanc
+    border:2px solid #dddddd; // Bordure grise
+    border-radius: 50%; // Forme arrondie
+    margin-right: 16px; // Espace entre l'icône et le texte
+  }
+  
+  /* Style des icônes */
+  .custom-icon {
+    font-size: 24px; // Taille de l'icône
+    color: #555; // Couleur de l'icône
+  }
+  /* Ajouter un espacement entre ion-row et ion-list */
+.spacing {
+    margin-top: 100px; // Ajustez la valeur selon vos besoins
+  }
+  /* Ajouter un espacement à gauche d'ion-list */
+ion-list {
+    padding-inline-start: 20px; // Espacement à gauche (ajustez la valeur selon vos besoins)
+  }
+  ion-header {
+    height: 10rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 1rem;
+    div.bg {
+        height: 15rem;
+        background: linear-gradient(90deg, var(--ion-color-secondary) 0%, var(--ion-color-primary) 100%);
+        transform: rotate(-15deg);
+        width: 130%;
+        border-radius: 10px 10px 10px 50px;
+        margin-top: -5rem;
+        margin-left: -1rem;
+        box-shadow: 0 1px 10px rgba(255, 98, 169, 0.5);
+    }
+    ion-item.avatar{
+        --background: transparent;
+        position: absolute;
+        top: 4rem;
+        left: 10;
+        right: 0rem;
+        ion-avatar {
+            height: 10rem;
+            width: 10rem;
+            border: 5px solid #e2d6d5;
+            margin-right: 0.6rem;
+        }}
+        ion-item.back {
+            --background: transparent; // Fond transparent
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+          margin-top:-7rem;
+          margin-left:-2rem;
+            ion-fab-button {
+              --box-shadow: none; // Supprime l'ombre
+              --background: transparent; // Fond transparent
+              ion-icon {
+                font-size: 1.7rem; // Taille de l'icône
+              }
+            }
+          }
+        ion-item.profile-info{
+          --background: transparent;
+          position: absolute;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          top: 50%; /* Positionne le haut de l'élément au milieu du header */
+          transform: translateY(-50%);
+       
+         
+        ion-label {
+            font-size: 1.5rem;
+            font-weight: bold;
+            width: auto;
+            letter-spacing: 0.5px;
+            p {
+                margin-top: 2px;
+                font-size: 1rem;
+                font-weight: normal;
+            }
+        }}
+    
+}
+ion-content {
+    * {
+        font-family: lato;
+    }
+  
+
+    ion-list {
+        ion-item {
+          margin-bottom: 5px; // Espace entre les éléments
+          ion-text {
+            font-weight: bold; // Titres en gras
+          }
+          p {
+            margin-top: 8px; // Espace entre le titre et le sous-titre
+          }
+        }
+        /* Style pour aligner "Password" et "Change" horizontalement */
+.password-label {
+    display: flex;
+    justify-content: space-between; /* Espacement entre les éléments */
+    align-items: center; /* Alignement vertical au centre */
+    width: 100%; /* Prend toute la largeur disponible */
+  }
+  
+  .password-label div {
+    margin: 0; /* Supprime la marge par défaut */
+  }
+  
+  .password-label ion-button {
+    margin: 0; /* Supprime la marge par défaut */
+  }
+      }
+}
+/* Style pour le bouton "Edit Profile" */
+.edit-profile-button {
+    font-size: 1.1rem; // Taille de la police
+    font-weight: bold; // Texte en gras
+    border-radius: calc(infinity * 1px);
+    margin: 25px; // Marge autour du bouton
+    padding: 10px; // Espacement interne
+    background-color: var(--ion-color-primary);
+  }
+ 

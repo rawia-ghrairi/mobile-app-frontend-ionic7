@@ -1,5 +1,6 @@
 import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   IonApp,
   IonRouterOutlet,
@@ -59,41 +60,6 @@ register();
   ],
 })
 export class AppComponent {
-  profile = {
-    name: 'Nikki Thakur',
-    email: 'nikki786@gmail.com',
-  };
-
-  pages = [
-    { title: 'Home', url: '/home', icon: 'home', active: true },
-    { title: 'Profile', url: '/profile', icon: 'person', active: false },
-    { title: 'Orders', url: '/orders', icon: 'bag-handle', active: false },
-    { title: 'Addresses', url: '/addresses', icon: 'location', active: false },
-    {
-      title: 'Change Password',
-      url: '/change-password',
-      icon: 'key',
-      active: false,
-    },
-    {
-      title: 'About Us',
-      url: '/about',
-      icon: 'information-circle',
-      active: false,
-    },
-    {
-      title: 'Privacy Policy',
-      url: '/privacy',
-      icon: 'document-lock',
-      active: false,
-    },
-    { title: 'Sign Out', icon: 'log-out', route: true, active: false },
-  ];
-
-  constructor() {
-    this.addAllIcons();
-  }
-
   addAllIcons() {
     addIcons({
       star,
@@ -121,16 +87,35 @@ export class AppComponent {
       keySharp,
     });
   }
+  profile = {
+    name: 'Nikki Thakur',
+    email: 'nikki786@gmail.com',
+  };
+
+  pages = [
+    { title: 'Home', url: '/tabs/home', icon: 'home', active: true},
+    { title: 'Profile', url: '/tabs/account', icon: 'person', active: false},
+    { title: 'Orders', url: '/orders', icon: 'bag-handle', active: false},
+    { title: 'Addresses', url: '/addresses', icon: 'location', active: false},
+    {title: 'Change Password',url: '/password',icon: 'key',active: false,},
+    {title: 'About Us',url: '/about',icon: 'information-circle', active: false,},
+    {title: 'Privacy Policy',url: '/privacy',icon: 'document-lock',active: false,},
+    { title: 'Sign Out', icon: 'log-out', route: true, active: false },
+    {title: 'Doctors Home Page',url: '/doctor-home-page',icon: 'document-lock',active: false,}
+  ];
+
+  constructor(private router: Router) {
+    this.addAllIcons();
+  }
 
   onItemTap(page: any) {
-    if(!page?.active) {
-      const index = this.pages.findIndex(x => x.active);
-      this.pages[index].active = false;
-      page.active = true;
+    if (!page?.active) {
+      this.pages.forEach((p) => (p.active = false)); // Désactive toutes les pages
+      page.active = true; 
     }
-
-    if(page?.route) {
-      // navigate
+  
+    if (page?.url) {
+      this.router.navigateByUrl(page.url); // 🔥 Corrige la navigation
     } else {
       this.logout();
     }

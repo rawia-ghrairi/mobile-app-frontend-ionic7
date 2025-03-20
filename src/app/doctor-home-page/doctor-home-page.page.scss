@@ -1,0 +1,114 @@
+ion-header {
+    background:linear-gradient(90deg, var(--ion-color-secondary) 0%, var(--ion-color-primary) 100%);
+    .header-container {
+      background:linear-gradient(90deg, var(--ion-color-secondary) 0%, var(--ion-color-primary) 100%);;
+      display: flex;
+      align-items: center; /* Aligne les éléments verticalement au centre */
+      justify-content: space-between; /* Espace entre l'icône à gauche et le titre au centre */
+      width: 100%; /* S'assure que la div prend toute la largeur */
+    }
+    
+    ion-title {
+      display: flex;
+      align-items:flex-start; /* Aligne les éléments verticalement au centre */
+      font-size: 1.2rem; /* Ajuste la taille du texte si nécessaire */
+
+    }
+    ion-grid {
+      background:linear-gradient(90deg, var(--ion-color-secondary) 0%, var(--ion-color-primary) 100%);;
+      margin-top: -5px;
+      border-radius: 0 0 5px 5px;
+      padding-bottom: 120px;
+    }
+    .popover {
+      background: var(--ion-color-white);
+      border-radius: 10px;
+      width: 90%;
+      margin: auto;
+      margin-top: -120px;
+      ion-item {
+        ion-label {
+          margin: 0;
+           h1 {
+             font-size: 1.8rem;
+           }
+           p {
+             margin-top: 3px;
+             font-size: 0.8rem;
+           }
+           ion-text {
+            font-size: 0.7rem;
+           }
+        }
+      }
+    }
+    div {
+      background: var(--ion-color-light);
+      ion-segment {
+        --background: var(--ion-color-white);
+        border-radius: 20px;
+        --margin-top: 5px;
+        --margin-bottom: 5px;
+        ion-segment-button {
+          --background-checked:linear-gradient(90deg, var(--ion-color-secondary) 0%, var(--ion-color-primary) 100%);
+          --indicator-color:linear-gradient(90deg, var(--ion-color-secondary) 0%, var(--ion-color-primary) 100%);
+          --border-radius: 20px;
+          --color: linear-gradient(90deg, var(--ion-color-secondary) 0%, var(--ion-color-primary) 100%);
+          --color-checked: var(--ion-color-white);
+        }
+      }
+    }
+  }
+  
+  ion-content {
+    --background: var(--ion-color-light);
+    ion-list {
+      background: var(--ion-color-light);
+      .heading {
+        font-family: lato;
+      }
+      .popItem {
+        width: 90%;
+        margin: auto;
+        margin-bottom: 15px;
+        border-radius: 10px;
+        padding: 0;
+        ion-card {
+          width: 5rem;
+          height: 5rem;
+          border-radius: 10px;
+          background: var(--ion-color-secondary);
+            ion-text {
+              font-size: 0.7rem;
+              font-weight: bold;
+            }
+          
+          p {
+            ion-text {
+              font-size: 2.5rem !important;
+            }
+          }
+        }
+        ion-label {
+          ion-note {
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+          }
+          p {
+            margin-top: 5px;
+            ion-text {
+              span {
+                color: var(--ion-color-dark);
+                padding: 0 5px;
+              }
+            }
+          }
+        }
+        ion-fab {
+          margin-right: -15px !important;
+          margin-top: -10px;
+        }
+      }
+    }
+  }
+ 

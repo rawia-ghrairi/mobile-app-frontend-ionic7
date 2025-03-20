@@ -1,0 +1,54 @@
+<ion-header [translucent]="true">
+  <ion-toolbar> 
+    <ion-icon name="arrow-back-outline" (click)="goToProfilePage()"></ion-icon>
+    <ion-title>Edit Profile</ion-title>
+  </ion-toolbar>
+  <ion-avatar class="avatarr" >
+    <img src="assets/imgs/avatar.jpg">
+  </ion-avatar>
+<div class="icon-container">
+  <ion-icon name="camera-outline"></ion-icon>
+  </div>
+</ion-header>
+<ion-content>
+
+  <ion-list>
+    <ion-item lines="none">
+      <ion-label>
+        <p color="primary">Profile Name</p>
+      <ion-input type="text" placeholder="Enter Name"></ion-input>
+    </ion-label>
+    </ion-item>
+    
+    <ion-item lines="none">
+      <ion-label>
+        <p>Email</p>
+      <ion-input  type="email" placeholder="email@domain.com"></ion-input>
+    </ion-label>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label>
+        <p color="primary">School</p>
+      <ion-input type="text" placeholder="Enter your school"></ion-input>
+    </ion-label>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label>
+        <p color="primary">Emergency Contact</p>
+      <ion-input  type="text" placeholder="Enter your Emergency Contact"></ion-input>
+    </ion-label>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label>
+        <p color="primary">Emergency Number</p>
+      <ion-input  type="tel" placeholder="888-888-8888"></ion-input>
+    </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+<ion-footer lines="none">
+  <ion-button expand="full" class="edit-profile-button">Update Profile</ion-button>
+</ion-footer>
+
+
+

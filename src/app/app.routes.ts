@@ -63,6 +63,14 @@ export const routes: Routes = [
             (m) => m.AccountComponent
           ),
       },
+      {
+        path: 'update-profile',
+        loadComponent: () => import('./update-profile/update-profile.page').then( m => m.UpdateProfilePage)
+      },
+      {
+        path: 'calendar',
+        loadComponent: () => import('./calendar/calendar.page').then( m => m.CalendarPage)
+      },
       // You can add other routes here, like stats or any additional pages
     ],
     
@@ -86,7 +94,21 @@ export const routes: Routes = [
     ],
   },
 
-  { path: 'reset-password/:token', component: ResetPasswordComponent }
+  { path: 'reset-password/:token', component: ResetPasswordComponent },
 
-  
+
+  {
+    path: 'update-profile',
+    loadComponent: () => import('./update-profile/update-profile.page').then( m => m.UpdateProfilePage)
+  },
+  {
+    path: 'doctor-home-page',
+    loadComponent: () => import('./doctor-home-page/doctor-home-page.page').then( m => m.DoctorHomePagePage)
+  },
+  {
+    path: 'calendar',
+    loadComponent: () => import('./calendar/calendar.page').then( m => m.CalendarPage)
+  },
+
+ 
 ];

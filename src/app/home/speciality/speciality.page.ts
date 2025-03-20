@@ -8,7 +8,7 @@ import { addIcons } from 'ionicons';
 import { calendarOutline, callOutline, chatboxEllipsesOutline, heartOutline, locationOutline, medkitOutline } from 'ionicons/icons';
 import { services } from 'src/app/data/services';
 import { Event } from 'src/app/interfaces/event.interface';
-
+import { DateComponent } from "../../date/date.component";
 @Component({
   selector: 'app-speciality',
   templateUrl: './speciality.page.html',
@@ -25,6 +25,7 @@ import { Event } from 'src/app/interfaces/event.interface';
     IonToolbar,
     IonHeader,
     IonContent,
+    DateComponent
     ]
 })
 export class SpecialityPage implements OnInit {

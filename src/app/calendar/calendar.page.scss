@@ -1,0 +1,36 @@
+ion-toolbar{
+  display: flex;
+  justify-content: center;  /* Centrer horizontalement */
+  align-items: center;   
+  height:4rem;
+  .center-title {
+    display: flex;
+    align-items:center;      /* Centrer verticalement */
+    justify-content: center;  /* Centrer horizontalement */
+   font-size:1.1rem;
+    white-space: nowrap; /* Empêche le texte de se couper en plusieurs lignes */
+    width: 100%;
+  }
+  
+}
+
+ion-segment-button {
+  --color: #000; /* Couleur par défaut du texte */
+  --background-checked: transparent; /* Retirer le fond de l'élément */
+
+  --border-radius: 0; /* Pour ne pas avoir de bords arrondis */
+height:3rem;
+  ion-label {
+    transition: all 0.3s ease;
+    font-size:1.5rem; /* Transition pour l'animation */
+  }
+  
+  &.selected {
+    --color: var(--ion-color-primary); /* Lorsque le bouton est sélectionné, la couleur devient primary */
+  }
+
+}
+
+ion-segment-button[selected] ion-label {
+  --color: var(--ion-color-primary); /* Le texte devient la couleur primaire lors de la sélection */
+}

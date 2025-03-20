@@ -14,6 +14,7 @@ import {
   IonSelectOption,
   IonList,
   IonItemDivider,
+  IonMenuButton,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { addCircle, chevronForwardCircle, menuOutline, notifications } from 'ionicons/icons';
@@ -42,6 +43,7 @@ import { MembersComponent } from "../members/members.component";
     IonSelectOption,
     IonList,
     IonItemDivider,
+    IonMenuButton,
     MembersComponent
 ],
 })

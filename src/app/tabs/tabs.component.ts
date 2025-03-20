@@ -44,7 +44,6 @@ export class TabsComponent  implements OnInit {
   ngOnInit() {}
   getCurrentTab(event: { tab: string }) {
     console.log(event.tab);
-
     this.currentTab.set(event.tab);
   }
 
