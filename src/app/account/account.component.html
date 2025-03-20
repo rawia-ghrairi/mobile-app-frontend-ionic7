@@ -1,14 +1,86 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>account</ion-title>
-  </ion-toolbar>
+<ion-header class="ion-no-border">
+  <div class="bg"></div>
+  <ion-item lines="none" class="avatar"  >
+    <ion-avatar slot="start">
+      <img src="assets/imgs/avatar.jpg">
+    </ion-avatar>
+  </ion-item>
+  <ion-item class="back">
+    <ion-fab-button slot="end"  size="small"(click)="goToHomePage()">
+      <ion-icon name="chevron-back-outline" color="black"></ion-icon>
+  </ion-fab-button>
+</ion-item> 
+  <ion-item>
+    <ion-label color="light">
+    {{ profile.name }}
+    <p>
+      <ion-text color="light">
+        {{ profile.email }}
+      </ion-text>
+    </p>
+  </ion-label>
+  </ion-item> 
 </ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">account</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<div class="spacing"></div>
+<ion-list lines="full" class="centered-list">
+  <!-- École -->
+  <ion-item lines="none">
+    <div class="icon-container">
+    <ion-icon name="school-outline" slot="start" color="primary"class="custom-icon" ></ion-icon>
+    </div>
+    <ion-label>
+      <p>The Lawrenceville School</p>
+      <ion-text color="black">+1-987654321</ion-text>
+    </ion-label>
+  </ion-item>
+
+  <!-- Email -->
+  <ion-item lines="none">
+    <div class="icon-container">
+    <ion-icon name="mail-outline" slot="start" color="secondary"class="custom-icon" ></ion-icon>
+    </div>
+    <ion-label>
+      <p>Email</p>
+      <ion-text color="black">infolawrenceville.org</ion-text> 
+    </ion-label>
+  </ion-item>
+
+  <!-- Adresse -->
+  <ion-item lines="none">
+    <div class="icon-container">
+      <ion-icon name="location-outline" color="primary" class="custom-icon" ></ion-icon>
+    </div>
+    <ion-label> 
+      <p>Address</p>
+      <ion-text color="black">2500 Main St, Lawrenceville, NJ, USA</ion-text>
+    </ion-label>
+  </ion-item>
+
+  <!-- Phone Number -->
+  <ion-item lines="none">
+    <div class="icon-container">
+    <ion-icon name="call-outline" slot="start" color="tertiary" class="custom-icon"></ion-icon>
+  </div>
+    <ion-label>
+      <p>Emergency Number</p>
+      <ion-text color="black">50775960</ion-text>
+    </ion-label>
+  </ion-item>
+
+  <!-- Password -->
+  <ion-item lines="none">
+    <div class="icon-container">
+      <ion-icon name="key-outline" slot="start" color="secondary" class="custom-icon"></ion-icon>
+  </div>
+    <ion-label class="password-label"> 
+      <p>Password</p>
+      <ion-button color="medium">Change</ion-button>
+    </ion-label>
+  </ion-item>
+</ion-list>
 </ion-content>
+<ion-footer >
+  <ion-button expand="full" class="edit-profile-button"(click)="editProfile()">Edit Profile</ion-button>
+</ion-footer>
 

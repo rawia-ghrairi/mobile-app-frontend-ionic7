@@ -51,6 +51,7 @@ export const routes: Routes = [
             path: ':id',
             loadComponent: () =>
               import('./member-detail-page/member-detail-page.component').then(
+        
                 (m) => m.MemberDetailPageComponent
               ),
           },
@@ -63,6 +64,10 @@ export const routes: Routes = [
             (m) => m.AccountComponent
           ),
       },
+      {
+        path: 'update-profile',
+        loadComponent: () => import('./update-profile/update-profile.page').then( m => m.UpdateProfilePage)
+      }
       // You can add other routes here, like stats or any additional pages
     ],
     
@@ -86,7 +91,8 @@ export const routes: Routes = [
     ],
   },
 
-  { path: 'reset-password/:token', component: ResetPasswordComponent }
+  { path: 'reset-password/:token', component: ResetPasswordComponent },
+  
 
   
 ];

@@ -1,0 +1,84 @@
+ion-header {
+    ion-toolbar {
+  /* Hauteur de la toolbar */
+        display: flex;
+        align-items: center; /* Centre verticalement tout le contenu */
+        justify-content: center; /* Centre horizontalement */
+        ion-fab-button{
+            top:0;
+            left:0;
+            right: 5rem;
+       ion-icon{
+    font-size: 1.2rem;
+          }}
+        ion-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+    }
+}
+ion-avatar.avatarr{
+    position:relative;
+    top: 1rem;
+    left: 7rem;
+    right: 4rem;
+    height: 12rem;
+    width: 12rem;
+   
+    ion-avatar { 
+        height: 8rem;
+        width: 8rem;
+        
+       
+    }}
+    .icon-container { 
+        position: absolute; /* Positionne l'icône de manière absolue par rapport à l'avatar */
+        --background: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px; // Taille du conteneur
+        height: 40px; // Taille du conteneur
+        background-color: var(--ion-color-primary); // Fond blanc
+        border:2px solid #dddddd; // Bordure grise
+        border-radius: 50%; // Forme arrondie
+         right: 10rem;
+         top:12rem; /* Positionne l'icône sur le même niveau que l'avatar */
+         left: 15rem; /* Positionne l'icône juste après l'avatar */
+         transform: translateX(30px);
+      }
+      .icon-container ion-icon {
+        font-size: 20px; /* Taille de l'icône */
+        color: white; /* Couleur de l'icône */
+    }
+
+ion-list {
+    ion-item {
+      margin-bottom: 2px; // Espace entre les éléments
+      padding: 0 1rem; /* Ajout d'un padding gauche et droite pour espacer des bords */
+
+      top: 2rem;
+      left: 1rem;
+      right: 1rem;
+      ion-input {
+        margin-top: 0.2rem; /* Réduit l'espacement au-dessus de l'input */
+        margin-bottom: 0.2rem; /* Réduit l'espacement en dessous de l'input */
+        --padding-start: 0; /* Supprime les padding internes de l'input */
+      --padding-end: 0; 
+    }
+      p {
+        color: var(--ion-color-primary); /* Applique la couleur primaire */
+        margin-bottom: 0.3rem; 
+      }
+    }}
+    .edit-profile-button {
+        font-size: 1.1rem; // Taille de la police
+        font-weight: bold; // Texte en gras
+        border-radius: calc(infinity * 1px);
+        margin: 25px; // Marge autour du bouton
+        padding: 10px; // Espacement interne
+        background-color: var(--ion-color-primary);
+      }
+     

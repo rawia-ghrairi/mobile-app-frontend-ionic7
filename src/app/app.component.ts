@@ -1,5 +1,6 @@
 import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   IonApp,
   IonRouterOutlet,
@@ -65,8 +66,8 @@ export class AppComponent {
   };
 
   pages = [
-    { title: 'Home', url: '/home', icon: 'home', active: true },
-    { title: 'Profile', url: '/profile', icon: 'person', active: false },
+    { title: 'Home', url: '/tabs/home', icon: 'home', active: true },
+    { title: 'Profile', url: '/tabs/account', icon: 'person', active: false },
     { title: 'Orders', url: '/orders', icon: 'bag-handle', active: false },
     { title: 'Addresses', url: '/addresses', icon: 'location', active: false },
     {
@@ -90,7 +91,7 @@ export class AppComponent {
     { title: 'Sign Out', icon: 'log-out', route: true, active: false },
   ];
 
-  constructor() {
+  constructor(private router: Router) {
     this.addAllIcons();
   }
 
@@ -123,14 +124,13 @@ export class AppComponent {
   }
 
   onItemTap(page: any) {
-    if(!page?.active) {
-      const index = this.pages.findIndex(x => x.active);
-      this.pages[index].active = false;
-      page.active = true;
+    if (!page?.active) {
+      this.pages.forEach((p) => (p.active = false)); 
+      page.active = true; 
     }
-
-    if(page?.route) {
-      // navigate
+  
+    if (page?.url) {
+      this.router.navigateByUrl(page.url); 
     } else {
       this.logout();
     }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, Validators,ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { IonicModule } from '@ionic/angular';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-auth-component',
   templateUrl: './auth-component.component.html',
@@ -16,8 +17,9 @@ export class AuthComponentComponent implements OnInit {
   signupForm: FormGroup;
   isLoading: boolean = false;
   resetForm: FormGroup;
+  
 
-  constructor(private fb: FormBuilder, private auth: AuthService) {
+  constructor(private fb: FormBuilder, private auth: AuthService,private router: Router) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
@@ -51,6 +53,7 @@ export class AuthComponentComponent implements OnInit {
         (data: any) => {
           console.log('Login success:', data);
           this.isLoading = false;
+          this.router.navigate(['/tabs']);
         },
         error => {
           console.error('Login error:', error);
