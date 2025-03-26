@@ -14,7 +14,7 @@ import { DateComponent } from "../../date/date.component";
   templateUrl: './speciality.page.html',
   styleUrls: ['./speciality.page.scss'],
   standalone: true,
-  imports: [IonImg, IonFabButton, IonButton, IonFooter, IonText, IonAvatar, IonList, IonListHeader, IonCard, 
+  imports: [IonImg, IonFabButton, IonButton, IonFooter, IonText, IonAvatar, IonList, IonListHeader, IonCard,
     IonIcon,
     IonCol,
     IonRow,

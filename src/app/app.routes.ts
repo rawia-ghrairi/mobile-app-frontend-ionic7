@@ -51,6 +51,7 @@ export const routes: Routes = [
             path: ':id',
             loadComponent: () =>
               import('./member-detail-page/member-detail-page.component').then(
+        
                 (m) => m.MemberDetailPageComponent
               ),
           },

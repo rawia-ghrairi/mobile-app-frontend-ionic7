@@ -6,7 +6,6 @@ import { addIcons } from 'ionicons';
 import { Router } from '@angular/router';
 import { arrowBackOutline, cameraOutline, chevronBackOutline, schoolOutline } from 'ionicons/icons';
 
-
 @Component({
   selector: 'app-update-profile',
   templateUrl: './update-profile.page.html',

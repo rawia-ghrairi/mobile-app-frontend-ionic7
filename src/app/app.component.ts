@@ -60,6 +60,44 @@ register();
   ],
 })
 export class AppComponent {
+<<<<<<< HEAD
+  profile = {
+    name: 'Nikki Thakur',
+    email: 'nikki786@gmail.com',
+  };
+
+  pages = [
+    { title: 'Home', url: '/tabs/home', icon: 'home', active: true },
+    { title: 'Profile', url: '/tabs/account', icon: 'person', active: false },
+    { title: 'Orders', url: '/orders', icon: 'bag-handle', active: false },
+    { title: 'Addresses', url: '/addresses', icon: 'location', active: false },
+    {
+      title: 'Change Password',
+      url: '/change-password',
+      icon: 'key',
+      active: false,
+    },
+    {
+      title: 'About Us',
+      url: '/about',
+      icon: 'information-circle',
+      active: false,
+    },
+    {
+      title: 'Privacy Policy',
+      url: '/privacy',
+      icon: 'document-lock',
+      active: false,
+    },
+    { title: 'Sign Out', icon: 'log-out', route: true, active: false },
+  ];
+
+  constructor(private router: Router) {
+    this.addAllIcons();
+  }
+
+=======
+>>>>>>> 3b3be6adafc36dafb0c81215f9bba8c495bc1f29
   addAllIcons() {
     addIcons({
       star,
@@ -110,12 +148,20 @@ export class AppComponent {
 
   onItemTap(page: any) {
     if (!page?.active) {
+<<<<<<< HEAD
+      this.pages.forEach((p) => (p.active = false)); 
+=======
       this.pages.forEach((p) => (p.active = false)); // Désactive toutes les pages
+>>>>>>> 3b3be6adafc36dafb0c81215f9bba8c495bc1f29
       page.active = true; 
     }
   
     if (page?.url) {
+<<<<<<< HEAD
+      this.router.navigateByUrl(page.url); 
+=======
       this.router.navigateByUrl(page.url); // 🔥 Corrige la navigation
+>>>>>>> 3b3be6adafc36dafb0c81215f9bba8c495bc1f29
     } else {
       this.logout();
     }
