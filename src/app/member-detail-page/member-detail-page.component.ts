@@ -35,7 +35,8 @@ import { ActivatedRoute } from '@angular/router';
 import { InfoCardComponent } from 'src/app/widgets/info-card/info-card.component';
 import { ActionButtonComponent } from 'src/app/widgets/action-button/action-button.component';
 import { MemberService } from '../services/member.service';
-
+import { ImageUploadComponent } from "../image-upload/image-upload.component";
+import { UploadFilesComponent } from "../upload-files/upload-files.component";
 
 @Component({
   selector: 'app-member-detail-page',
@@ -61,7 +62,9 @@ import { MemberService } from '../services/member.service';
     MemberPersonalDetailComponent,
     InfoCardComponent,
     ActionButtonComponent,
-  ],
+    ImageUploadComponent,
+    UploadFilesComponent
+],
 })
 export class MemberDetailPageComponent  implements OnInit {
 

@@ -26,14 +26,11 @@ ion-list {
   }
   ion-header {
     height: 10rem;
-<<<<<<< HEAD
-=======
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
     padding-left: 1rem;
->>>>>>> 3b3be6adafc36dafb0c81215f9bba8c495bc1f29
     div.bg {
         height: 15rem;
         background: linear-gradient(90deg, var(--ion-color-secondary) 0%, var(--ion-color-primary) 100%);
@@ -59,18 +56,11 @@ ion-list {
         ion-item.back {
             --background: transparent; // Fond transparent
             position: absolute;
-<<<<<<< HEAD
-            top: 0rem;
-            left: 0;
-            right: 22rem;
-          
-=======
             display: flex;
             flex-direction: column;
             align-items: flex-start;
           margin-top:-7rem;
           margin-left:-2rem;
->>>>>>> 3b3be6adafc36dafb0c81215f9bba8c495bc1f29
             ion-fab-button {
               --box-shadow: none; // Supprime l'ombre
               --background: transparent; // Fond transparent
@@ -79,14 +69,6 @@ ion-list {
               }
             }
           }
-<<<<<<< HEAD
-        ion-item{
-            --background: transparent;
-            position: absolute;
-            top: 5rem;
-            left: 5;
-            right: 14rem;
-=======
         ion-item.profile-info{
           --background: transparent;
           position: absolute;
@@ -97,7 +79,6 @@ ion-list {
           transform: translateY(-50%);
        
          
->>>>>>> 3b3be6adafc36dafb0c81215f9bba8c495bc1f29
         ion-label {
             font-size: 1.5rem;
             font-weight: bold;
@@ -152,9 +133,5 @@ ion-content {
     margin: 25px; // Marge autour du bouton
     padding: 10px; // Espacement interne
     background-color: var(--ion-color-primary);
-<<<<<<< HEAD
-  }
-=======
   }
  
->>>>>>> 3b3be6adafc36dafb0c81215f9bba8c495bc1f29

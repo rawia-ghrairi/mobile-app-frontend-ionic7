@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonDatetime } from '@ionic/angular/standalone';
+import {DailyScheduleComponent} from "../../daily-schedule/daily-schedule.component";
 import {
   IonContent,
   IonHeader,
@@ -36,7 +37,8 @@ import { DateComponent } from "../../date/date.component";
     IonToolbar,
     IonHeader,
     IonContent,
-    DateComponent],
+    DateComponent,
+    DailyScheduleComponent],
 })
 export class EventPage implements OnInit {
   event!: Event;

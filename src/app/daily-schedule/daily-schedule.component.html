@@ -1,0 +1,14 @@
+<mbsc-eventcalendar [data]="myEvents" [options]="myOptions"></mbsc-eventcalendar>
+
+<!-- Mobiscroll Popup for Naming the Event -->
+<mbsc-popup #eventPopup [display]="'center'" [buttons]="[]">
+  <div class="popup-content">
+    <h3>Name Your Event</h3>
+    <input mbsc-input [(ngModel)]="newEvent.title" placeholder="Enter event name" />
+
+    <div class="popup-actions">
+      <button mbsc-button (click)="saveEvent()" color="primary">Save</button>
+      <button mbsc-button (click)="closePopup()" color="secondary">Cancel</button>
+    </div>
+  </div>
+</mbsc-popup>

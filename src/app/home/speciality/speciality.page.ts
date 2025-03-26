@@ -9,6 +9,7 @@ import { calendarOutline, callOutline, chatboxEllipsesOutline, heartOutline, loc
 import { services } from 'src/app/data/services';
 import { Event } from 'src/app/interfaces/event.interface';
 import { DateComponent } from "../../date/date.component";
+import { UploadFilesComponent } from "../../upload-files/upload-files.component";
 @Component({
   selector: 'app-speciality',
   templateUrl: './speciality.page.html',
@@ -25,8 +26,7 @@ import { DateComponent } from "../../date/date.component";
     IonToolbar,
     IonHeader,
     IonContent,
-    DateComponent
-    ]
+    DateComponent, UploadFilesComponent]
 })
 export class SpecialityPage implements OnInit {
 
