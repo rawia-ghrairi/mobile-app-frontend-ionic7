@@ -1,0 +1,62 @@
+ion-card {
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+  
+    ion-card-header {
+      background: #72b0f1; // Bleu médical
+      color: white;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      padding: 10px;
+      text-align: center;
+    }
+  
+    ion-card-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+  
+    ion-card-content {
+      padding: 15px;
+    }
+  
+  }
+  ion-item.time-date {
+    --background: #f5f5f5; // Gris clair
+    border-radius: 8px;
+
+  }
+
+  .custom-buttons {
+    display: flex;
+    justify-content: space-between; /* Espacement maximal entre les boutons */
+    width: 100%; /* Permet aux boutons d'occuper toute la largeur */
+    padding: 10px 0; /* Ajoute un peu d'espace autour des boutons */
+  }
+  
+  .custom-buttons ion-button {
+    width: 150px;/* Permet aux boutons de prendre toute la largeur disponible */
+    font-size: 16px; /* Augmente la taille du texte */
+    height: 40px; /* Augmente la hauteur */
+    border-radius: 8px; /* Arrondit légèrement les boutons */
+    margin: 0 5px; /* Ajoute un espacement entre les boutons */
+  }
+  .cancel-button {
+    --background: white;
+    color: black;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .reschedule-button {
+    background: #007bff;
+    color: white;
+    border-radius: 8px;
+  }
+  
+  .custom-popover {
+    width: 900px; /* Augmenter ou réduire selon tes besoins */
+ 
+  }
+  
