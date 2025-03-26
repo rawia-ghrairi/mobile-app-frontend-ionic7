@@ -8,7 +8,6 @@
         <ion-icon slot="icon-only" color="white" name="person-circle"></ion-icon>
       </ion-button>
     </ion-buttons>
- 
   <ion-grid></ion-grid>
   <ion-list class="popover" lines="none">
     <ion-row>
@@ -73,19 +72,53 @@
             <ion-text color="dark"><span>&#9679;</span>{{item?.gender}}</ion-text>
           </p>
         </ion-label>
-
-        <ion-fab vertical="top" horizontal="end">
-          <ion-fab-button size="small" color="white">
-            <img [src]="item?.photo"/>
-          </ion-fab-button>
-        </ion-fab>
-
-        <ion-button fill="clear"  class="read-more-btn" (onclick)="ShowDetails()">Show Details</ion-button>
+        <app-details-patient [patient]="item"></app-details-patient>
 
       </ion-item>
     </ion-item-group>
   </ion-list>
 <!--pour la liste des demandes-->
+<ion-list lines="none" *ngIf="segmentValue == '2'">
+  <ion-item-group>
+    @for(item of filteredappointmentRequests; track $index) {
+   <ion-card class="vertical-align">
+   <ion-item lines="none" class="horizontal-align"  >
+    <div class="image-container">
+      <img [src]="item?.photo" class="photo-img"/>
+    </div>
+        <ion-label >   
+        {{item?.name }} 
+       <p>
+        {{item?.gender }}
+       </p>
+        </ion-label>
+      </ion-item> 
+
+        <ion-item class="custom-ion-item" lines="inset">
+        <ion-label>
+        Email:<p> {{item?.email }}</p>
+        </ion-label>
+        <ion-label>
+        Phone:<p>{{item?.phone}}</p>
+        </ion-label>
+        </ion-item>
+
+           <ion-item class="custom-ion-item2">
+            <ion-icon name="location-outline" class="custom-icon2"></ion-icon>
+            <ion-label><p>Location:</p>
+            {{item?.address}}
+          </ion-label>
+             </ion-item>
+             <ion-item class="custom-buttons">
+              <ion-button class="decline-button" (click)="declineRequest(item?.id)">Decline</ion-button>
+              <ion-button class="accept-button">Accept</ion-button>
+            </ion-item>
+      </ion-card> 
+      }
+  </ion-item-group>
+</ion-list>
+
+
 
 
 </ion-content>

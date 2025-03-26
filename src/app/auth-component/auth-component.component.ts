@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   templateUrl: './auth-component.component.html',
   styleUrls: ['./auth-component.component.scss'],
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule,IonicModule],
+  imports:[CommonModule,ReactiveFormsModule,IonicModule]
 })
 export class AuthComponentComponent implements OnInit {
   screen: 'signin' | 'signup' | 'forget' = 'signin';
@@ -111,5 +111,4 @@ export class AuthComponentComponent implements OnInit {
       console.log('Reset password form is invalid', this.resetForm.value);
     }
   }
-  
-}  
+}

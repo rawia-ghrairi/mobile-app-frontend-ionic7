@@ -111,4 +111,104 @@ ion-header {
       }
     }
   }
+//Appointment requests
+  .vertical-align {
+    display: flex;
+    flex-direction: column; /* Aligne les enfants verticalement */
+    max-width: 400px;
+    padding: 15px;
+    
+  }
+  //pour l'image , le nom et le gender
+  .horizontal-align {
+    display: flex;
+    align-items: center; /* Assure un alignement vertical parfait */
+    gap: 20px; /* Espace entre l'image et le texte */
+    font-size: 18px;
+  }
+  
+  .image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 60px; /* Taille fixe pour éviter les décalages */
+  }
+  
+  .photo-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Rend l'image ronde */
+  }
+  
+  //pour le contact : email,phone
+  .custom-ion-item {
+    display: flex;
+    flex-direction: column; /* Affiche les éléments en colonne */
+    align-items: flex-start; /* Aligne le contenu à gauche */
+    padding: 10px 10px; /* Ajoute de l'espace interne */
+  }
+  
+  .custom-ion-item ion-label {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    color: #2c2b2b; /* Couleur du texte */
+  }
+  
+  .custom-ion-item p {
+    margin: 5px 0 0 0; /* Ajoute un petit espace entre le label et la valeur */
+    font-size: 14px;
+    font-weight: normal;
+    color: #666; /* Couleur plus douce pour le texte des valeurs */
+  }
+
+//pour l'ion-item de la localisation
+  .custom-ion-item2 {
+    display: flex;
+    align-items: center; /* Alignement vertical */
+    gap: 10px; /* Espace entre l'icône et le texte */
+  }
+  
+  .custom-icon2 {
+    color: var(--ion-color-primary); /* Couleur de l'icône */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0; /* Empêche l'icône de se rétrécir */
+  }
+  
+  .custom-ion-item2 ion-label {
+    flex-grow: 1; /* Permet au label de prendre tout l'espace restant */
+    font-size: 16px;
+  }
+  
+  //pour les bouttons accept est decline
+  .custom-buttons {
+    display: flex;
+    justify-content: space-between; /* Espacement maximal entre les boutons */
+    width: 100%; /* Permet aux boutons d'occuper toute la largeur */
+    padding: 10px 0; /* Ajoute un peu d'espace autour des boutons */
+  }
+  
+  .custom-buttons ion-button {
+    width: 150px;/* Permet aux boutons de prendre toute la largeur disponible */
+    font-size: 16px; /* Augmente la taille du texte */
+    height: 40px; /* Augmente la hauteur */
+    border-radius: 8px; /* Arrondit légèrement les boutons */
+    margin: 0 5px; /* Ajoute un espacement entre les boutons */
+  }
+  
+  .decline-button {
+    --background: #d3d3d3; /* Gris clair */
+    --color: rgb(61, 59, 59); /* Texte noir pour contraster */
+    --border-color: #ccc; /* Bordure gris clair */
+  }
  
+  .accept-button {
+    --background: var(--ion-color-primary); /* Utilise la couleur primaire */
+    --color: white; /* Texte en blanc */
+  }
+  
+  

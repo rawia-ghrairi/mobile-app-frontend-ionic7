@@ -1,0 +1,88 @@
+<div>
+  <ion-button expand="block"  fill="clear"  class="read-more-btn" (click)="setOpen(true)">Show Details</ion-button>
+  <ion-modal [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Patient's Information</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setOpen(false)">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+      <!--les Informations personnelles du patient -->
+       <ion-card>
+        <ion-card-header>
+          <ion-card-title>Personnal Information</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+        <ion-item  >
+            Name: {{ patient?.name }}
+        </ion-item>
+          <ion-item >
+            Location: {{ patient?.address }}
+          </ion-item >
+          <ion-item>
+            Age: {{ patient?.age }}
+          </ion-item >
+          <ion-item lines="none">
+            Gender: {{ patient?.gender }}
+          </ion-item>
+      </ion-card-content>
+       </ion-card>
+        <!--changement des rendez vous-->
+       <ion-card>
+        <ion-card-header>
+          <ion-card-title>Upcoming Appointment</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+        <ion-item lines="none"  class="time-date">
+          <ion-label>
+            <ion-icon name="time-outline"></ion-icon>
+            10.00 PM
+          </ion-label>
+          <ion-label>
+          <ion-icon name="calendar-outline"></ion-icon>
+          Tuesday,May 24
+          </ion-label>
+        </ion-item>
+        <ion-item lines="none" class="custom-buttons">
+          <ion-button class="cancel-button">Cancel</ion-button>
+          <ion-button id="click-trigger" class="reschedule-button" >Reschedule</ion-button>        
+          <ion-popover trigger="click-trigger" triggerAction="click" class="custom-popover">
+            <ng-template>
+              <ion-content class="ion-padding">
+                <app-date ></app-date>
+              </ion-content>
+            </ng-template>
+          </ion-popover>           
+          </ion-item>
+        </ion-card-content>
+       </ion-card>
+        <!--consulter des diagnostics et des documents -->
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Medical Records</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list>
+              <ion-item>
+                <ion-thumbnail slot="start">
+                  <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+                </ion-thumbnail>
+                <ion-label>Item</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-thumbnail slot="start">
+                  <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+                </ion-thumbnail>
+                <ion-label>Item</ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</div>

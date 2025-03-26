@@ -4,14 +4,29 @@ import { FormsModule } from '@angular/forms';
 import { IonFabButton, IonFooter,  IonButton, IonList, IonText, IonLabel, IonItem, IonIcon, IonAvatar,IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { Router } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
 import { arrowForwardOutline,pencilOutline, callOutline, chevronBackOutline, locationOutline, lockOpenOutline, mailOutline, schoolOutline, trophy, water, keyOutline, arrowBackOutline } from 'ionicons/icons';
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss'],
   standalone: true,
-  imports:  [IonFabButton, IonFooter,  IonButton, IonList, IonText, IonLabel, IonItem, IonIcon, IonAvatar,
-      IonContent, IonHeader,CommonModule, FormsModule]})
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule, // Ajoute ceci pour importer tous les composants Ionic
+    IonFabButton,
+    IonFooter,
+    IonButton,
+    IonList,
+    IonText,
+    IonLabel,
+    IonItem,
+    IonAvatar,
+    IonContent,
+    IonHeader
+  ]
+  })
 export class AccountComponent  implements OnInit {
  profile = {
     name: 'Nikki Thakur',
