@@ -1,0 +1,58 @@
+ion-content {
+    --background: #f4f4f4; // Fond gris clair pour un effet plus doux
+    padding: 16px;
+  }
+  
+  .ion-item {
+    --background: #ffffff; // Fond blanc pour chaque item
+    border-radius: 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Ombre légère pour effet de profondeur
+    padding: 10px;
+  }
+  
+  ion-label {
+    color: #333;
+    font-size: 16px;
+  }
+  
+  ion-input,
+ 
+  
+  .gender-group {
+    display: flex;
+    justify-content: space-around; // Aligner horizontalement
+    width: 100%;
+  }
+  
+  .gender-group ion-item {
+    display: flex;
+    align-items: center;
+    gap:2px;
+    background: transparent;
+    box-shadow: none;
+  }
+  
+  .title-item {
+    --background: #f4f4f4;
+    margin-bottom:5px; // Ajouter un peu d'espace en dessous
+  }
+  
+  .title-label {
+    font-size: 18px; // Augmenter la taille du texte
+    font-weight: bold; // Mettre en gras
+    color: #070707; // Changer la couleur en bleu foncé (modifiable)
+    letter-spacing: 1px; // Espacement entre les lettres pour une meilleure lisibilité
+  }
+  ion-title{
+    font-size: 20px; // Augmenter la taille du texte
+    font-weight: bold; 
+    color: #070707; 
+  }
+  .custom-label {
+    font-weight: bold;
+    color: #3880ff; /* Couleur bleu Ionic */
+    font-size: 20px;
+    margin-left: 12px;
+  }
+  

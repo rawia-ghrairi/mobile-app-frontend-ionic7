@@ -76,24 +76,7 @@
 </ion-content>
 
 <ion-footer class="ion-no-border">
-  <ion-row>
-    <ion-col size="10">
-      <ion-button
-        expand="block"
-        shape="round"
-        color="primary"
-        size="large"
-        [strong]="true"
-      >
-        <ion-text>Book Appointment</ion-text>
-      </ion-button>
-    </ion-col>
-    <ion-col size="2">
-      <ion-fab-button color="light">
-        <ion-icon color="primary" name="heart-outline"></ion-icon>
-      </ion-fab-button>
-    </ion-col>
-  </ion-row>
+  <app-form-book-appointment ></app-form-book-appointment>
   <app-daily-schedule></app-daily-schedule>
   
 </ion-footer>

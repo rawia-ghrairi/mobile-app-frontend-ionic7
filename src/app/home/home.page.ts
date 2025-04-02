@@ -2,7 +2,6 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import {
   IonHeader,
   IonToolbar,
-  IonTitle,
   IonContent,
   IonItem,
   IonLabel,
@@ -14,7 +13,6 @@ import {
   IonCol,
   IonSearchbar,
   IonicSlides,
-  IonListHeader,
   IonList,
   IonCard,
 } from '@ionic/angular/standalone';

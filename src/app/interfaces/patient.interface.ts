@@ -1,11 +1,14 @@
 export interface Patient { 
-    id: number, 
+    _id:string, 
     name: string, 
     age: number, 
     address: string, 
     gender: string, 
     photo: string,
     phone: string, 
-    email: string
+    email: string,
+    date_rdv: string;
+    time_rdv:string; 
+    isAccept:boolean;
      }
  

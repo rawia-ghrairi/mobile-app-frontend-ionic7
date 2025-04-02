@@ -19,6 +19,8 @@ import { calendarOutline, heartOutline, locationOutline } from 'ionicons/icons';
 import { events } from 'src/app/data/events';
 import { Event } from 'src/app/interfaces/event.interface';
 import { DateComponent } from "../../date/date.component";
+import { FormBookAppointmentComponent } from 'src/app/form-book-appointment/form-book-appointment.component';
+import { IonicModule } from '@ionic/angular';
 
 
 @Component({
@@ -26,17 +28,8 @@ import { DateComponent } from "../../date/date.component";
   templateUrl: './event.page.html',
   styleUrls: ['./event.page.scss'],
   standalone: true,
-  imports: [IonFabButton, IonButton, IonFooter, IonText, IonAvatar, IonList, IonListHeader, IonCard,
-    IonIcon,
-    IonCol,
-    IonRow,
-    IonLabel,
-    IonItem,
-    IonBackButton,
-    IonButtons,
-    IonToolbar,
-    IonHeader,
-    IonContent,
+  imports: [IonicModule,
+    FormBookAppointmentComponent,
     DateComponent,
     DailyScheduleComponent],
 })

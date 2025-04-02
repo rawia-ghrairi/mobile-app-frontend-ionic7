@@ -1,32 +1,21 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {
-  IonAvatar, IonBackButton, IonButton, IonButtons, IonCard, IonCol, IonContent, IonFabButton, IonFooter, IonHeader, IonIcon, IonImg, IonItem,
-  IonLabel, IonList, IonListHeader, IonRow, IonText, IonToolbar
-} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { calendarOutline, callOutline, chatboxEllipsesOutline, heartOutline, locationOutline, medkitOutline } from 'ionicons/icons';
 import { services } from 'src/app/data/services';
 import { Event } from 'src/app/interfaces/event.interface';
 import { DateComponent } from "../../date/date.component";
-import { UploadFilesComponent } from "../../upload-files/upload-files.component";
+import { FormBookAppointmentComponent } from 'src/app/form-book-appointment/form-book-appointment.component';
+import { IonicModule } from '@ionic/angular';
 @Component({
   selector: 'app-speciality',
   templateUrl: './speciality.page.html',
   styleUrls: ['./speciality.page.scss'],
   standalone: true,
-  imports: [IonImg, IonFabButton, IonButton, IonFooter, IonText, IonAvatar, IonList, IonListHeader, IonCard,
-    IonIcon,
-    IonCol,
-    IonRow,
-    IonLabel,
-    IonItem,
-    IonBackButton,
-    IonButtons,
-    IonToolbar,
-    IonHeader,
-    IonContent,
-    DateComponent, UploadFilesComponent]
+  imports: [
+    IonicModule,
+    DateComponent,
+    FormBookAppointmentComponent]
 })
 export class SpecialityPage implements OnInit {
 

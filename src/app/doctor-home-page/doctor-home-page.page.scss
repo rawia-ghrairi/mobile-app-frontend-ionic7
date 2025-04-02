@@ -7,7 +7,10 @@ ion-header {
       justify-content: space-between; /* Espace entre l'icône à gauche et le titre au centre */
       width: 100%; /* S'assure que la div prend toute la largeur */
     }
-    
+    ion-buttons {
+      background: rgba(209, 204, 204, 0.3);
+      border-radius: 50%;
+    }
     ion-title {
       display: flex;
       align-items:flex-start; /* Aligne les éléments verticalement au centre */

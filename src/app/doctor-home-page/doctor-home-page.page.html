@@ -3,10 +3,8 @@
     <ion-title class="ion-text-center ">
       Patient Overview
     </ion-title>
-    <ion-buttons slot="end">
-      <ion-button fill="clear">
-        <ion-icon slot="icon-only" color="white" name="person-circle"></ion-icon>
-      </ion-button>
+    <ion-buttons slot="start" mode="md">
+        <ion-back-button color="light" defaultHref="/tabs/home"></ion-back-button>
     </ion-buttons>
   <ion-grid></ion-grid>
   <ion-list class="popover" lines="none">
@@ -15,7 +13,7 @@
         <ion-item>
           <ion-label class="ion-text-wrap">
             <h1>
-              <b>10</b>
+              <b>{{requestNumber}}</b>
               <ion-text class="ion-margin-start" color="primary">-12%</ion-text>
             </h1>
             <p>Appointment Requests</p>
@@ -27,7 +25,7 @@
           <ion-label class="ion-text-wrap ion-text-right">
             <h1>
               <ion-text class="ion-margin-end" color="primary">+49%</ion-text>
-              <b>20</b>
+              <b>{{patientNumber}}</b>
             </h1>
             <p>Patients</p>
           </ion-label>
@@ -63,7 +61,6 @@
      <ion-card>
       <ion-img [src]="item?.photo"></ion-img>
         </ion-card>
-
         <ion-label>
           <ion-note color="dark"><b>{{item?.name}}</b></ion-note>
           <p class="ion-text-wrap">{{item?.address}}</p>
@@ -80,7 +77,7 @@
 <!--pour la liste des demandes-->
 <ion-list lines="none" *ngIf="segmentValue == '2'">
   <ion-item-group>
-    @for(item of filteredappointmentRequests; track $index) {
+    @for(item of appointmentRequests; track $index) {
    <ion-card class="vertical-align">
    <ion-item lines="none" class="horizontal-align"  >
     <div class="image-container">
@@ -103,15 +100,23 @@
         </ion-label>
         </ion-item>
 
-           <ion-item class="custom-ion-item2">
+           <ion-item class="custom-ion-item2" >
             <ion-icon name="location-outline" class="custom-icon2"></ion-icon>
             <ion-label><p>Location:</p>
             {{item?.address}}
-          </ion-label>
+            </ion-label>
              </ion-item>
+
+             <ion-item lines="inset">
+              <ion-icon name="calendar-outline" class="custom-icon2" ></ion-icon>
+              <ion-label><p>Date of appointment:</p>
+                {{item?.date_rdv}}
+              </ion-label>
+               </ion-item>
+
              <ion-item class="custom-buttons">
-              <ion-button class="decline-button" (click)="declineRequest(item?.id)">Decline</ion-button>
-              <ion-button class="accept-button">Accept</ion-button>
+              <ion-button class="decline-button" (click)="declineRequest(item?.email)">Decline</ion-button>
+              <ion-button class="accept-button" (click)="acceptRequest(item?.email)">Accept</ion-button>
             </ion-item>
       </ion-card> 
       }

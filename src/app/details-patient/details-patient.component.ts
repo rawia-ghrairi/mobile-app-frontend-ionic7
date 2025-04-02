@@ -1,54 +1,36 @@
 import { Component,Input, OnInit } from '@angular/core';
 import { addIcons } from 'ionicons';
 import { DateComponent } from '../date/date.component';
-import {
-  IonButton,
-  IonButtons,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
-  IonContent,
-  IonHeader,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonModal,
-  IonThumbnail,
-  IonTitle,
-  IonToolbar,
-  IonPopover
-} from '@ionic/angular/standalone';
-import { calendarOutline, list, timeOutline } from 'ionicons/icons';
+import { IonicModule } from '@ionic/angular';
+import { calendarOutline, timeOutline } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { PatientService } from '../services/patient.service';
+import { ReactiveFormsModule } from '@angular/forms';
+import { PopoverController } from '@ionic/angular';
+
 @Component({
   selector: 'app-details-patient',
   templateUrl: './details-patient.component.html',
   standalone: true,
   styleUrls: ['./details-patient.component.scss'],
-  imports:[IonButton, IonButtons,IonIcon,IonList, IonContent, IonHeader,IonThumbnail, IonModal, IonTitle, IonToolbar,IonItem,
-    IonCard,
-    IonCardContent,
-    IonCardHeader,
-    IonCardSubtitle,
-    IonCardTitle,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonThumbnail,
+  imports:[
     DateComponent,
     CommonModule,
-    IonPopover
+    IonicModule,
+    ReactiveFormsModule,
   ],
 })
 export class DetailsPatientComponent  implements OnInit {
-  @Input() patient: any; // Recevoir le patient sélectionné
+  @Input() patient: any; // Receive the selected patient 
+  appointmentReschedule: FormGroup;  
   isModalOpen = false;
-
   isCalendarOpen = false;
-
+  images: string[] = [];
+  
+  async closePopover() {
+    await this.popoverController.dismiss();
+  }
   openCalendar() {
     this.isCalendarOpen = true;
   }
@@ -57,8 +39,36 @@ export class DetailsPatientComponent  implements OnInit {
   }
   ngOnInit(): void {
   }
-constructor(){
+
+constructor(private popoverController: PopoverController,private fb: FormBuilder,private patientService: PatientService){
   addIcons({timeOutline,calendarOutline});
+  this.appointmentReschedule = this.fb.group({
+    date_rdv: ['', [Validators.required]],
+  });
      }
 
+rescheduleAppointment(emailPatient:string){
+  if (this.appointmentReschedule.valid) {
+    const dateValue = this.appointmentReschedule.get('date_rdv')!.value;
+     const formattedDate = dateValue ? new Date(dateValue).toISOString().slice(0, 19).replace("T", " ") : null;
+    const patientData = {
+      email: emailPatient,
+      date_rdv: formattedDate,
+    };
+    console.log('patient is:', patientData);
+    this.patientService.reschedule_appointment_by_email(emailPatient,patientData).subscribe(
+      (data: any) => {
+        this.patient.date_rdv=formattedDate;
+        console.log('Appointment updated successfully:', data);
+      },
+      (error: any) => {
+        console.error(' error:', error);
+
+      }
+    );
+  } else {
+    console.log('appointment date is invalid', this.appointmentReschedule.value);
+   
+  }
+}
 }

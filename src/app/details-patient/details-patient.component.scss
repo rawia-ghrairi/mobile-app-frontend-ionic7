@@ -59,4 +59,19 @@ ion-card {
     width: 900px; /* Augmenter ou réduire selon tes besoins */
  
   }
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .cancel-btn {
+    margin-right: 10px; /* Ajoute un espace à droite du bouton Cancel */
+    width: 70px;
+  }
+  
+  .done-btn {
+    margin-left: 10px; /* Ajoute un espace à gauche du bouton Done */
+    width: 70px;
+  }
+    
   

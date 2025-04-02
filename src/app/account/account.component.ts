@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonFabButton, IonFooter,  IonButton, IonList, IonText, IonLabel, IonItem, IonIcon, IonAvatar,IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
@@ -14,17 +13,7 @@ import { arrowForwardOutline,pencilOutline, callOutline, chevronBackOutline, loc
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule, // Ajoute ceci pour importer tous les composants Ionic
-    IonFabButton,
-    IonFooter,
-    IonButton,
-    IonList,
-    IonText,
-    IonLabel,
-    IonItem,
-    IonAvatar,
-    IonContent,
-    IonHeader
+    IonicModule, // Ajoute ceci pour importer tous les composants Ionic(Gère automatiquement IonItem, IonHeader, etc.)
   ]
   })
 export class AccountComponent  implements OnInit {

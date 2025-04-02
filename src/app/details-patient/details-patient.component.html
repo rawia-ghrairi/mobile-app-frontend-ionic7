@@ -39,21 +39,23 @@
         <ion-card-content>
         <ion-item lines="none"  class="time-date">
           <ion-label>
-            <ion-icon name="time-outline"></ion-icon>
-            10.00 PM
-          </ion-label>
-          <ion-label>
           <ion-icon name="calendar-outline"></ion-icon>
-          Tuesday,May 24
+          {{ patient?.date_rdv }}
           </ion-label>
         </ion-item>
         <ion-item lines="none" class="custom-buttons">
           <ion-button class="cancel-button">Cancel</ion-button>
-          <ion-button id="click-trigger" class="reschedule-button" >Reschedule</ion-button>        
+          <ion-button id="click-trigger" class="reschedule-button"  >Reschedule</ion-button>        
           <ion-popover trigger="click-trigger" triggerAction="click" class="custom-popover">
             <ng-template>
               <ion-content class="ion-padding">
-                <app-date ></app-date>
+                <form [formGroup]="appointmentReschedule">
+               <ion-datetime formControlName="date_rdv"></ion-datetime>
+               <ion-item lines="none"class="button-container">
+                <ion-button color="light" class="cancel-btn"(click)="closePopover()">Cancel</ion-button>
+                <ion-button expand="full" class="done-btn" (click)="rescheduleAppointment(patient?.email)" >Done</ion-button>
+               </ion-item>
+              </form>
               </ion-content>
             </ng-template>
           </ion-popover>           
@@ -67,18 +69,12 @@
           </ion-card-header>
           <ion-card-content>
             <ion-list>
-              <ion-item>
+              <ion-item *ngFor="let image of images" size="6">
                 <ion-thumbnail slot="start">
-                  <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+                  <img [src]="image" alt="Uploaded Image" />
                 </ion-thumbnail>
-                <ion-label>Item</ion-label>
-              </ion-item>
-              <ion-item>
-                <ion-thumbnail slot="start">
-                  <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-                </ion-thumbnail>
-                <ion-label>Item</ion-label>
-              </ion-item>
+                <ion-label>Image Name</ion-label>
+              </ion-item>           
             </ion-list>
           </ion-card-content>
         </ion-card>

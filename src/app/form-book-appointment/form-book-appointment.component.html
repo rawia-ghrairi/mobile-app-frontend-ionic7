@@ -1,0 +1,79 @@
+<div>
+  <ion-row>
+    <ion-col size="10">
+      <ion-button
+        expand="block"
+        shape="round"
+        color="primary"
+        size="large"
+        [strong]="true"
+        (click)="setOpen(true)"
+      >
+        <ion-text>Book Appointment</ion-text>
+      </ion-button>
+    </ion-col>
+    <ion-col size="2">
+      <ion-fab-button color="light">
+        <ion-icon color="primary" name="heart-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-col>
+  </ion-row>
+  <ion-modal [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Book Appointment</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setOpen(false)">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-item lines="none" class="title-item" >
+        <ion-label class="title-label">Fill out the form below to book Appointment</ion-label>
+      </ion-item>
+      <form [formGroup]="appointmentForm">
+        <ion-item lines="none" class="ion-item">
+          <ion-input label="Name:" formControlName="name" type="text" placeholder="Enter your name"></ion-input>
+        </ion-item>
+        <ion-item lines="none" class="ion-item">
+          <ion-input label="Age:"type="number" formControlName="age"  placeholder="Enter your age"></ion-input>
+        </ion-item>
+        <ion-item lines="none" class="ion-item">
+          <ion-input label="Adress:" type="text" formControlName="address" placeholder="Enter your adress"></ion-input>
+        </ion-item>
+        <ion-item lines="none" class="ion-item"> 
+          <p>Gender</p>
+          <ion-radio-group formControlName="gender" class="gender-group">
+            <ion-item lines="none">
+              <ion-radio value="male"></ion-radio>
+              <ion-label> Male</ion-label>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-radio value="female"></ion-radio>
+              <ion-label> Female</ion-label>
+            </ion-item>
+          </ion-radio-group>       
+         </ion-item>
+         <ion-item lines="none" class="ion-item" >
+          <ion-input label="Photo:" type="text" formControlName="photo" placeholder="Enter your phone url"></ion-input>
+        </ion-item>
+        <ion-item lines="none" class="ion-item" >
+          <ion-input label="Phone:" type="text" formControlName="phone" placeholder="Enter your phone number"></ion-input>
+        </ion-item>
+        <ion-item lines="none" class="ion-item">
+          <ion-input label="Email:" type="text" formControlName="email" placeholder="Enter your email"></ion-input>
+          </ion-item>        
+          <ion-label position="floating" class="custom-label">Select date :</ion-label> 
+          <ion-item class="ion-item">
+          <ion-datetime  formControlName="date_rdv" ></ion-datetime>  
+        </ion-item> 
+          <ion-button expand="block" shape="round"color="primary"size="large"[strong]="true" (click)="bookAppointment()">
+           Confirm
+           </ion-button>
+           </form>
+    </ion-content>
+</ng-template>
+</ion-modal>
+</div>
+      
