@@ -37,7 +37,7 @@
        Doctors
       <img src="assets/imgs/doctor2.png" />
     </ion-item-divider>
-
+    <div *ngIf="doctors.length === 0">No doctors available</div>
     <swiper-container
       #event_upcoming
       [modules]="swiperModules"
@@ -45,32 +45,32 @@
       [keyboard]="true"
       [centerSlides]="true"
     >
-      @for(event of upcomingEvents; track $index) {
-      <swiper-slide>
+     
+      <swiper-slide *ngFor="let doctor of doctors; trackBy: trackDoctor">
         <ion-card
           class="event1"
-          [routerLink]="['/', 'home', 'events', event?.id]"
+          [routerLink]="['/', 'home', 'events', doctor._id]"
         >
           <ion-item lines="none">
             <ion-thumbnail slot="start">
-              <ion-img [src]="event.image"></ion-img>
+              <ion-img [src]="doctor.image_url"></ion-img>
             </ion-thumbnail>
             <ion-label>
               <p class="location">
                 <ion-icon name="location-outline"></ion-icon>
-                {{ event?.location }}
+                {{ doctor.location }}
               </p>    
               <p class="title">
-                <ion-text color="dark"> {{ event?.name }} </ion-text>
+                <ion-text color="dark"> {{ doctor.name }} </ion-text>
               </p>
               <ion-text class="date">
-                {{ event?.speciality }}
+                {{ doctor.speciality }}
               </ion-text>              
             </ion-label>
           </ion-item>
         </ion-card>
       </swiper-slide>
-      }
+      
     </swiper-container>
   </ion-list>
 

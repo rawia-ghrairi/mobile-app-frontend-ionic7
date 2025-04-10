@@ -3,14 +3,14 @@ import { Event } from '../interfaces/event.interface';
 export const events: Event[] = [
   {
     id: '1',
-    name: 'Dr. Yassine Trabelsi',
+    name: 'Dr. Yassine Trabelsi',//
     date: '2024-07-19',
-    location: 'Soussa, tunisia',
+    location: 'Soussa, tunisia',//
     performers: ['John Mulaney', 'Ali Wong', 'Hassan Minhaj'],
     category_id: '3',
-    image: 'assets/imgs/gala3.jpg',
-    description: 'I am a dedicated cardiologist focused on diagnosing, treating, and preventing heart-related conditions. With a patient-centered approach, I strive to provide comprehensive care for cardiovascular health, helping individuals lead a healthy life through prevention, management, and advanced treatment options. Your heart health is my priority.',
-    speciality:'Cardiologist',
+    image: 'assets/imgs/gala3.jpg',//
+    description: 'I am a dedicated cardiologist focused on diagnosing, treating, and preventing heart-related conditions. With a patient-centered approach, I strive to provide comprehensive care for cardiovascular health, helping individuals lead a healthy life through prevention, management, and advanced treatment options. Your heart health is my priority.',//
+    speciality:'Cardiologist',//
     imageDoctor:'',
   },
   {

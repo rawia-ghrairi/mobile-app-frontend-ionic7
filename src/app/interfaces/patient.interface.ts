@@ -10,5 +10,5 @@ export interface Patient {
     date_rdv: string;
     time_rdv:string; 
     isAccept:boolean;
-     }
+}
  

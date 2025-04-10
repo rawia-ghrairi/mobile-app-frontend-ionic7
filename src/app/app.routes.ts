@@ -110,6 +110,10 @@ export const routes: Routes = [
     path: 'calendar',
     loadComponent: () => import('./calendar/calendar.page').then( m => m.CalendarPage)
   },
+  {
+    path: 'admin-page',
+    loadComponent: () => import('./admin-page/admin-page.component').then( m => m.AdminPageComponent)
+  },
 
  
 ];

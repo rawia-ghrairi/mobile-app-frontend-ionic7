@@ -9,18 +9,18 @@
   </ion-header>
 
   <div class="bg-container">
-    <div [style.backgroundImage]="'url(' + event.image + ')'" class="bg"></div>
+    <div [style.backgroundImage]="'url(' + doctor.image_url + ')'" class="bg"></div>
   </div>
 
   <ion-item lines="none">
     <ion-label class="eventInfo"> 
-      {{event.name}} 
+      {{doctor.name}} 
       <ion-row>
         <ion-col>
           <ion-icon name="calendar-outline"></ion-icon>
-          {{ event.speciality }}
+          {{ doctor.speciality }}
           <ion-icon name="location-outline" class="loc"></ion-icon>
-          {{event.location}}
+          {{doctor.location}}
         </ion-col>
       </ion-row>
     </ion-label>
@@ -35,7 +35,7 @@
     <ion-list>
       <ion-list-header> About Me </ion-list-header>
 
-      <p class="ion-margin-horizontal">{{event.description}}</p>
+      <p class="ion-margin-horizontal">{{doctor.description}}</p>
 
       <ion-row>
         <ion-col class="ion-align-items-center">
@@ -77,6 +77,5 @@
 
 <ion-footer class="ion-no-border">
   <app-form-book-appointment ></app-form-book-appointment>
-  <app-daily-schedule></app-daily-schedule>
   
 </ion-footer>

@@ -1,4 +1,5 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
@@ -29,6 +30,8 @@ import { events } from '../data/events';
 import { services } from '../data/services';
 import { categories } from '../data/categories';
 import { RouterLink } from '@angular/router';
+import { Doctor } from '../interfaces/doctor.interface';
+import { DoctorService } from 'src/app/services/doctor.service';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -49,7 +52,8 @@ import { RouterLink } from '@angular/router';
     IonHeader,
     IonToolbar,
     IonContent,
-    RouterLink
+    RouterLink,
+    CommonModule
 ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
@@ -58,10 +62,13 @@ export class HomePage implements OnInit {
   upcomingEvents: Event[] = [];
   currentEvents: Event[] = [];
   categories: Category[] = [];
+  doctors: Doctor[] = [];
 
-  constructor() {
+  constructor(private doctorService: DoctorService) {
     addIcons({menuOutline,locateOutline,notificationsOutline,optionsOutline,locationOutline,arrowForwardOutline,heartOutline});
   }
+
+  
 
   ngOnInit(): void {
     this.currentEvents = [...services];
@@ -75,5 +82,18 @@ export class HomePage implements OnInit {
     console.log(this.upcomingEvents);
     this.categories = [...categories];
     console.log(this.categories);
+
+    this.doctorService.getDoctors().subscribe((doctors) => {
+      this.doctors = doctors;
+      console.log('Doctors isra:', this.doctors); // This will log the doctor data
+    });
+
+    
   }
+
+  trackDoctor(index: number, doctor: Doctor): string {
+    console.log(doctor._id)
+    return doctor._id; // assuming 'id' is unique for each doctor
+  }
+
 }

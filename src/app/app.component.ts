@@ -36,6 +36,7 @@ import {
   personOutline,
   personSharp,
   remove,
+  settingsOutline,
   star,
   ticketOutline,
   trashOutline,
@@ -65,6 +66,7 @@ export class AppComponent {
   addAllIcons() {
     addIcons({
       star,
+      settingsOutline,
       bagHandleOutline,
       bagHandle,
       bagHandleSharp,
@@ -96,10 +98,9 @@ export class AppComponent {
 
   pages = [
     { title: 'Home', url: '/tabs/home', icon: 'home', active: true},
-    { title: 'Profile', url: '/tabs/account', icon: 'person', active: false},
+    { title: 'Profile', url: '/tabs/account', icon: 'key', active: false},
     { title: 'Orders', url: '/orders', icon: 'bag-handle', active: false},
-    { title: 'Addresses', url: '/addresses', icon: 'location', active: false},
-    {title: 'Change Password',url: '/password',icon: 'key',active: false,},
+    { title: 'Admin', url: '/admin-page', icon: 'person', active: false},
     {title: 'About Us',url: '/about',icon: 'information-circle', active: false,},
     {title: 'Privacy Policy',url: '/privacy',icon: 'document-lock',active: false,},
     { title: 'Sign Out', icon: 'log-out', route: true, active: false },
