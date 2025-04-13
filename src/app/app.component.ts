@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
 import {
   IonApp,
   IonRouterOutlet,
@@ -48,17 +49,7 @@ register();
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [MbscModule, FormsModule, IonIcon, 
-    IonContent,
-    IonText,
-    IonLabel,
-    IonAvatar,
-    IonItem,
-    IonHeader,
-    IonApp,
-    IonRouterOutlet,
-    IonMenu,
-    IonMenuToggle,
+  imports: [MbscModule, FormsModule,  IonicModule,
     NgClass,
   ],
 })
@@ -104,7 +95,7 @@ export class AppComponent {
     {title: 'About Us',url: '/about',icon: 'information-circle', active: false,},
     {title: 'Privacy Policy',url: '/privacy',icon: 'document-lock',active: false,},
     { title: 'Sign Out', icon: 'log-out', route: true, active: false },
-    {title: 'Doctors Home Page',url: '/doctor-home-page',icon: 'document-lock',active: false,}
+    {title: 'Doctors Home Page',url: '/auth',icon: 'document-lock',active: false,}
   ];
 
   constructor(private router: Router) {

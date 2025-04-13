@@ -12,11 +12,7 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./welcome/welcome.page').then((m) => m.WelcomePage),
   },
-  {
-    path: 'auth',
-    loadComponent: () =>
-      import('./auth-component/auth-component.component').then((m) => m.AuthComponentComponent),
-  },
+
   {
     path: 'tabs',
     loadComponent: () =>
@@ -103,7 +99,7 @@ export const routes: Routes = [
     loadComponent: () => import('./update-profile/update-profile.page').then( m => m.UpdateProfilePage)
   },
   {
-    path: 'doctor-home-page',
+    path: 'doctor-home-page/:_id',
     loadComponent: () => import('./doctor-home-page/doctor-home-page.page').then( m => m.DoctorHomePagePage)
   },
   {
@@ -113,6 +109,10 @@ export const routes: Routes = [
   {
     path: 'admin-page',
     loadComponent: () => import('./admin-page/admin-page.component').then( m => m.AdminPageComponent)
+  },
+  {
+    path: 'auth',
+    loadComponent: () => import('./auth-component/auth-component.component').then( m => m.AuthComponentComponent)
   },
 
  

@@ -32,26 +32,14 @@ import { categories } from '../data/categories';
 import { RouterLink } from '@angular/router';
 import { Doctor } from '../interfaces/doctor.interface';
 import { DoctorService } from 'src/app/services/doctor.service';
+import { IonicModule } from '@ionic/angular';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
   imports: [
-    IonCard,
-    IonList,
-    IonSearchbar,
-    IonCol,
-    IonRow,
-    IonBadge,
-    IonFabButton,
-    IonText,
-    IonIcon,
-    IonLabel,
-    IonItem,
-    IonHeader,
-    IonToolbar,
-    IonContent,
+    IonicModule,
     RouterLink,
     CommonModule
 ],
@@ -59,8 +47,6 @@ import { DoctorService } from 'src/app/services/doctor.service';
 })
 export class HomePage implements OnInit {
   swiperModules = [IonicSlides];
-  upcomingEvents: Event[] = [];
-  currentEvents: Event[] = [];
   categories: Category[] = [];
   doctors: Doctor[] = [];
 
@@ -71,18 +57,8 @@ export class HomePage implements OnInit {
   
 
   ngOnInit(): void {
-    this.currentEvents = [...services];
-    console.log('current', this.currentEvents);
-    this.upcomingEvents = events.sort((a, b) => {
-      // Convert id to number for comparison
-      const idA = parseInt(a.id, 10);
-      const idB = parseInt(b.id, 10);
-      return idB - idA; // Descending order
-    });
-    console.log(this.upcomingEvents);
+   
     this.categories = [...categories];
-    console.log(this.categories);
-
     this.doctorService.getDoctors().subscribe((doctors) => {
       this.doctors = doctors;
       console.log('Doctors isra:', this.doctors); // This will log the doctor data

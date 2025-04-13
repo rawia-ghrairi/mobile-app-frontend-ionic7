@@ -5,9 +5,10 @@ import { ToastController } from '@ionic/angular';
 import { IonicModule } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { heartOutline } from 'ionicons/icons';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PatientService } from '../services/patient.service';
+import { AuthService } from '../services/auth.service';
 @Component({
   selector: 'app-form-book-appointment',
   templateUrl: './form-book-appointment.component.html',
@@ -21,7 +22,8 @@ import { PatientService } from '../services/patient.service';
 })
 export class FormBookAppointmentComponent  implements OnInit {
   appointmentForm: FormGroup;
-  constructor(private toastController: ToastController,private fb: FormBuilder, private patient: PatientService) { 
+  doctorsId:any
+  constructor(private toastController: ToastController,private router: Router,private authservice:AuthService,private route:ActivatedRoute,private fb: FormBuilder, private patient: PatientService) { 
     addIcons({heartOutline});
     this.appointmentForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -32,15 +34,27 @@ export class FormBookAppointmentComponent  implements OnInit {
       phone:  ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       date_rdv: ['', [Validators.required]],
+      doctor_id: [''],
     });
   }
   isModalOpen = false;
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
   }
-  ngOnInit(): void {
+  ngOnInit() {
+    this.doctorsId=this.route.snapshot.paramMap.get('_id');
+    console.log(this.doctorsId);
     
   }
+  // Cette fonction est appelée au clic
+handleAppointmentClick() {
+  const isAuthenticated = this.authservice.isLoggedIn(); // ✅ méthode à définir selon ton auth
+  if (isAuthenticated) {
+    this.setOpen(true);
+  } else {
+    this.router.navigate(['/auth']);
+  }
+}
   
   //async → la fonction est asynchrone(elle peut contenir des opérations asynchrones avec await)
   async presentToast(message: string, color: string) {
@@ -61,10 +75,11 @@ export class FormBookAppointmentComponent  implements OnInit {
   }
   
   bookAppointment() {
+    
     if (this.appointmentForm.valid) {
       const dateValue = this.appointmentForm.get('date_rdv')!.value;
-const formattedDate = dateValue ? new Date(dateValue).toISOString().slice(0, 19).replace("T", " ") : null;
-const patientData = {
+      const formattedDate = dateValue ? new Date(dateValue).toISOString().slice(0, 19).replace("T", " ") : null;
+      const patientData = {
         name: this.appointmentForm.get('name')!.value,
         age: this.appointmentForm.get('age')!.value,
         address: this.appointmentForm.get('address')!.value,
@@ -73,12 +88,24 @@ const patientData = {
         phone: this.appointmentForm.get('phone')!.value,
         email: this.appointmentForm.get('email')!.value,
         date_rdv: formattedDate,
+        doctor_id:this.doctorsId
       };
       console.log('patient is:', patientData);
       this.patient.patientRegister(patientData).subscribe(
         (data: any) => {
           console.log('Appointment booked successfully:', data);
           this.presentToast('Appointment booked successfully!', 'success');
+          this.appointmentForm = this.fb.group({
+            name: ['', [Validators.required]],
+            age: ['', [Validators.required]],
+            address: ['', [Validators.required]],
+            gender: ['', [Validators.required]],
+            photo: ['', [Validators.required]],
+            phone:  ['', [Validators.required]],
+            email: ['', [Validators.required, Validators.email]],
+            date_rdv: ['', [Validators.required]],
+            doctor_id: [''],
+          });
         },
         (error: any) => {
           console.error('Register error:', error);
