@@ -3,16 +3,16 @@
     
     <ion-toolbar>
       <ion-buttons slot="start" mode="md">
-        <ion-back-button color="light" defaultHref="/home"></ion-back-button>
+        <ion-back-button color="light" defaultHref="/tabs/home"></ion-back-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
-  <div class="bg-container">
-    <div [style.backgroundImage]="'url(' + doctor.image_url + ')'" class="bg"></div>
+  <div class="bg-container" *ngIf="doctor">
+    <div [style.backgroundImage]="'url(' + doctor.imageDoctor + ')'" class="bg"></div>
   </div>
 
-  <ion-item lines="none">
+  <ion-item lines="none"*ngIf="doctor">
     <ion-label class="eventInfo"> 
       {{doctor.name}} 
       <ion-row>
@@ -30,7 +30,7 @@
     </div>
   </ion-item>
 
-  <ion-card>
+  <ion-card *ngIf="doctor">
 
     <ion-list>
       <ion-list-header> About Me </ion-list-header>

@@ -91,9 +91,8 @@ export class HomePage implements OnInit {
     
   }
 
-  trackDoctor(index: number, doctor: Doctor): string {
-    console.log(doctor._id)
-    return doctor._id; // assuming 'id' is unique for each doctor
+ trackDoctor(index: number, doctor: Doctor): string {
+  return doctor && doctor._id ? doctor._id : index.toString();// assuming 'id' is unique for each doctor
   }
 
 }

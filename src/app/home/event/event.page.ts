@@ -1,12 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {DailyScheduleComponent} from "../../daily-schedule/daily-schedule.component";
 import { addIcons } from 'ionicons';
 import { calendarOutline, heartOutline, locationOutline } from 'ionicons/icons';
 import { DateComponent } from "../../date/date.component";
 import { FormBookAppointmentComponent } from 'src/app/form-book-appointment/form-book-appointment.component';
 import { IonicModule } from '@ionic/angular';
 import { DoctorService } from 'src/app/services/doctor.service';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -17,19 +17,14 @@ import { DoctorService } from 'src/app/services/doctor.service';
   imports: [IonicModule,
     FormBookAppointmentComponent,
     DateComponent,
-    DailyScheduleComponent],
+    CommonModule
+    ],
 })
 export class EventPage implements OnInit {
-  doctor: any;
-  constructor() {
+  doctor: any={};
+  constructor(private doctorService :DoctorService,private route:ActivatedRoute  ) {
     addIcons({ calendarOutline, locationOutline, heartOutline });
   }
-
-
-  private route = inject(ActivatedRoute);
-  private doctorService = inject(DoctorService);
-
-  
 
   ngOnInit() {
     const _id = this.route.snapshot.paramMap.get('_id');
@@ -39,6 +34,7 @@ export class EventPage implements OnInit {
         (data) => {
           if (data) {
             this.doctor = data;  // Set doctor if found
+            console.log(this.doctor);
             console.log('Doctor data:', this.doctor);  // Log for debugging
           } else {
             console.error('Doctor not found with id:', _id);  // Handle case where doctor is not found

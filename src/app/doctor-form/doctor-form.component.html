@@ -34,12 +34,17 @@
       <ion-input type="text" [(ngModel)]="doctorData.location" name="location" required></ion-input>
     </ion-item>
 
-    <!-- Image Upload -->
+    <!-- Image Of Doctor Upload -->
     <ion-item>
-      <ion-label position="floating">Upload Image</ion-label>
-      <ion-input type="file" (change)="onImageChange($event)" name="image" required></ion-input>
+      <ion-label position="floating">Upload Image's Doctor</ion-label>
+      <ion-input type="file" (change)=" onImageDoctorChange($event)" name="imageDoctor" required></ion-input>
     </ion-item>
+      <!-- Image Of Service Upload -->
+      <ion-item>
+        <ion-label position="floating">Upload Image's Service</ion-label>
+        <ion-input type="file" (change)=" onImageServiceChange($event)" name="imageService" required></ion-input>
+      </ion-item>
 
-    <ion-button expand="full" type="submit" [disabled]="!doctorData.fullName || !doctorData.email || !doctorData.speciality || !doctorData.description || !doctorData.location || !doctorData.image">Add Doctor</ion-button>
+    <ion-button expand="full" type="submit" [disabled]="!doctorData.fullName || !doctorData.email || !doctorData.speciality || !doctorData.description || !doctorData.location || !doctorData.imageDoctor|| !doctorData.imageService">Add Doctor</ion-button>
   </form>
 </ion-content>

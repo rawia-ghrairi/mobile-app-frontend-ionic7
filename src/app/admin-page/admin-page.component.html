@@ -1,16 +1,19 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start" mode="md">
+      <ion-back-button color="black" defaultHref="/tabs/home"></ion-back-button>
+    </ion-buttons>
     <ion-title>Doctors Overview</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-  <ion-button id="open-modal" expand="block">Add Doctor</ion-button>
-  <ion-modal trigger="open-modal">
+  <ion-button id="open-modal" expand="block" (click)="setOpen(true)">Add Doctor</ion-button>
+  <ion-modal [isOpen]="isModalOpen">
     <ng-template>
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="start">
-            <ion-button (click)="cancel()">Cancel</ion-button>
+            <ion-button (click)="setOpen(false)">Cancel</ion-button>
           </ion-buttons>
           <ion-title>Add Doctor</ion-title>
           <ion-buttons slot="end">
@@ -35,8 +38,12 @@
           <ion-input label="Location" labelPlacement="stacked" type="text" placeholder="Enter location" [(ngModel)]="location"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label>Image</ion-label>
+          <ion-label>Image of Doctor</ion-label>
           <input type="file" (change)="onFileSelected($event)">
+        </ion-item>
+        <ion-item>
+          <ion-label>Image of Service</ion-label>
+          <input type="file" (change)="onImageServiceSelected($event)">
         </ion-item>
       </ion-content>
     </ng-template>
@@ -47,7 +54,7 @@
   <ion-list>
     <ion-item *ngFor="let doctor of doctors">
       <ion-avatar slot="start">
-        <ion-img [src]="doctor.image_url || 'https://i.pravatar.cc/300?u=' + doctor.name"></ion-img>
+        <ion-img [src]="doctor.imageDoctor || 'https://i.pravatar.cc/300?u=' + doctor.name"></ion-img>
       </ion-avatar>
       <ion-label>
         <h2>{{ doctor.name }}</h2>

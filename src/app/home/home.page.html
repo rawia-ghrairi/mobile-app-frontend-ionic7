@@ -53,7 +53,7 @@
         >
           <ion-item lines="none">
             <ion-thumbnail slot="start">
-              <ion-img [src]="doctor.image_url"></ion-img>
+              <ion-img [src]="doctor.imageDoctor"></ion-img>
             </ion-thumbnail>
             <ion-label>
               <p class="location">
@@ -115,17 +115,18 @@
     </swiper-container>
   </ion-list>
 
-  @for(event of currentEvents; track $index) {
+  @for(doctor of doctors; track  trackDoctor) {
+    @if(doctor?._id) {
   <ion-card
-    [routerLink]="['/', 'home', 'services', event?.id]"
+    [routerLink]="['/', 'home', 'services', doctor._id]"
     class="event2"
-    [style.backgroundImage]="'url('+ event.image +')'"
+    [style.backgroundImage]="'url('+doctor.imageService +')'"
   >
   <ion-item lines="none">
     <ion-label>
-      {{ event.speciality}}
+      {{ doctor.speciality}}
       <p>
-        {{event?.name }}
+        {{doctor?.name }}
       </p>
     </ion-label>
     <ion-fab-button slot="end" size="small">
@@ -133,7 +134,7 @@
     </ion-fab-button>
   </ion-item>
   </ion-card>
-  
+}
   }
 </ion-content>
 

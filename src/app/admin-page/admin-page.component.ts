@@ -1,27 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
-import {
-  IonButton,
-  IonButtons,
-  IonContent,
-  IonHeader,
-  IonInput,
-  IonItem,
-  IonModal,
-  IonTitle,
-  IonToolbar,
-  IonLabel,
-  IonAvatar,
-  IonImg,
-  IonList,
-  IonSearchbar,
-
- 
- 
-} from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
+import {IonModal} from '@ionic/angular/standalone';
 import { OverlayEventDetail } from '@ionic/core/components';
+import { DoctorService } from '../services/doctor.service';
 
 @Component({
   selector: 'app-admin-page',
@@ -30,20 +13,7 @@ import { OverlayEventDetail } from '@ionic/core/components';
   standalone: true,
   imports: [
     FormsModule,
-    IonButton,
-    IonButtons,
-    IonContent,
-    IonHeader,
-    IonInput,
-    IonItem,
-    IonModal,
-    IonTitle,
-    IonToolbar,
-    IonLabel,
-    IonAvatar,
-    IonImg,
-    IonList,
-    IonSearchbar,
+   IonicModule,
     CommonModule
   ],
 })
@@ -51,7 +21,7 @@ export class AdminPageComponent implements OnInit{
   @ViewChild(IonModal) modal!: IonModal;
   doctors: any[] = [];
 
-
+constructor(private doctorService:DoctorService){}
   
   // Define properties for form fields
   name!: string;
@@ -60,11 +30,13 @@ export class AdminPageComponent implements OnInit{
   description!: string;
   location!: string;
   selectedFile: File | null = null;
+  selectedImageService:File | null = null;
 
-  cancel() {
-    this.modal.dismiss(null, 'cancel');
+ 
+  isModalOpen = false;
+  setOpen(isOpen: boolean) {
+    this.isModalOpen = isOpen;
   }
-
   confirm() {
     const formData = new FormData();
     formData.append('name', this.name);
@@ -73,45 +45,53 @@ export class AdminPageComponent implements OnInit{
     formData.append('description', this.description);
     formData.append('location', this.location);
     if (this.selectedFile) {
-      formData.append('image', this.selectedFile);
+      formData.append('imageDoctor', this.selectedFile);
     }
-  
-    fetch('http://localhost:5000/doctors', {
-      method: 'POST',
-      body: formData
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Doctor added:', data);
+    if (this.selectedImageService) {
+      formData.append('imageService', this.selectedImageService);
+    }
+    this.doctorService.addDoctors(formData).subscribe(
+      (data: any) => {
+        console.log('Doctor added  successfully:', data);
         this.getDoctors(); // Fetch updated list
         this.modal.dismiss(this.name, 'confirm');
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+      },
+      (error: any) => {
+        console.error('Register error:', error);
+
+      }
+    );
   }
 
   getDoctors() {
-    fetch('http://localhost:5000/doctors')
-      .then(res => res.json())
-      .then(data => {
+    this.doctorService.getDoctors().subscribe(
+      (data: any) => {
         this.doctors = data;
-      });
+      }, error => {
+        console.error("Error doctors", error);
+      }
+
+    )
   }
-  
   ngOnInit() {
     this.getDoctors();
   }
   
 
-  
-
-  // Handle file selection
+  // Handle file selection(image of doctor)
   onFileSelected(event: Event) {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput.files && fileInput.files.length > 0) {
       this.selectedFile = fileInput.files[0];
       console.log('Selected file:', this.selectedFile.name);
+    }
+  }
+// Handle the image of the serice
+  onImageServiceSelected(event: Event) {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files.length > 0) {
+      this.selectedImageService = fileInput.files[0];
+      console.log('Selected file:', this.selectedImageService.name);
     }
   }
 }

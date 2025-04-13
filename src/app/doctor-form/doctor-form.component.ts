@@ -15,10 +15,11 @@ export class DoctorFormComponent {
   doctorData = {
     fullName: '',
     email: '',
-    image: '',
+    imageDoctor: '',
     description: '',
     location: '',
     speciality: '',
+    imageService: '',
   };
 
   // Close the modal without saving
@@ -26,13 +27,24 @@ export class DoctorFormComponent {
     this.doctorCreated.emit(null);
   }
 
-  // Handle image selection
-  onImageChange(event: any) {
+  // Handle image's service selection
+  onImageServiceChange(event: any) {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        this.doctorData.image = reader.result as string;
+        this.doctorData.imageService = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+  // Handle image's Doctor selection
+  onImageDoctorChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.doctorData.imageDoctor = reader.result as string;
       };
       reader.readAsDataURL(file);
     }

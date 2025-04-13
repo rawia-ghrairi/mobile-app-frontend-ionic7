@@ -8,7 +8,7 @@
   </ion-header>
 
   <div class="bg-container">
-    <div [style.backgroundImage]="'url(' + service.image + ')'" class="bg"></div>
+    <div [style.backgroundImage]="'url(' + service.imageService + ')'" class="bg"></div>
   </div>
 
   <ion-item lines="none">
@@ -37,7 +37,7 @@
     <ion-list>
     <ion-list-header> About Me </ion-list-header>
    <div class="description-container">   
-    <p class="ion-margin-horizontal">{{getShortDescription()}} </p> 
+    <p class="ion-margin-horizontal">{{getShortDescription(service.description)}} </p> 
       <ion-button fill="clear" (click)="toggleDescription()" class="read-more-btn">
       {{ isExpanded ? 'Read Less' : 'Read More' }}
       </ion-button>

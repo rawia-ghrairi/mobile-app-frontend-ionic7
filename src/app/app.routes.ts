@@ -84,12 +84,12 @@ export const routes: Routes = [
         loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
       },
       {
-        path: 'events/:id',
+        path: 'events/:_id',
         loadComponent: () =>
           import('./home/event/event.page').then((m) => m.EventPage),
       },
       {
-        path: 'services/:id',
+        path: 'services/:_id',
         loadComponent: () => import('./home/speciality/speciality.page').then( m => m.SpecialityPage)
       },
     ],
