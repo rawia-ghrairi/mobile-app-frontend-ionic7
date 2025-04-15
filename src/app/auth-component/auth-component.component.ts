@@ -66,12 +66,9 @@ export class AuthComponentComponent implements OnInit {
           if (data.user.role === 'patient') {
             this.router.navigateByUrl('/form-book-appointment');
         }else if(data.user.role === 'doctor'){
-          
-          
           this.router.navigate([`/doctor-home-page`, data.user._id]);
         }
           
-        
         },
         error => {
           console.error('Login error:', error);
