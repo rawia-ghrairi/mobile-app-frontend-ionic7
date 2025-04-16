@@ -49,6 +49,7 @@ export class HomePage implements OnInit {
   swiperModules = [IonicSlides];
   categories: Category[] = [];
   doctors: Doctor[] = [];
+  filteredDoctors : Doctor[] = [];
 
   constructor(private doctorService: DoctorService) {
     addIcons({menuOutline,locateOutline,notificationsOutline,optionsOutline,locationOutline,arrowForwardOutline,heartOutline});
@@ -58,10 +59,18 @@ export class HomePage implements OnInit {
     this.categories = [...categories];
     this.loadDoctors();
   }
+  filterDoctors(event: any) {
+    const searchTerm = event.target.value?.toLowerCase() || '';
+    this.filteredDoctors = this.doctors.filter(doctor =>
+      doctor.name.toLowerCase().includes(searchTerm)
+      ||doctor.speciality.toLocaleLowerCase().includes(searchTerm)
+    );
+  }
 
   loadDoctors(){
   this.doctorService.getDoctors().subscribe((doctors) => {
     this.doctors = doctors;
+    this.filteredDoctors=doctors;
    
     console.log('Doctors isra:', this.doctors); // This will log the doctor data
   });
