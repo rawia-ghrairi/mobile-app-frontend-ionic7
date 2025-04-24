@@ -37,6 +37,18 @@ export class FormBookAppointmentComponent  implements OnInit {
       doctor_id: [''],
     });
   }
+
+selectedPhotoFile: File | null = null;
+
+onPhotoSelected(event: any) {
+  const file = event.target.files[0];
+  if (file) {
+    this.selectedPhotoFile = file;
+    this.appointmentForm.patchValue({ photo: file.name }); // juste pour l’affichage
+  }
+}
+
+
   isModalOpen = false;
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
@@ -87,6 +99,7 @@ handleAppointmentClick() {
         photo: this.appointmentForm.get('photo')!.value,
         phone: this.appointmentForm.get('phone')!.value,
         email: this.appointmentForm.get('email')!.value,
+
         date_rdv: formattedDate,
         doctor_id:this.doctorsId
       };

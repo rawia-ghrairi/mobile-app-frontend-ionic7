@@ -4,10 +4,12 @@ import { DateComponent } from '../date/date.component';
 import { IonicModule } from '@ionic/angular';
 import { calendarOutline, timeOutline } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { PatientService } from '../services/patient.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PopoverController } from '@ionic/angular';
+import { EventSourceInput } from '@fullcalendar/core';
+import { CalendarService } from '../services/calendar.service';
 
 @Component({
   selector: 'app-details-patient',
@@ -15,41 +17,61 @@ import { PopoverController } from '@ionic/angular';
   standalone: true,
   styleUrls: ['./details-patient.component.scss'],
   imports:[
-    DateComponent,
     CommonModule,
     IonicModule,
     ReactiveFormsModule,
+    FormsModule
   ],
 })
 export class DetailsPatientComponent  implements OnInit {
   @Input() patient: any; // Receive the selected patient 
-  appointmentReschedule: FormGroup;  
   isModalOpen = false;
+  isModalOpenConfirm =false;
+  isModalOpenReschedule = false;
   isCalendarOpen = false;
   images: string[] = [];
+  showStart=false;
+  showEnd=false;
+  newEvent:any={
+    title:'',
+    allDay:false,
+    startTime:'',
+    endTime:''
+    }
+    setOpenConfim(isOpen: boolean){
+      this.isModalOpenConfirm = isOpen;
+      this.newEvent.startTime=this.patient?.date_rdv;
+    }
   
-  async closePopover() {
-    await this.popoverController.dismiss();
+  setOpenReschedule(isOpen: boolean) {
+    this.isModalOpenReschedule = isOpen;
   }
+  setOpen(isOpen: boolean) {
+    this.isModalOpen= isOpen;
+  }
+
+startChange(event:CustomEvent){
+  this.newEvent.startTime = event.detail.value;
+
+}
+endChange(event:CustomEvent){
+  this.newEvent.endTime = event.detail.value;
+}
+  
   openCalendar() {
     this.isCalendarOpen = true;
   }
-  setOpen(isOpen: boolean) {
-    this.isModalOpen = isOpen;
-  }
+
   ngOnInit(): void {
+    this.newEvent.title = this.patient?.name 
   }
 
-constructor(private popoverController: PopoverController,private fb: FormBuilder,private patientService: PatientService){
+constructor(private eventService:CalendarService,private popoverController: PopoverController,private fb: FormBuilder,private patientService: PatientService){
   addIcons({timeOutline,calendarOutline});
-  this.appointmentReschedule = this.fb.group({
-    date_rdv: ['', [Validators.required]],
-  });
      }
 
 rescheduleAppointment(emailPatient:string){
-  if (this.appointmentReschedule.valid) {
-    const dateValue = this.appointmentReschedule.get('date_rdv')!.value;
+    const dateValue = this.newEvent.startTime;
      const formattedDate = dateValue ? new Date(dateValue).toISOString().slice(0, 19).replace("T", " ") : null;
     const patientData = {
       email: emailPatient,
@@ -66,9 +88,56 @@ rescheduleAppointment(emailPatient:string){
 
       }
     );
-  } else {
-    console.log('appointment date is invalid', this.appointmentReschedule.value);
-   
-  }
+    this.newEvent.title=this.patient?.name;
+    const eventData = {
+      title: this.newEvent.title,
+      start: this.newEvent.startTime,
+      end: this.newEvent.endTime,
+      allDay: this.newEvent.allDay
+    };
+    console.log('event Data is:', eventData);
+    this.eventService.addEvent(eventData).subscribe({
+      next: (response) => {
+        this.newEvent = {
+          title: '',
+          allDay: false,
+          startTime: '',
+          endTime: ''
+        };
+        console.log('event Added in calendar successfully ', response);
+        this.setOpenReschedule(false);  
+      },
+      error: (err) => {
+        console.error('Error adding event:', err);
+      }
+    });
+  
+}
+
+
+confirmAppointment(){
+  this.newEvent.startTime=this.patient?.date_rdv
+  const eventData = {
+    title: this.newEvent.title,
+    start: this.newEvent.startTime,
+    end: this.newEvent.endTime,
+    allDay: this.newEvent.allDay
+  };
+  console.log('event Data is:', eventData);
+  this.eventService.addEvent(eventData).subscribe({
+    next: (response) => {
+      this.newEvent = {
+        title: '',
+        allDay: false,
+        startTime: '',
+        endTime: ''
+      };
+      console.log('event Added in calendar successfully ', response);
+      this.setOpenConfim(false);  
+    },
+    error: (err) => {
+      console.error('Error adding event:', err);
+    }
+  });
 }
 }
