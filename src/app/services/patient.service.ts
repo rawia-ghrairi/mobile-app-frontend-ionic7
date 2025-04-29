@@ -9,7 +9,6 @@ export class PatientService {
   API_URL = environment.API_URL;
   constructor(private http:HttpClient) {}
 
-
   patientRegister(req: any){
     return this.http.post(`${this.API_URL}book-appointment`,req);
   }

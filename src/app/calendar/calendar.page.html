@@ -3,8 +3,9 @@
   <ion-title class="center-title">Appointment Scheduler</ion-title>
 </ion-toolbar>
 </ion-header>
-<ion-content>
-  <div (ionChange)="timeChanged($event)">
+<ion-content class="ion-padding modal">
+
+ <div (ionChange)="timeChanged($event)">
     <ion-segment mode="ios" [value]="segmentValue">
       <ion-segment-button value="1" [class.selected]="segmentValue === '1'">
         <ion-label>Month</ion-label>
@@ -18,7 +19,7 @@
     </ion-segment>
   </div>
   <full-calendar  *ngIf="segmentValue == '1'"
-    [options]="calendarOptions">
+    [options]="monthCalendarOptions">
   </full-calendar>
   <full-calendar  *ngIf="segmentValue == '2'"
   [options]="calendarOptions">
@@ -26,4 +27,82 @@
 <full-calendar  *ngIf="segmentValue == '3'"
 [options]="calendarOptions">
 </full-calendar>
+  <!-- Liste des événements du jour (uniquement en vue mois) -->
+  <ion-list *ngIf="segmentValue === '1' && selectedDate">
+    <ion-list-header>
+      <ion-label>
+        Events Of {{ selectedDate | date:'dd/MM/yyyy' }}
+        <ion-badge color="primary" slot="end">{{ selectedDateEvents.length }}</ion-badge>
+      </ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let event of selectedDateEvents">
+      <ion-label>
+        <h3>{{ event.title }}</h3>
+        <p *ngIf="!event.allDay">
+          {{ event.start | date:'HH:mm' }}
+          <span *ngIf="event.end"> - {{ event.end | date:'HH:mm' }}</span>
+        </p>
+        <p *ngIf="event.allDay">All-Day</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item *ngIf="selectedDateEvents.length === 0">
+      <ion-label class="ion-text-center">Aucun événement ce jour</ion-label>
+    </ion-item>
+  </ion-list>
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button  (click)="setOpen(true)">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+<ion-modal [isOpen]="isModalOpen">
+  <ng-template>
+    <ion-header class="ion-no-border">
+      <ion-toolbar>    
+        <ion-buttons slot="start">
+          <ion-button (click)="setOpen(false)">Close</ion-button>
+        </ion-buttons>
+        <ion-title>New Event </ion-title>
+        <ion-buttons slot="end">
+          <ion-button color="primary" strong [disabled]="!newEvent.title"(click)="addEvent()">Add</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="modal-content">
+      <div class="group">
+        <ion-input type="text" placeholder="Title" [(ngModel)]="newEvent.title"></ion-input>
+      </div>
+      <div class="group">
+        <ion-item>
+          <ion-label>All-Day</ion-label>
+          <ion-toggle [(ngModel)]="newEvent.allDay"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label (click)="showStart=!showStart">Starts</ion-label>
+          <ion-text slot="end">{{newEvent.startTime}}</ion-text>
+        </ion-item>
+        <ion-datetime 
+        #start 
+        *ngIf="showStart" 
+        [value]="newEvent.startTime" 
+        [presentation]="newEvent.allDay?'date':'time-date'"
+        (ionChange)="startChange($event)"
+        >
+       </ion-datetime>
+        <ion-item>
+          <ion-label (click)="showEnd=!showEnd">End</ion-label>
+          <ion-text slot="end">{{newEvent.endTime}}</ion-text>
+        </ion-item>
+        <ion-datetime 
+        #end 
+        *ngIf="showEnd" 
+        [value]="newEvent.endTime" 
+        [presentation]="newEvent.allDay?'date':'time-date'"
+        (ionChange)="endChange($event)"
+        >
+       </ion-datetime>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>
 </ion-content>

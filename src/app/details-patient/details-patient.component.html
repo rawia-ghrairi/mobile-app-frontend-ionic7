@@ -17,7 +17,7 @@
           <ion-card-title>Personnal Information</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-        <ion-item  >
+        <ion-item >
             Name: {{ patient?.name }}
         </ion-item>
           <ion-item >
@@ -44,21 +44,97 @@
           </ion-label>
         </ion-item>
         <ion-item lines="none" class="custom-buttons">
-          <ion-button class="cancel-button">Cancel</ion-button>
-          <ion-button id="click-trigger" class="reschedule-button"  >Reschedule</ion-button>        
-          <ion-popover trigger="click-trigger" triggerAction="click" class="custom-popover">
+          <ion-button class="reschedule-button"(click)="setOpenReschedule(true)" >Reschedule</ion-button>
+          <!--Modal open when to reschdule appointment  -->
+          <ion-modal [isOpen]="isModalOpenReschedule">
             <ng-template>
-              <ion-content class="ion-padding">
-                <form [formGroup]="appointmentReschedule">
-               <ion-datetime formControlName="date_rdv"></ion-datetime>
-               <ion-item lines="none"class="button-container">
-                <ion-button color="light" class="cancel-btn"(click)="closePopover()">Cancel</ion-button>
-                <ion-button expand="full" class="done-btn" (click)="rescheduleAppointment(patient?.email)" >Done</ion-button>
-               </ion-item>
-              </form>
+              <ion-header class="ion-no-border">
+                <ion-toolbar>    
+                  <ion-buttons slot="start">
+                    <ion-button (click)="setOpenReschedule(false)">Close</ion-button>
+                  </ion-buttons>
+                  <ion-title>Reschedule Appointment</ion-title>
+                  <ion-buttons slot="end">
+                    <ion-button color="primary" strong (click)="rescheduleAppointment(patient.email)">Add</ion-button>
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-header>
+              <ion-content class="modal-content">
+                <div class="group">
+                  <ion-item>
+                    <ion-label>All-Day</ion-label>
+                    <ion-toggle [(ngModel)]="newEvent.allDay"></ion-toggle>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label (click)="showStart=!showStart">Starts</ion-label>
+                    <ion-text slot="end">{{newEvent.startTime}}</ion-text>
+                  </ion-item>
+                  <ion-datetime 
+                  #start 
+                  *ngIf="showStart" 
+                  [value]="newEvent.startTime" 
+                  [presentation]="newEvent.allDay?'date':'time-date'"
+                  (ionChange)="startChange($event)"
+                  >
+                 </ion-datetime>
+                  <ion-item>
+                    <ion-label (click)="showEnd=!showEnd">End</ion-label>
+                    <ion-text slot="end">{{newEvent.endTime}}</ion-text>
+                  </ion-item>
+                  <ion-datetime 
+                  #end 
+                  *ngIf="showEnd" 
+                  [value]="newEvent.endTime" 
+                  [presentation]="newEvent.allDay?'date':'time-date'"
+                  (ionChange)="endChange($event)"
+                  >
+                 </ion-datetime>
+                </div>
               </ion-content>
             </ng-template>
-          </ion-popover>           
+          </ion-modal>
+          
+          <ion-button class="cancel-button" (click)="setOpenConfim(true)">Confirm</ion-button>  
+          <!--Modal open when to Confirm appointment and choose end time  -->
+          <ion-modal [isOpen]="isModalOpenConfirm">
+            <ng-template>
+              <ion-header class="ion-no-border">
+                <ion-toolbar>    
+                  <ion-buttons slot="start">
+                    <ion-button (click)="setOpenConfim(false)">Close</ion-button>
+                  </ion-buttons>
+                  <ion-title>Confirm Appointment</ion-title>
+                  <ion-buttons slot="end">
+                    <ion-button color="primary" strong (click)="confirmAppointment()">Confirm</ion-button>
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-header>
+              <ion-content class="modal-content">
+                <div class="group">
+                  <ion-item>
+                    <ion-label>All-Day</ion-label>
+                    <ion-toggle [(ngModel)]="newEvent.allDay"></ion-toggle>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>Starts</ion-label>
+                    <ion-text slot="end">{{patient?.date_rdv}}</ion-text>
+                  </ion-item>              
+                  <ion-item>
+                    <ion-label (click)="showEnd=!showEnd">End</ion-label>
+                    <ion-text slot="end">{{newEvent.endTime}}</ion-text>
+                  </ion-item>
+                  <ion-datetime 
+                  #end 
+                  *ngIf="showEnd" 
+                  [value]="newEvent.endTime" 
+                  [presentation]="newEvent.allDay?'date':'time-date'"
+                  (ionChange)="endChange($event)"
+                  >
+                 </ion-datetime>
+                </div>
+              </ion-content>
+            </ng-template>
+          </ion-modal>             
           </ion-item>
         </ion-card-content>
        </ion-card>

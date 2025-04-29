@@ -8,17 +8,15 @@
       <ion-label color="light">
         <p>Tunis, Tunisia</p>
       </ion-label>
-
       <ion-fab-button size="small">
         <ion-icon name="notifications-outline" color="medium"></ion-icon>
         <ion-badge>&#9679;</ion-badge>
       </ion-fab-button>
     </ion-item>
-
     <ion-toolbar class="srchBar" mode="ios">
       <ion-row>
         <ion-col size="10">
-          <ion-searchbar placeholder="Find a doctor near you"></ion-searchbar>
+          <ion-searchbar   placeholder="Find a doctor near you" (ionInput)="filterDoctors($event)"></ion-searchbar>
         </ion-col>
         <ion-col size="2">
           <ion-fab-button size="small" color="light">
@@ -28,10 +26,8 @@
       </ion-row>
     </ion-toolbar>
   </ion-toolbar>
-</ion-header>
-
+  </ion-header>
 <ion-content color="light">
-  
   <ion-list class="ion-margin-top">
     <ion-item-divider mode="ios" color="light">
        Doctors
@@ -45,8 +41,7 @@
       [keyboard]="true"
       [centerSlides]="true"
     >
-     
-      <swiper-slide *ngFor="let doctor of doctors; trackBy: trackDoctor">
+      <swiper-slide *ngFor="let doctor of filteredDoctors; trackBy: trackDoctor">
         <ion-card
           class="event1"
           [routerLink]="['/', 'home', 'events', doctor._id]"
@@ -115,7 +110,7 @@
     </swiper-container>
   </ion-list>
 
-  @for(doctor of doctors; track  trackDoctor) {
+  @for(doctor of filteredDoctors; track  trackDoctor) {
     @if(doctor?._id) {
   <ion-card
     [routerLink]="['/', 'home', 'services', doctor._id]"
