@@ -9,10 +9,7 @@ export class PatientService {
   API_URL = environment.API_URL;
   constructor(private http:HttpClient) {}
 
-// Récupérer les demandes de rendez-vous pour un médecin spécifique
-getDoctorAppointmentsByDoctorId(doctorId: string) {
-  return this.http.get(`${this.API_URL}appointments/doctor/${doctorId}`);
-}
+
   patientRegister(req: any){
     return this.http.post(`${this.API_URL}book-appointment`,req);
   }
