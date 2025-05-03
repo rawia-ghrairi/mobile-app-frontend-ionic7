@@ -4,6 +4,7 @@ export interface Doctor {
     name: string; // Name of the doctor
     speciality: string; // Doctor's speciality (e.g., cardiologist, dentist, etc.)
     location: string; // Location (e.g., city, clinic address)
+    phoneNumber: string;
     imageDoctor: string; // Image URL for the doctor's profile picture
     description:string;
     email:string;
