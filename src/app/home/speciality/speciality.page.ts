@@ -8,6 +8,7 @@ import { DateComponent } from "../../date/date.component";
 import { FormBookAppointmentComponent } from 'src/app/form-book-appointment/form-book-appointment.component';
 import { IonicModule } from '@ionic/angular';
 import { DoctorService } from 'src/app/services/doctor.service';
+import { CalendarService } from 'src/app/services/calendar.service';
 @Component({
   selector: 'app-speciality',
   templateUrl: './speciality.page.html',
@@ -44,9 +45,10 @@ export class SpecialityPage implements OnInit {
         }
       );
     }
-  }
 
   
+    
+  }
   getShortDescription(text: string): string {
     if (!text || text.length === 0) return '';
     else if(this.isExpanded)
@@ -56,5 +58,4 @@ export class SpecialityPage implements OnInit {
   toggleDescription() {
     this.isExpanded = !this.isExpanded;
   }
-
-}
+ }

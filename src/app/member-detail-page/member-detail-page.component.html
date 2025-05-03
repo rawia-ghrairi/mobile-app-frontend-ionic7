@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Member Detail</ion-title>
+    <ion-title>Doctor Detail</ion-title>
 
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/members"></ion-back-button>
@@ -19,48 +19,66 @@
 </ion-header>
 
 <ion-content color="medium">
-  @defer(when member()) {
+ 
   <ion-card>
     <div>
       <app-member-personal-detail
-        [member]="member()!"
+        [member]="member!"
         [isList]="false"
       ></app-member-personal-detail>
 
       <ion-row class="business-info">
         <ion-col size="6">
           <app-info-card
-            heading="Training Type"
-            [value]="member()?.trainingType"
+            heading="Location"
+            [value]="member?.location"
           ></app-info-card>
         </ion-col>
 
         <ion-col size="6">
           <app-info-card
-            heading="Gender"
-            [value]="member()?.gender"
+            heading="Speciality"
+            [value]="member?.speciality"
           ></app-info-card>
         </ion-col>
 
         <ion-col size="6">
           <app-info-card
-            heading="Address"
-            [value]="member()?.address"
+            heading="Email"
+            [value]="member?.email"
           ></app-info-card>
         </ion-col>
 
         <ion-col size="6">
           <app-info-card
-            heading="Batch Name"
-            [value]="member()?.batchName"
+            heading="Phone Number"
+            [value]="member?.phone"
           ></app-info-card>
         </ion-col>
-
         <ion-col size="6">
           <app-info-card
-            heading="Batch Time"
-            [value]="member()?.batchTime"
+            heading="Medical Office"
+            [value]="member?.location"
           ></app-info-card>
+        </ion-col>
+        <ion-button id="open-modal" expand="block">Files</ion-button>
+        <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+          <ng-template>
+            <ion-header>
+              <ion-toolbar>
+                <ion-buttons slot="start">
+                  <ion-button (click)="cancel()">Cancel</ion-button>
+                </ion-buttons>
+                <ion-title>Diagnostics Upload</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content class="ion-padding">
+              <app-image-upload></app-image-upload>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+        <ion-col size="6">
+          
         </ion-col>
       </ion-row>
     </div>
@@ -108,18 +126,18 @@
 
   <ion-card class="package">
     <ion-card-header>
-      <ion-label color="primary">{{ member()?.package?.plan }}</ion-label>
+      <ion-label color="primary">{{ member?.package?.plan }}</ion-label>
     </ion-card-header>
 
-    @let package = member()?.package;
+    
 
     <ion-card-content>
       <ion-row>
         <ion-col size="4">
           <div align="center">
             <app-info-card
-              heading="Total Amount"
-              [value]="package?.totalAmount"
+              heading="Expérience"
+              [value]="10"
             ></app-info-card>
           </div>
         </ion-col>
@@ -127,8 +145,8 @@
         <ion-col size="4">
           <div align="center">
             <app-info-card
-              heading="Discount"
-              [value]="package?.discount"
+              heading="Languages"
+              [value]="languages"
             ></app-info-card>
           </div>
         </ion-col>
@@ -136,8 +154,8 @@
         <ion-col size="4">
           <div align="center">
             <app-info-card
-              heading="Purchase Date"
-              [value]="package?.purchaseDate"
+              heading="Note "
+              [value]="7.5"
             ></app-info-card>
           </div>
         </ion-col>
@@ -145,8 +163,8 @@
         <ion-col size="4">
           <div align="center">
             <app-info-card
-              heading="Paid"
-              [value]="package?.paid"
+              heading="payment Methods"
+              [value]="paymentMethods"
             ></app-info-card>
           </div>
         </ion-col>
@@ -154,8 +172,8 @@
         <ion-col size="4">
           <div align="center">
             <app-info-card
-              heading="Due Amount"
-              [value]="package?.dueAmount"
+              heading="Consultation Price"
+              [value]="consultationPrice"
             ></app-info-card>
           </div>
         </ion-col>
@@ -163,17 +181,17 @@
         <ion-col size="4">
           <div align="center">
             <app-info-card
-              heading="Day Remaining"
-              [value]="package?.daysRemaining"
+              heading="Urgences"
+              [value]="urgence"
             ></app-info-card>
           </div>
         </ion-col>
       </ion-row>
     </ion-card-content>
   </ion-card>
-  }
+  
 
-  <app-image-upload></app-image-upload>
-  <app-upload-files></app-upload-files>
+  
+
 </ion-content>
 

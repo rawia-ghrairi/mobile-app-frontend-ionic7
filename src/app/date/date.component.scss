@@ -9,16 +9,14 @@
   gap: 8px;
 }
 
-.green-box, .red-box {
+.red-box {
   width: 15px;
   height: 15px;
   display: inline-block;
   border-radius: 3px;
 }
 
-.green-box {
-  background-color: green;
-}
+
 
 .red-box {
   background-color: red;

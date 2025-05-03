@@ -4,7 +4,7 @@
       <ion-icon [name]="currentTab() === 'home' ? 'home' : 'home-outline'"></ion-icon>
     </ion-tab-button>
 
-    <ion-tab-button tab="members">
+    <ion-tab-button tab="members" (click)="handleMembersTabClick()">
       <ion-icon [name]="currentTab() === 'members' ? 'people' : 'people-outline'"></ion-icon>
     </ion-tab-button>
 

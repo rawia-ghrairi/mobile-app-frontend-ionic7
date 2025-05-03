@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ViewChild } from '@angular/core';
 import {
   IonContent,
   IonHeader,
@@ -15,8 +15,7 @@ import {
   IonItemDivider,
   IonCardHeader,
   IonLabel,
-  IonCardContent,
-} from '@ionic/angular/standalone';
+  IonCardContent, IonInput, IonItem, IonModal } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
   addCircle,
@@ -37,13 +36,14 @@ import { ActionButtonComponent } from 'src/app/widgets/action-button/action-butt
 import { MemberService } from '../services/member.service';
 import { ImageUploadComponent } from "../image-upload/image-upload.component";
 import { UploadFilesComponent } from "../upload-files/upload-files.component";
-
+import { OverlayEventDetail } from '@ionic/core/components';
+import { DoctorService } from '../services/doctor.service';
 @Component({
   selector: 'app-member-detail-page',
   templateUrl: './member-detail-page.component.html',
   styleUrls: ['./member-detail-page.component.scss'],
   standalone: true,
-  imports: [
+  imports: [IonModal, IonItem, IonInput, 
     IonCardContent,
     IonLabel,
     IonCardHeader,
@@ -67,13 +67,16 @@ import { UploadFilesComponent } from "../upload-files/upload-files.component";
 ],
 })
 export class MemberDetailPageComponent  implements OnInit {
-
-  member = signal<Member | null>(null);
+languages:String="Arabe/French"
+urgence:String="Yes"
+consultationPrice:String="80 $"
+paymentMethods:String="Cash"
+  member:any;
   id!: number;
 
   private route = inject(ActivatedRoute);
   private navCtrl = inject(NavController);
-  private memberService = inject(MemberService);
+  private doctorService = inject(DoctorService);
 
   constructor() {
     addIcons({
@@ -89,24 +92,40 @@ export class MemberDetailPageComponent  implements OnInit {
   }
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-    console.log(id);
-
-    if (!id) {
-      this.navCtrl.back();
-      return;
+    const _id = this.route.snapshot.paramMap.get('ids');
+    console.log('Doctor ID:', _id);
+    if (_id) {
+      this.doctorService.getDoctorById(_id).subscribe(
+        (data) => {
+          if (data) {
+            this.member = data;  // Set doctor if found
+            console.log(this.member);
+            console.log('Doctor data:', this.member);  // Log for debugging
+          } else {
+            console.error('Doctor not found with id:', _id);  // Handle case where doctor is not found
+          }
+        },
+        (error) => {
+          console.error('Error fetching doctor data:', error);
+        }
+      );
     }
-
-    this.id = parseInt(id);
-    this.getMemberById();
   }
 
-  getMemberById() {
-    const member = this.memberService.getMemberById(this.id);
+  @ViewChild(IonModal) modal!: IonModal;
 
-    if (member) {
-      this.member.set(member);
-    }
+  message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
+  name!: string;
+
+  cancel() {
+    this.modal.dismiss(null, 'cancel');
   }
 
+
+
+  onWillDismiss(event: CustomEvent<OverlayEventDetail>) {
+    if (event.detail.role === 'confirm') {
+      this.message = `Hello, ${event.detail.data}!`;
+    }
+  }
 }

@@ -8,7 +8,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { IonicModule } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-import { add, arrowForwardOutline, calendarOutline, locationOutline, menu, options, personCircle } from 'ionicons/icons';
+import { add, arrowForwardOutline, calendarOutline, locationOutline, menu, options, personCircle, trashOutline } from 'ionicons/icons';
 import { CalendarService } from '../services/calendar.service';
 
 @Component({
@@ -25,7 +25,6 @@ export class CalendarPage implements OnInit {
   selectedDate: string | null = null;
   selectedDateEvents: any[] = [];
   segmentValue = '1';
-  monthCalendarOptions: CalendarOptions;
   AddEvent:EventSourceInput=[];
   newEvent:any={
   title:'',
@@ -33,8 +32,6 @@ export class CalendarPage implements OnInit {
   startTime:'',
   endTime:''
   }
- 
- 
  
 setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
@@ -68,11 +65,7 @@ calendarOptions: CalendarOptions = {
 };
 
   constructor(private eventService: CalendarService) {
-        addIcons({personCircle,options,locationOutline,calendarOutline,arrowForwardOutline,menu,add,});
-        this.monthCalendarOptions = {
-          ...this.calendarOptions,
-          dateClick: (arg) => this.handleMonthDateClick(arg)
-        };
+        addIcons({trashOutline,personCircle,options,locationOutline,calendarOutline,arrowForwardOutline,menu,add,});
    }
    handleMonthDateClick(arg: any) {
     this.selectedDate = arg.dateStr;
@@ -136,6 +129,7 @@ calendarOptions: CalendarOptions = {
           ...this.calendarOptions.events as any[],
           response.event
         ];
+        console.log('event added with success');
         
         this.newEvent = {
           title: '',
@@ -152,6 +146,7 @@ calendarOptions: CalendarOptions = {
     });
   }
 
+ 
 
     
         

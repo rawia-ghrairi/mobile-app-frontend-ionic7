@@ -1,4 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
+import { Router } from '@angular/router';
 
 import {
   IonTabs,
@@ -26,9 +27,9 @@ import {
   imports: [IonIcon, IonTabButton, IonTabBar, IonTabs],
 })
 export class TabsComponent  implements OnInit {
+  currentTab = signal<string>('home'); // Changé à 'home' par défaut
 
-  currentTab = signal<string>('members');
-  constructor() {
+  constructor(private router: Router) {
     addIcons({
       home,
       homeOutline,
@@ -40,11 +41,29 @@ export class TabsComponent  implements OnInit {
       calendar,
     });
   }
-
-  ngOnInit() {}
   getCurrentTab(event: { tab: string }) {
-    console.log(event.tab);
-    this.currentTab.set(event.tab);
+    if (event.tab === 'members') {
+      this.handleMembersTabClick();
+      return false; // Empêche la navigation par défaut
+    } else {
+      this.currentTab.set(event.tab);
+      return true;
+    }
+  }
+  ngOnInit(): void {
+    
+  }
+  handleMembersTabClick() {
+    const token = localStorage.getItem('auth_token');
+    
+    if (token) {
+      this.currentTab.set('members');
+      this.router.navigate(['/tabs/members']);
+    } else {
+      localStorage.setItem('redirect_url', '/tabs/members');
+      this.router.navigate(['/auth']);
+      this.currentTab.set('home');
+    }
+  }
   }
 
-}

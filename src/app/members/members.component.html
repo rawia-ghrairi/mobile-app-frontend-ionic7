@@ -1,28 +1,28 @@
-<ion-card [routerLink]="['/', 'tabs', 'members', member()?.id]">
+<ion-card [routerLink]="[member?.ids]">
   <div>
     <app-member-personal-detail
-      [member]="member()"
+      [member]="member"
     ></app-member-personal-detail>
 
     <ion-row class="business-info">
       <ion-col size="4">
         <app-info-card
-          heading="Plan Expiry"
-          [value]="member()?.package?.planExpiryDate"
+          heading="Expérience"
+          [value]="10"
         ></app-info-card>
       </ion-col>
 
       <ion-col size="4">
         <app-info-card
-          heading="Day Remaining"
-          [value]="member()?.package?.daysRemaining"
+          heading="Note"
+          [value]="7.5"
         ></app-info-card>
       </ion-col>
 
       <ion-col size="4">
         <app-info-card
-          heading="Due Amount"
-          [value]="member()?.package?.dueAmount"
+          heading="Consultation Price"
+          [value]="consultationPrice"
         ></app-info-card>
       </ion-col>
     </ion-row>

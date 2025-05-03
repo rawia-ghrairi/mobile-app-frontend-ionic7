@@ -1,13 +1,13 @@
 <ion-item lines="none">
   <ion-thumbnail slot="start">
-    <img [src]="member()?.photo" />
+    <img [src]="member?.imageDoctor" />
   </ion-thumbnail>
 
   <ion-label>
-    {{ member()?.name }}
+    {{ member?.name }}
     <p>
       <ion-text color="dark">
-        {{ member()?.phone }}
+        {{ member?.email }}
       </ion-text>
     </p>
   </ion-label>

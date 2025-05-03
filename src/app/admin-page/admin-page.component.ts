@@ -29,6 +29,7 @@ constructor(private doctorService:DoctorService){}
   speciality!: string;
   description!: string;
   location!: string;
+  phone!: string;
   selectedFile: File | null = null;
   selectedImageService:File | null = null;
 
@@ -44,6 +45,7 @@ constructor(private doctorService:DoctorService){}
     formData.append('speciality', this.speciality);
     formData.append('description', this.description);
     formData.append('location', this.location);
+    formData.append('phone', this.phone);
     if (this.selectedFile) {
       formData.append('imageDoctor', this.selectedFile);
     }

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar  color="primary">
-    <ion-title>Members</ion-title>
+    <ion-title>My Care Team</ion-title>
 
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
@@ -20,7 +20,8 @@
   <ion-toolbar color="primary">
     <ion-searchbar
       class="srchBar"
-      placeholder="Search Name / Mobile Number"
+      placeholder="Search Name / Speciality"
+      (ionInput)="filterDoctors($event)"
     ></ion-searchbar>
 
     <ion-row>
@@ -70,13 +71,13 @@
             justify="start"
           >
             <ion-select-option value="Select Batch"
-              >Select Batch</ion-select-option
+              >Select Doctors</ion-select-option
             >
             <ion-select-option value="Morning Batch"
-              >Morning Batch</ion-select-option
+              >All Doctors</ion-select-option
             >
             <ion-select-option value="Evening Batch"
-              >Evening Batch</ion-select-option
+              >Available Doctors</ion-select-option
             >
           </ion-select>
         </div>
@@ -89,7 +90,7 @@
   
   <ion-list>
     <ion-item-divider color="light" mode="ios" class="ion-no-padding">
-      Members
+      My Care Team
       <div slot="end" class="selectDiv activeFilter">
         <ion-select
           value="Active"
@@ -107,10 +108,22 @@
       </div>
     </ion-item-divider>
   </ion-list>
+  <div *ngIf="isLoading()" class="loading-spinner">
+    <ion-spinner></ion-spinner>
+  </div>
 
-  @for(member of members(); track $index) {
+  <!-- Message d'erreur -->
+  <ion-item *ngIf="error()" color="danger">
+    <ion-label class="ion-text-center">{{ error() }}</ion-label>
+  </ion-item>
+  <ion-list *ngIf="!isLoading() && !error()">
+  @for(member of filteredDoctors; track $index) {
     <app-members [member]="member"></app-members>
+  }@empty {
+    <ion-item>
+      <ion-label class="ion-text-center">No doctor found</ion-label>
+    </ion-item>
   }
-
+  </ion-list>
 </ion-content>
 

@@ -2,7 +2,7 @@ import { Component,Input, OnInit } from '@angular/core';
 import { addIcons } from 'ionicons';
 import { DateComponent } from '../date/date.component';
 import { IonicModule } from '@ionic/angular';
-import { calendarOutline, timeOutline } from 'ionicons/icons';
+import { calendarOutline, checkmarkDoneOutline, checkmarkOutline,timeOutline } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { PatientService } from '../services/patient.service';
@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PopoverController } from '@ionic/angular';
 import { EventSourceInput } from '@fullcalendar/core';
 import { CalendarService } from '../services/calendar.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-details-patient',
@@ -24,7 +25,8 @@ import { CalendarService } from '../services/calendar.service';
   ],
 })
 export class DetailsPatientComponent  implements OnInit {
-  @Input() patient: any; // Receive the selected patient 
+  @Input() patient: any; // Receive the selected patient
+  flaskApiUrl = 'http://127.0.0.1:5000/uploads';  
   isModalOpen = false;
   isModalOpenConfirm =false;
   isModalOpenReschedule = false;
@@ -64,10 +66,11 @@ endChange(event:CustomEvent){
 
   ngOnInit(): void {
     this.newEvent.title = this.patient?.name 
+    this.fetchImages();
   }
 
-constructor(private eventService:CalendarService,private popoverController: PopoverController,private fb: FormBuilder,private patientService: PatientService){
-  addIcons({timeOutline,calendarOutline});
+constructor(private http: HttpClient,private eventService:CalendarService,private popoverController: PopoverController,private fb: FormBuilder,private patientService: PatientService){
+  addIcons({timeOutline,calendarOutline,checkmarkDoneOutline});
      }
 
 rescheduleAppointment(emailPatient:string){
@@ -113,6 +116,25 @@ rescheduleAppointment(emailPatient:string){
     });
   
 }
+fetchImages() {
+  this.http.get<{ images: string[] }>(`${this.flaskApiUrl}/list`).subscribe(
+    (data) => {
+      console.log("Raw API Response:", data); // Log full response
+
+      // Extract the images array from the response object
+      this.images = data.images || [];
+
+      // Prepend the Flask API URL to each image filename
+      this.images = this.images.map((image) => `${this.flaskApiUrl}/${image}`);
+
+      console.log("Images with full URL:", this.images); // Log the updated image URLs
+    },
+    (error) => {
+      console.error('Error fetching images:', error);
+    }
+  );
+}
+
 
 
 confirmAppointment(){

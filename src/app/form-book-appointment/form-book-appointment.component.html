@@ -65,8 +65,13 @@
           <ion-input label="Email:" type="text" formControlName="email" placeholder="Enter your email"></ion-input>
           </ion-item>        
           <ion-label position="floating" class="custom-label">Select date :</ion-label> 
+          <div class="date-legend">
+            <p><span class="red-box"></span> Unavailable dates (You cannot book)</p>
+          </div>
           <ion-item class="ion-item">
-          <ion-datetime  formControlName="date_rdv" ></ion-datetime>  
+           
+          <ion-datetime  formControlName="date_rdv"   [highlightedDates]="highlightedDates" ></ion-datetime>
+            
         </ion-item> 
           <ion-button expand="block" shape="round"color="primary"size="large"[strong]="true" (click)="bookAppointment()">
            Confirm

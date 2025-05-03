@@ -49,61 +49,50 @@ export class AuthComponentComponent implements OnInit {
   }
 
   login() {
-    if (this.loginForm.valid) {
-      this.isLoading = true;
-      
-      const payload = {
-        email: this.loginForm.get('email')!.value,
-        password: this.loginForm.get('password')!.value,
-        role: this.loginForm.get('role')!.value
-      };
-      console.log('Login payload:', payload);
-      this.auth.userLogin(payload).subscribe(
-        (data: any) => {
-          console.log('Login success:', data);
-          this.isLoading = false;
-          console.log('user id', data.user._id);
-          if (data.user.role === 'patient') {
-            this.router.navigateByUrl('/form-book-appointment');
-        }else if(data.user.role === 'doctor'){
-          this.router.navigate([`/doctor-home-page`, data.user._id]);
-        }
-          
-        },
-        error => {
-          console.error('Login error:', error);
-          this.isLoading = false;
-        }
-      );
-    } else {
-      console.log('Login form is invalid', this.loginForm.value);
+    if (this.loginForm.invalid) {
+      this.markFormGroupTouched(this.loginForm);
+      return;
     }
+
+    this.isLoading = true;
+    const { email, password, role } = this.loginForm.value;
+
+    this.auth.userLogin({ email, password, role }).subscribe({
+      next: (data) => {
+        this.isLoading = false;
+        // La redirection est maintenant gérée par AuthService
+      },
+          
+      error: (error) => {
+        console.error('Login error:', error);
+        this.isLoading = false;
+        // Ajouter ici un message d'erreur à l'utilisateur
+      }
+    });
   }
   
 
   register() {
-    if (this.signupForm.valid) {
-      this.isLoading = true;
-      const payload = {
-        name: this.signupForm.get('name')!.value,
-        email: this.signupForm.get('email')!.value,
-        password: this.signupForm.get('password')!.value,
-        role: this.signupForm.get('role')!.value
-      };
-      console.log('Signup payload:', payload);
-      this.auth.userRegister(payload).subscribe(
-        (data: any) => {
-          console.log('Register success:', data);
-          this.isLoading = false;
-        },
-        (error: any) => {
-          console.error('Register error:', error);
-          this.isLoading = false;
-        }
-      );
-    } else {
-      console.log('Signup form is invalid', this.signupForm.value);
+    if (this.signupForm.invalid) {
+      this.markFormGroupTouched(this.signupForm);
+      return;
     }
+
+    this.isLoading = true;
+    const { name, email, password, role } = this.signupForm.value;
+
+    this.auth.userRegister({ name, email, password, role }).subscribe({
+      next: (data) => {
+        this.isLoading = false;
+        // Optionnel: Auto-login après inscription
+        this.screen = 'signin';
+        this.loginForm.patchValue({ email, password });
+      },
+      error: (error) => {
+        console.error('Register error:', error);
+        this.isLoading = false;
+      }
+    });
   }
 
   resetPassword() {
@@ -126,5 +115,14 @@ export class AuthComponentComponent implements OnInit {
     } else {
       console.log('Reset password form is invalid', this.resetForm.value);
     }
+  }
+  private markFormGroupTouched(formGroup: FormGroup) {
+    Object.values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
+      }
+    });
   }
 }

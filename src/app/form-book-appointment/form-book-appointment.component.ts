@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PatientService } from '../services/patient.service';
 import { AuthService } from '../services/auth.service';
+import { CalendarService } from '../services/calendar.service';
 @Component({
   selector: 'app-form-book-appointment',
   templateUrl: './form-book-appointment.component.html',
@@ -22,8 +23,9 @@ import { AuthService } from '../services/auth.service';
 })
 export class FormBookAppointmentComponent  implements OnInit {
   appointmentForm: FormGroup;
+  occupiedDates = new Set<string>();
   doctorsId:any
-  constructor(private toastController: ToastController,private router: Router,private authservice:AuthService,private route:ActivatedRoute,private fb: FormBuilder, private patient: PatientService) { 
+  constructor(private calendarService: CalendarService,private toastController: ToastController,private router: Router,private authservice:AuthService,private route:ActivatedRoute,private fb: FormBuilder, private patient: PatientService) { 
     addIcons({heartOutline});
     this.appointmentForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -38,15 +40,25 @@ export class FormBookAppointmentComponent  implements OnInit {
     });
   }
 
-selectedPhotoFile: File | null = null;
 
-onPhotoSelected(event: any) {
-  const file = event.target.files[0];
-  if (file) {
-    this.selectedPhotoFile = file;
-    this.appointmentForm.patchValue({ photo: file.name }); // juste pour l’affichage
+highlightedDates = (isoString: string) => {
+  const dateStr = isoString.split('T')[0];
+  
+  if (this.occupiedDates.has(dateStr)) {
+    return {
+      textColor: '#ffffff',
+      backgroundColor: '#ff0000',
+      borderRadius: '50%'
+    };
   }
-}
+  
+  return {
+    textColor: '#000000',
+    backgroundColor: '#ffffff',
+    borderRadius: '50%'
+  };
+};
+
 
 
   isModalOpen = false;
@@ -56,6 +68,9 @@ onPhotoSelected(event: any) {
   ngOnInit() {
     this.doctorsId=this.route.snapshot.paramMap.get('_id');
     console.log(this.doctorsId);
+    this.calendarService.getOccupiedDates().subscribe(dates => {
+      this.occupiedDates = new Set(dates);
+    });
     
   }
   // Cette fonction est appelée au clic

@@ -44,7 +44,7 @@ export const routes: Routes = [
               ),
           },
           {
-            path: ':id',
+            path: ':ids',
             loadComponent: () =>
               import('./member-detail-page/member-detail-page.component').then(
         
@@ -113,10 +113,8 @@ export const routes: Routes = [
   {
     path: 'auth',
     loadComponent: () => import('./auth-component/auth-component.component').then( m => m.AuthComponentComponent)
-  },  {
-    path: 'calendar-tool',
-    loadComponent: () => import('./calendar-tool/calendar-tool.page').then( m => m.CalendarToolPage)
   },
+ 
 
 
  
