@@ -42,8 +42,5 @@ export class MemberService {
     this.router.navigate(['/auth']);
   }
    
-  
-  getMemberById(id: number) {
-    return members.find((member) => member.id === id);
-  }
+ 
 }

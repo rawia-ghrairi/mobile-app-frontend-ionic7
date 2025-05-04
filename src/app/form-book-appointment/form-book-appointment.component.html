@@ -56,7 +56,7 @@
           </ion-radio-group>       
          </ion-item> 
          <ion-item lines="none" class="ion-item" >
-          <ion-input label="Photo:" type="text" formControlName="photo" placeholder="Enter your phone url"></ion-input>
+          <ion-input label="Photo:" type="file" (change)="onImageChange($event)"></ion-input>
         </ion-item>
         <ion-item lines="none" class="ion-item" >
           <ion-input label="Phone:" type="text" formControlName="phone" placeholder="Enter your phone number"></ion-input>

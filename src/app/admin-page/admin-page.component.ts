@@ -66,7 +66,16 @@ export class AdminPageComponent implements OnInit {
       }
     );
   }
-
+  resetForm() {
+    this.name = '';
+    this.email = '';
+    this.speciality = '';
+    this.description = '';
+    this.location = '';
+    this.phone = '';
+    this.selectedFile = null;
+    this.selectedImageService = null;
+  }
   getDoctors() {
     this.doctorService.getDoctors().subscribe(
       (data: any) => {

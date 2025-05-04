@@ -32,12 +32,20 @@ export class FormBookAppointmentComponent implements OnInit {
       age: ['', [Validators.required]],
       address: ['', [Validators.required]],
       gender: ['', [Validators.required]],
-      photo: ['', [Validators.required]],
+      photo: [null, [Validators.required]],
       phone: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       date_rdv: ['', [Validators.required]],
       doctor_id: [''],
     });
+  }
+  onImageChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.appointmentForm.patchValue({
+        photo: file
+      });
+    }
   }
 
 
@@ -69,6 +77,7 @@ highlightedDates = (isoString: string) => {
 
   ngOnInit() {
     this.doctorsId = this.route.snapshot.paramMap.get('_id');
+    this.appointmentForm.patchValue({ doctor_id: this.doctorsId});
     console.log(this.doctorsId);
     this.calendarService.getOccupiedDates().subscribe(dates => {
       this.occupiedDates = new Set(dates);
@@ -103,49 +112,60 @@ highlightedDates = (isoString: string) => {
 
   bookAppointment() {
     if (this.appointmentForm.valid) {
-      const dateValue = this.appointmentForm.get('date_rdv')!.value;
-      const formattedDate = dateValue ? new Date(dateValue).toISOString().slice(0, 19).replace("T", " ") : null;
+      const formData = new FormData();
       
-      const patientData = {
-        name: this.appointmentForm.get('name')!.value,
-        age: this.appointmentForm.get('age')!.value,
-        address: this.appointmentForm.get('address')!.value,
-        gender: this.appointmentForm.get('gender')!.value,
-        photo: this.appointmentForm.get('photo')!.value,
-        phone: this.appointmentForm.get('phone')!.value,
-        email: this.appointmentForm.get('email')!.value,
-
-        date_rdv: formattedDate,
-        doctor_id: this.doctorsId
-      };
-
-      console.log('patient is:', patientData);
-      
-      this.patient.patientRegister(patientData).subscribe(
+      Object.keys(this.appointmentForm.controls).forEach(key => {
+        const value = this.appointmentForm.get(key)?.value;
+        if (value !== null && value !== undefined && key !== 'photo' && key !== 'date_rdv') {
+          formData.append(key, value);
+        }
+      });
+  
+      const dateValue = this.appointmentForm.get('date_rdv')?.value;
+      if (dateValue) {
+        const formattedDate = new Date(dateValue).toISOString().slice(0, 19).replace("T", " ");
+        formData.append('date_rdv', formattedDate);
+      }
+      // Ajoutez le fichier photo
+      const photoFile = this.appointmentForm.get('photo')?.value;
+      if (photoFile) {
+        formData.append('photo', photoFile);
+         }
+  
+      this.patient.patientRegister(formData).subscribe(
         (data: any) => {
+          
           console.log('Appointment booked successfully:', data);
           this.presentToast('Appointment booked successfully!', 'success');
           this.resetForm();
+          this.setOpen(false); // Fermer le modal après succès
         },
         (error: any) => {
           console.error('Register error:', error);
           
-          // Check for specific error from backend
-          if (error.error && error.error.code === 'USER_NOT_REGISTERED') {
-            this.presentToast('This email is not registered. Please sign up first.', 'danger');
-            
-            // Option 3: Just show the message and let user decide
+          if (error.error?.message) {
+            this.presentToast(error.error.message, 'danger');
           } else {
             this.presentToast('Failed to book appointment. Please try again.', 'danger');
           }
         }
       );
     } else {
-      console.log('patient form is invalid', this.appointmentForm.value);
+      console.log('Form is invalid', this.appointmentForm.value);
+      this.markFormGroupTouched(this.appointmentForm);
       this.presentToast('Please fill out all required fields correctly.', 'warning');
     }
   }
-
+  
+  // Ajoutez cette méthode pour marquer tous les champs comme touchés
+  private markFormGroupTouched(formGroup: FormGroup) {
+    Object.values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
+      }
+    });
+  }
   private resetForm() {
     this.appointmentForm.reset({
       name: '',

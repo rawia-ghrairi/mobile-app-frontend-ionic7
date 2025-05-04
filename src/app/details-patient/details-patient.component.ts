@@ -11,6 +11,7 @@ import { PopoverController } from '@ionic/angular';
 import { EventSourceInput } from '@fullcalendar/core';
 import { CalendarService } from '../services/calendar.service';
 import { HttpClient } from '@angular/common/http';
+import { FilesService } from '../services/files.services';
 
 @Component({
   selector: 'app-details-patient',
@@ -26,7 +27,6 @@ import { HttpClient } from '@angular/common/http';
 })
 export class DetailsPatientComponent  implements OnInit {
   @Input() patient: any; // Receive the selected patient
-  flaskApiUrl = 'http://127.0.0.1:5000/uploads';  
   isModalOpen = false;
   isModalOpenConfirm =false;
   isModalOpenReschedule = false;
@@ -40,6 +40,7 @@ export class DetailsPatientComponent  implements OnInit {
     startTime:'',
     endTime:''
     }
+    files:any;
     setOpenConfim(isOpen: boolean){
       this.isModalOpenConfirm = isOpen;
       this.newEvent.startTime=this.patient?.date_rdv;
@@ -69,7 +70,7 @@ endChange(event:CustomEvent){
     this.fetchImages();
   }
 
-constructor(private http: HttpClient,private eventService:CalendarService,private popoverController: PopoverController,private fb: FormBuilder,private patientService: PatientService){
+constructor(private filesService: FilesService,private http: HttpClient,private eventService:CalendarService,private popoverController: PopoverController,private fb: FormBuilder,private patientService: PatientService){
   addIcons({timeOutline,calendarOutline,checkmarkDoneOutline});
      }
 
@@ -117,24 +118,44 @@ rescheduleAppointment(emailPatient:string){
   
 }
 fetchImages() {
-  this.http.get<{ images: string[] }>(`${this.flaskApiUrl}/list`).subscribe(
+  this.filesService.getFileByDoctor().subscribe(
     (data) => {
-      console.log("Raw API Response:", data); // Log full response
-
-      // Extract the images array from the response object
-      this.images = data.images || [];
-
-      // Prepend the Flask API URL to each image filename
-      this.images = this.images.map((image) => `${this.flaskApiUrl}/${image}`);
-
-      console.log("Images with full URL:", this.images); // Log the updated image URLs
+      if (data) {
+        this.files = data;  // Set doctor if found
+        console.log(this.files);
+        console.log('Doctor data:',this.files);  // Log for debugging
+      } else {
+        console.error('File not found :');  // Handle case where doctor is not found
+      }
     },
     (error) => {
-      console.error('Error fetching images:', error);
+      console.error('Error fetching file data:', error);
     }
   );
 }
+startUpload(file: any) {
+  const link = document.createElement('a');
+  link.href = file.DiagnosticFile;
+  link.download = file.filname || 'diagnostic_file'; // nom du fichier
+  link.target = '_blank';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
 
+deleteImage(file: any) {
+ 
+    this.filesService.deleteFileById(file._id).subscribe(
+      (res: any) => {
+        console.log('File deleted:', res);
+        this.fetchImages(); // Recharge la liste des fichiers
+      },
+      (err) => {
+        console.error('Error deleting file:', err);
+      }
+    );
+  
+}
 
 
 confirmAppointment(){
