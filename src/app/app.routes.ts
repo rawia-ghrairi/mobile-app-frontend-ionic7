@@ -113,10 +113,8 @@ export const routes: Routes = [
   {
     path: 'auth',
     loadComponent: () => import('./auth-component/auth-component.component').then( m => m.AuthComponentComponent)
-  },  {
-    path: 'calendar-tool',
-    loadComponent: () => import('./calendar-tool/calendar-tool.page').then( m => m.CalendarToolPage)
   },
+  
 
 
  
