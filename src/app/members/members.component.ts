@@ -1,4 +1,4 @@
-import { Component, input, OnInit } from '@angular/core';
+import { Component,Input, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   IonCard,
@@ -24,8 +24,8 @@ import { Member } from '../interfaces/member.interface';
 ],
 })
 export class MembersComponent  implements OnInit {
-
-  member = input<Member>();
+ @Input() member: any;
+ consultationPrice:String="80 $"
 
   constructor() {}
 

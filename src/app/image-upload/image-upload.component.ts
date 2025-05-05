@@ -104,6 +104,7 @@ export class ImageUploadComponent implements OnInit {
 
     if (image) {
       this.saveImage(image);
+      this.loadFiles();
     }
   }
 

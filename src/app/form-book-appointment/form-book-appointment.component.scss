@@ -55,4 +55,26 @@ ion-content {
     font-size: 20px;
     margin-left: 12px;
   }
+  .date-legend {
+    margin-top: 10px;
+    font-size: 14px;
+  }
   
+  .date-legend p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .red-box {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    border-radius: 3px;
+  }
+  
+  
+  
+  .red-box {
+    background-color: red;
+  }

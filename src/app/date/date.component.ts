@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonDatetime} from '@ionic/angular/standalone';
+import { CalendarService } from '../services/calendar.service';
 
 @Component({
   selector: 'app-date',
@@ -9,27 +10,31 @@ import { IonDatetime} from '@ionic/angular/standalone';
   imports: [ IonDatetime],
 })
 export class DateComponent  {
+ 
+  constructor(private calendarService: CalendarService) {}
+  occupiedDates = new Set<string>();
+
+  ngOnInit() {
+    this.calendarService.getOccupiedDates().subscribe(dates => {
+      this.occupiedDates = new Set(dates);
+    });
+  }
 
   highlightedDates = (isoString: string) => {
-    const date = new Date(isoString);
-    const utcDay = date.getUTCDate();
-
-    if (utcDay % 5 === 0) {
+    const dateStr = isoString.split('T')[0];
+    
+    if (this.occupiedDates.has(dateStr)) {
       return {
-        textColor: '#800080',
-        backgroundColor: '#ffc0cb',
+        textColor: '#ffffff',
+        backgroundColor: '#ff0000',
+        borderRadius: '50%'
       };
     }
-
-    if (utcDay % 3 === 0) {
-      return {
-        textColor: 'var(--ion-color-secondary-contrast)',
-        backgroundColor: 'var(--ion-color-secondary)',
-      };
-    }
-
-    return undefined;
+    
+    return {
+      textColor: '#000000',
+      backgroundColor: '#f5f5f5',
+      borderRadius: '50%'
+    };
   };
-
-  
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { addIcons } from 'ionicons';
 import { Router } from '@angular/router';
@@ -23,7 +23,7 @@ export class DoctorHomePagePage implements OnInit {
   segmentValue = '1';
   patientList: Patient[] = [];
   appointmentRequests: Patient[] = [];
-
+error = signal<string | null>(null);
   constructor(private router: Router,private patientService: PatientService) {
     addIcons({personCircle,options,locationOutline,calendarOutline,arrowForwardOutline,menu,add,});
    }
@@ -60,24 +60,43 @@ export class DoctorHomePagePage implements OnInit {
   
 // load the page of appointment request
   loadAppointmentsRequest() {
-    this.patientService.getAppointmentsRequest().subscribe((data: any) => {
-      this.appointmentRequests = data;
-      this.requestNumber=this.appointmentRequests.length;
-    }, error => {
-      console.error("Error loading appointments", error);
-    });
+    this.patientService.getAppointmentsRequest().subscribe({
+      next: (response:any) => {
+        this.appointmentRequests=response.appointments;
+        this.requestNumber=this.appointmentRequests.length;
+      },
+      error: (err) => {
+        console.error('Error loading appointments:', err);
+        if (err.status === 401 || err.message === 'No authentication token found') {
+          this.error.set('You must log in to access this page');
+          localStorage.setItem('redirect_url', this.router.url);
+          this.router.navigate(['/auth']);
+        } else {
+          this.error.set('Error loading appointments');
+        }
+      }
+    })
   }
 
 
   //load the patient list
   loadPatientList(){
-   this.patientService.getAcceptedAppointment().subscribe((data:any)=>{
-      this.patientList=data;
+   this.patientService.getAcceptedAppointment().subscribe({
+    next: (response:any) => {
+      this.patientList=response.appointments;
       this.patientNumber=this.patientList.length;
-      console.log(this.patientList);
-    },error=>{
-        console.error("error Loading patientList",error);
+    },
+    error: (err) => {
+      console.error('Error loading appointments:', err);
+      if (err.status === 401 || err.message === 'No authentication token found') {
+        this.error.set('You must log in to access this page');
+        localStorage.setItem('redirect_url', this.router.url);
+        this.router.navigate(['/auth']);
+      } else {
+        this.error.set('Error loading accepted appointments');
+      }
     }
+  }
   );
 }
   //accept request and add the patient to the patient list

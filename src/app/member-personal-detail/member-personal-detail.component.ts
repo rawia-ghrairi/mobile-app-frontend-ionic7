@@ -6,7 +6,7 @@ import {
   IonIcon,
   IonText,
 } from '@ionic/angular/standalone';
-import { Component, input, OnInit } from '@angular/core';
+import { Component, Input,input, OnInit } from '@angular/core';
 import { Member } from '../interfaces/member.interface';
 
 
@@ -19,7 +19,7 @@ import { Member } from '../interfaces/member.interface';
   imports: [IonIcon, IonText, IonButton, IonLabel, IonItem, IonThumbnail],
 })
 export class MemberPersonalDetailComponent  implements OnInit {
-  member = input<Member>();
+ @Input() member: any;
   isList = input<boolean>(true);
   constructor() { }
 

@@ -2,7 +2,7 @@ import { Component,Input, OnInit } from '@angular/core';
 import { addIcons } from 'ionicons';
 import { DateComponent } from '../date/date.component';
 import { IonicModule } from '@ionic/angular';
-import { calendarOutline, timeOutline } from 'ionicons/icons';
+import { calendarOutline, checkmarkDoneOutline, checkmarkOutline,timeOutline } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { PatientService } from '../services/patient.service';
@@ -10,6 +10,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PopoverController } from '@ionic/angular';
 import { EventSourceInput } from '@fullcalendar/core';
 import { CalendarService } from '../services/calendar.service';
+import { HttpClient } from '@angular/common/http';
+import { FilesService } from '../services/files.services';
 
 @Component({
   selector: 'app-details-patient',
@@ -24,7 +26,7 @@ import { CalendarService } from '../services/calendar.service';
   ],
 })
 export class DetailsPatientComponent  implements OnInit {
-  @Input() patient: any; // Receive the selected patient 
+  @Input() patient: any; // Receive the selected patient
   isModalOpen = false;
   isModalOpenConfirm =false;
   isModalOpenReschedule = false;
@@ -38,6 +40,7 @@ export class DetailsPatientComponent  implements OnInit {
     startTime:'',
     endTime:''
     }
+    files:any;
     setOpenConfim(isOpen: boolean){
       this.isModalOpenConfirm = isOpen;
       this.newEvent.startTime=this.patient?.date_rdv;
@@ -64,10 +67,11 @@ endChange(event:CustomEvent){
 
   ngOnInit(): void {
     this.newEvent.title = this.patient?.name 
+    this.fetchImages();
   }
 
-constructor(private eventService:CalendarService,private popoverController: PopoverController,private fb: FormBuilder,private patientService: PatientService){
-  addIcons({timeOutline,calendarOutline});
+constructor(private filesService: FilesService,private http: HttpClient,private eventService:CalendarService,private popoverController: PopoverController,private fb: FormBuilder,private patientService: PatientService){
+  addIcons({timeOutline,calendarOutline,checkmarkDoneOutline});
      }
 
 rescheduleAppointment(emailPatient:string){
@@ -111,6 +115,45 @@ rescheduleAppointment(emailPatient:string){
         console.error('Error adding event:', err);
       }
     });
+  
+}
+fetchImages() {
+  this.filesService.getFileByDoctor().subscribe(
+    (data) => {
+      if (data) {
+        this.files = data;  // Set doctor if found
+        console.log(this.files);
+        console.log('Doctor data:',this.files);  // Log for debugging
+      } else {
+        console.error('File not found :');  // Handle case where doctor is not found
+      }
+    },
+    (error) => {
+      console.error('Error fetching file data:', error);
+    }
+  );
+}
+startUpload(file: any) {
+  const link = document.createElement('a');
+  link.href = file.DiagnosticFile;
+  link.download = file.filname || 'diagnostic_file'; // nom du fichier
+  link.target = '_blank';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+deleteImage(file: any) {
+ 
+    this.filesService.deleteFileById(file._id).subscribe(
+      (res: any) => {
+        console.log('File deleted:', res);
+        this.fetchImages(); // Recharge la liste des fichiers
+      },
+      (err) => {
+        console.error('Error deleting file:', err);
+      }
+    );
   
 }
 

@@ -29,7 +29,7 @@ export class AdminPageComponent implements OnInit {
   speciality!: string;
   description!: string;
   location!: string;
-  phoneNumber!: string;
+  phone!: string;
   selectedFile: File | null = null;
   selectedImageService: File | null = null;
 
@@ -46,8 +46,7 @@ export class AdminPageComponent implements OnInit {
     formData.append('speciality', this.speciality);
     formData.append('description', this.description);
     formData.append('location', this.location);
-    formData.append('phoneNumber', this.phoneNumber);
-    
+    formData.append('phone', this.phone);
     if (this.selectedFile) {
       formData.append('imageDoctor', this.selectedFile);
     }
@@ -67,18 +66,16 @@ export class AdminPageComponent implements OnInit {
       }
     );
   }
-
   resetForm() {
     this.name = '';
     this.email = '';
     this.speciality = '';
     this.description = '';
     this.location = '';
-    this.phoneNumber = '';
+    this.phone = '';
     this.selectedFile = null;
     this.selectedImageService = null;
   }
-
   getDoctors() {
     this.doctorService.getDoctors().subscribe(
       (data: any) => {

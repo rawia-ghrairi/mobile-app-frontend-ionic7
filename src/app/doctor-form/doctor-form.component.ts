@@ -20,7 +20,7 @@ export class DoctorFormComponent {
     location: '',
     speciality: '',
     imageService: '',
-    phoneNumber: '',
+    phone: '',
   };
 
   // Close the modal without saving

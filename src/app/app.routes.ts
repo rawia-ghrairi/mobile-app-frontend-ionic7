@@ -44,7 +44,7 @@ export const routes: Routes = [
               ),
           },
           {
-            path: ':id',
+            path: ':ids',
             loadComponent: () =>
               import('./member-detail-page/member-detail-page.component').then(
         
@@ -114,7 +114,7 @@ export const routes: Routes = [
     path: 'auth',
     loadComponent: () => import('./auth-component/auth-component.component').then( m => m.AuthComponentComponent)
   },
-  
+ 
 
 
  
