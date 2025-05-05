@@ -73,14 +73,23 @@
               </ion-toolbar>
             </ion-header>
             <ion-content class="ion-padding">
-              <h3 *ngIf="files.length == 0" class="ion-padding ion-text-center">Please Select Image!</h3>
-              <ion-list>
+              <h3 *ngIf="!files || files.length === 0" class="ion-padding ion-text-center">No diagnostic files found!</h3>
+              <p class="ion-padding ion-text-center">Files count: {{files ? files.length : 0}}</p>
+              
+              <ion-list *ngIf="files && files.length > 0">
                 <ion-label position="floating" class="custom-label">Diagnostics List: </ion-label>
                 <ion-item *ngFor="let file of files; let i = index">
                   <ion-thumbnail slot="start">
-                    <ion-img [src]="file.DiagnosticFile"></ion-img>
+                    <ion-img *ngIf="!isPdfFile(file)" [src]="file.DiagnosticFile"></ion-img>
+                    <ion-icon *ngIf="isPdfFile(file)" name="document" size="large"></ion-icon>
                   </ion-thumbnail>
-                  <ion-label class="ion-text-wrap"> {{ file.filname }} </ion-label>
+                  <ion-label class="ion-text-wrap">
+                    {{ file.filname }}
+                    <div class="consultation-status">
+                      <ion-icon *ngIf="file.isConsulted" name="eye" color="success" title="Viewed by doctor"></ion-icon>
+                      <ion-icon *ngIf="!file.isConsulted" name="eye-off" color="medium" title="Not yet viewed by doctor"></ion-icon>
+                    </div>
+                  </ion-label>
                   <ion-button slot="end" fill="clear" (click)="startUpload(file)">
                     <ion-icon src="assets/icon/cloud-upload-outline.svg"></ion-icon>
                   </ion-button>
@@ -100,8 +109,8 @@
               </ion-item>
 
               <ion-item>
-
-                <ion-input type="file" (change)="onImageChange($event)" name="image" required></ion-input>
+                <ion-label position="floating">Select Image or PDF</ion-label>
+                <ion-input type="file" (change)="onFileChange($event)" accept="image/*,.pdf" name="file" required></ion-input>
               </ion-item>
               <ion-button expand="full" type="submit" >Confirm</ion-button>
             </form>

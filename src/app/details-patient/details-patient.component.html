@@ -147,7 +147,8 @@
               <ion-list>
                 <ion-item *ngFor="let file of files; let i = index">
                   <ion-thumbnail slot="start">
-                    <ion-img [src]="file.DiagnosticFile"></ion-img>
+                    <ion-img *ngIf="!isPdfFile(file)" [src]="file.DiagnosticFile"></ion-img>
+                    <ion-icon *ngIf="isPdfFile(file)" name="document" size="large"></ion-icon>
                   </ion-thumbnail>
                   <ion-label class="ion-text-wrap"> {{ file.filname }} </ion-label>
                   <ion-button slot="end" fill="clear" (click)="startUpload(file)">

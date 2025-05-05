@@ -47,8 +47,11 @@ export class FilesService {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     });
+    
+    console.log('Requesting files from server...');
     return this.http.get(`${this.API_URL}FilePatient`, { headers }).pipe(
       catchError((error) => {
+        console.error('Error getting files:', error);
         if (error.status === 401) {
           this.redirectToLogin();
         }
@@ -63,9 +66,10 @@ export class FilesService {
       'Content-Type': 'application/json'
     });
   
+    console.log('Deleting file with ID:', fileId);
     return this.http.delete(`${this.API_URL}diagnostics/${fileId}`, { headers }).pipe(
       catchError((error) => {
-        console.error('Erreur suppression:', error);
+        console.error('Error suppression:', error);
         return throwError(() => error);
       })
     );
@@ -90,4 +94,26 @@ export class FilesService {
       })
     );
   }  
+  // New method to mark a file as consulted by the doctor
+  markFileAsConsulted(fileId: string) {
+    const token = localStorage.getItem('auth_token');
+    
+    if (!token) {
+      this.redirectToLogin();
+      return throwError(() => new Error('No authentication token found'));
+    }
+    
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+    
+    // This endpoint would need to be implemented in the backend
+    return this.http.patch(`${this.API_URL}diagnostics/${fileId}/consult`, {}, { headers }).pipe(
+      catchError((error) => {
+        console.error('Error marking file as consulted:', error);
+        return throwError(() => error);
+      })
+    );
+  }
 }

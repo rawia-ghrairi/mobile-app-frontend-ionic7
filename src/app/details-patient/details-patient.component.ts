@@ -1,9 +1,9 @@
-import { Component,Input, OnInit } from '@angular/core';
+import { Component,Input, OnInit, Inject } from '@angular/core';
 import { addIcons } from 'ionicons';
 import { DateComponent } from '../date/date.component';
 import { IonicModule } from '@ionic/angular';
-import { calendarOutline, checkmarkDoneOutline, checkmarkOutline,timeOutline } from 'ionicons/icons';
-import { CommonModule } from '@angular/common';
+import { calendarOutline, checkmarkDoneOutline, checkmarkOutline, timeOutline, document as documentIcon } from 'ionicons/icons';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { PatientService } from '../services/patient.service';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -70,9 +70,21 @@ endChange(event:CustomEvent){
     this.fetchImages();
   }
 
-constructor(private filesService: FilesService,private http: HttpClient,private eventService:CalendarService,private popoverController: PopoverController,private fb: FormBuilder,private patientService: PatientService){
-  addIcons({timeOutline,calendarOutline,checkmarkDoneOutline});
-     }
+constructor(
+  private filesService: FilesService,
+  private http: HttpClient,
+  private eventService:CalendarService,
+  private popoverController: PopoverController,
+  private fb: FormBuilder,
+  private patientService: PatientService,
+  @Inject(DOCUMENT) private document: Document
+){
+  addIcons({timeOutline,calendarOutline,checkmarkDoneOutline,document: documentIcon});
+}
+
+isPdfFile(file: any): boolean {
+  return file.file_type === 'pdf' || file.DiagnosticFile?.toLowerCase().endsWith('.pdf');
+}
 
 rescheduleAppointment(emailPatient:string){
     const dateValue = this.newEvent.startTime;
@@ -134,29 +146,44 @@ fetchImages() {
   );
 }
 startUpload(file: any) {
-  const link = document.createElement('a');
+  const link = this.document.createElement('a');
   link.href = file.DiagnosticFile;
-  link.download = file.filname || 'diagnostic_file'; // nom du fichier
+  link.download = file.filname || 'diagnostic_file';
   link.target = '_blank';
-  document.body.appendChild(link);
+  this.document.body.appendChild(link);
   link.click();
-  document.body.removeChild(link);
+  this.document.body.removeChild(link);
+  
+  // Mark file as consulted when doctor downloads it
+  const fileId = file.id || file._id;
+  this.filesService.markFileAsConsulted(fileId).subscribe(
+    (res: any) => {
+      console.log('File marked as consulted:', res);
+      // Update local file status to reflect consultation
+      if (file && !file.isConsulted) {
+        file.isConsulted = true;
+      }
+    },
+    (err) => {
+      console.error('Error marking file as consulted:', err);
+    }
+  );
 }
 
 deleteImage(file: any) {
+  // Use file.id instead of file._id to match backend response
+  const fileId = file.id || file._id;
  
-    this.filesService.deleteFileById(file._id).subscribe(
-      (res: any) => {
-        console.log('File deleted:', res);
-        this.fetchImages(); // Recharge la liste des fichiers
-      },
-      (err) => {
-        console.error('Error deleting file:', err);
-      }
-    );
-  
+  this.filesService.deleteFileById(fileId).subscribe(
+    (res: any) => {
+      console.log('File deleted:', res);
+      this.fetchImages(); // Recharge la liste des fichiers
+    },
+    (err) => {
+      console.error('Error deleting file:', err);
+    }
+  );
 }
-
 
 confirmAppointment(){
   this.newEvent.startTime=this.patient?.date_rdv

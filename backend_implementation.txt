@@ -1,0 +1,75 @@
+# Backend Implementation Instructions
+
+## 1. Database Update
+Add an 'isConsulted' field to your file document schema:
+
+```python
+# When creating a file document:
+file_id = db.file.insert_one({
+    'filname': filname,
+    'doctor_id': appointment['doctor_id'],
+    'patient_id': patient_id,
+    'DiagnosticFile': DiagnosticFile,
+    'file_type': file_type,
+    'isConsulted': False,  # New field - initialize as False
+    'uploaded_at': datetime.utcnow()
+}).inserted_id
+```
+
+## 2. New Endpoint to Mark File as Consulted
+Add a new endpoint to mark a file as consulted:
+
+```python
+# -------------------------------------------
+# Endpoint to mark a file as consulted
+# -------------------------------------------
+@app.route('/diagnostics/<file_id>/consult', methods=['PATCH'])
+@token_required
+def mark_file_as_consulted(current_user, file_id):
+    if current_user['role'] != 'doctor':
+        return jsonify({'status': 'fail', 'message': 'Unauthorized access'}), 403
+    
+    try:
+        # Find the file and update it
+        result = db.file.update_one(
+            {'_id': ObjectId(file_id)},
+            {'$set': {'isConsulted': True}}
+        )
+        
+        if result.modified_count == 0:
+            return jsonify({'status': 'fail', 'message': 'File not found or already marked as consulted'}), 404
+            
+        return jsonify({
+            'status': 'success',
+            'message': 'File marked as consulted'
+        }), 200
+        
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
+```
+
+## 3. Update the File Retrieval Endpoints
+Update both file retrieval endpoints to include the consultation status:
+
+```python
+# For getFileByPatient and getFileByDoctor endpoints:
+file_data = {
+    'id': str(file['_id']),
+    'filname': file.get('filname', ''),
+    'DiagnosticFile': file.get('DiagnosticFile', ''),
+    'file_type': file.get('file_type', 'image'),
+    'isConsulted': file.get('isConsulted', False),  # Include consultation status
+    'doctor_id': doctor_id,
+    'patient_id': appointment_id,
+    'uploaded_at': file.get('uploaded_at', datetime.utcnow()).isoformat() if isinstance(file.get('uploaded_at'), datetime) else None
+}
+```
+
+## 4. Testing
+After implementing these changes, test both as a doctor and as a patient:
+1. As a patient, upload a file and verify it shows as "not consulted" 
+2. As a doctor, download/view the file and verify the API call is made
+3. As a patient again, verify the file now shows as "consulted" 

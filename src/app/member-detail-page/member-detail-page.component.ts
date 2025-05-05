@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   IonAvatar,
@@ -33,11 +33,14 @@ import {
   chatboxEllipses,
   logoWhatsapp,
   notifications,
-  person, trashOutline
+  person, trashOutline,
+  document as documentIcon,
+  eye,
+  eyeOff
 } from 'ionicons/icons';
 import { MemberPersonalDetailComponent } from '../member-personal-detail/member-personal-detail.component';
 
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { ActionButtonComponent } from 'src/app/widgets/action-button/action-button.component';
@@ -79,6 +82,7 @@ import { UploadFilesComponent } from "../upload-files/upload-files.component";
 })
 export class MemberDetailPageComponent  implements OnInit {
   @ViewChild(IonModal) modal!: IonModal;
+  @ViewChild('modal') addFileModal!: IonModal;
   @ViewChild('popover') popover!: HTMLIonPopoverElement;
   message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
   name!: string;
@@ -89,16 +93,16 @@ export class MemberDetailPageComponent  implements OnInit {
   paymentMethods:String="Cash"
   member:any;
   fileForm: FormGroup;
-  files:any
-  constructor(private fb: FormBuilder,private route:ActivatedRoute,private navCtrl:NavController,private filesService:FilesService,private doctorService:DoctorService) {
-    addIcons({notifications,addCircle,trashOutline,call,logoWhatsapp,chatboxEllipses,person,barbell,ban,});
+  files: any[] = [];
+  constructor(private fb: FormBuilder,private route:ActivatedRoute,private navCtrl:NavController,private filesService:FilesService,private doctorService:DoctorService, @Inject(DOCUMENT) private document: Document) {
+    addIcons({notifications,addCircle,trashOutline,call,logoWhatsapp,chatboxEllipses,person,barbell,ban,document: documentIcon, eye, eyeOff});
     this.fileForm = this.fb.group({
       filname: ['', Validators.required],
       DiagnosticFile: [null, Validators.required],
       doctor_id: ['']
     });
   }
-  onImageChange(event: any) {
+  onFileChange(event: any) {
       const file = event.target.files[0];
       if (file) {
         this.fileForm.patchValue({
@@ -111,16 +115,20 @@ export class MemberDetailPageComponent  implements OnInit {
     const _id = this.route.snapshot.paramMap.get('ids');
     this.fileForm.patchValue({ doctor_id: _id});
     console.log('Doctor ID:', _id);
-    this.loadFile() ;
+    
+    // Initialize files array and load files
+    this.files = [];
+    this.loadFile();
+    
     if (_id) {
       this.doctorService.getDoctorById(_id).subscribe(
         (data) => {
           if (data) {
-            this.member = data;  // Set doctor if found
+            this.member = data;
             console.log(this.member);
-            console.log('Doctor data:', this.member);  // Log for debugging
+            console.log('Doctor data:', this.member);
           } else {
-            console.error('Doctor not found with id:', _id);  // Handle case where doctor is not found
+            console.error('Doctor not found with id:', _id);
           }
         },
         (error) => {
@@ -129,8 +137,6 @@ export class MemberDetailPageComponent  implements OnInit {
       );
     }
   }
-
- 
 
   cancel() {
     this.modal.dismiss(null, 'cancel');
@@ -145,62 +151,88 @@ export class MemberDetailPageComponent  implements OnInit {
       const formData = new FormData();
       formData.append('filname', this.fileForm.get('filname')?.value);
       formData.append('doctor_id', this.fileForm.get('doctor_id')?.value);
-      formData.append('image', this.fileForm.get('DiagnosticFile')?.value);
+      formData.append('file', this.fileForm.get('DiagnosticFile')?.value);
   
+      console.log('Submitting file:', this.fileForm.value);
+      
+      // Log form data keys
+      console.log('FormData keys:');
+      for (const key of ['filname', 'doctor_id', 'file']) {
+        console.log(`${key} included: ${formData.has(key)}`);
+      }
+      
       this.filesService.addFiles(formData).subscribe(
-        (response) => {
-          console.log('File added successfully', response);
-          this.isOpen = false; // Fermer le popover
-          // Réinitialiser le formulaire si nécessaire
+        (response: any) => {
+          console.log('File added successfully, server response:', response);
+          this.addFileModal.dismiss();
           this.fileForm.reset();
-          this.loadFile() ;       },
+          // Add a small delay before reloading files to ensure server has processed the upload
+          setTimeout(() => {
+            this.loadFile();
+          }, 1000); // Increased delay to 1 second to ensure server processing
+        },
         (error) => {
           console.error('Error adding file', error);
         }
       );
     }
-  
   }
 
-
-  loadFile(){
+  loadFile() {
+    console.log('Loading files...');
     this.filesService.getFileByPatient().subscribe(
-      (data) => {
+      (data: any) => {
+        console.log('Raw files data received:', data);
         if (data) {
-          this.files = data;  // Set doctor if found
-          console.log(this.files);
-          console.log('Doctor data:',this.files);  // Log for debugging
+          // Check if data is an array or if it's wrapped in a property
+          if (Array.isArray(data)) {
+            this.files = data;
+          } else if (data.data && Array.isArray(data.data)) {
+            // If data is wrapped in a 'data' property (common API pattern)
+            this.files = data.data;
+          } else if (typeof data === 'object') {
+            // Try to convert object to array if needed
+            this.files = Object.values(data);
+          } else {
+            this.files = [];
+          }
+          console.log('Processed files data:', this.files);
         } else {
-          console.error('File not found :');  // Handle case where doctor is not found
+          console.error('File not found:');
+          this.files = [];
         }
       },
       (error) => {
         console.error('Error fetching file data:', error);
+        this.files = [];
       }
     );
   }
+  
+  isPdfFile(file: any): boolean {
+    return file.file_type === 'pdf' || file.DiagnosticFile?.toLowerCase().endsWith('.pdf');
+  }
   startUpload(file: any) {
-    const link = document.createElement('a');
+    const link = this.document.createElement('a');
     link.href = file.DiagnosticFile;
-    link.download = file.filname || 'diagnostic_file'; // nom du fichier
+    link.download = file.filname || 'diagnostic_file';
     link.target = '_blank';
-    document.body.appendChild(link);
+    this.document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
+    this.document.body.removeChild(link);
   }
-  
   deleteImage(file: any) {
-   
-      this.filesService.deleteFileById(file._id).subscribe(
-        (res: any) => {
-          console.log('File deleted:', res);
-          this.loadFile(); // Recharge la liste des fichiers
-        },
-        (err) => {
-          console.error('Error deleting file:', err);
-        }
-      );
+    // Use file.id instead of file._id to match backend response
+    const fileId = file.id || file._id;
     
+    this.filesService.deleteFileById(fileId).subscribe(
+      (res: any) => {
+        console.log('File deleted:', res);
+        this.loadFile();
+      },
+      (err) => {
+        console.error('Error deleting file:', err);
+      }
+    );
   }
-  
 }
