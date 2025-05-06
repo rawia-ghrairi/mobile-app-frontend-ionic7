@@ -36,11 +36,14 @@ export class AuthService {
   }
   setSession(authResult: {
     access_token: string,
-    user: { email: string, role: string }
+    user: { email: string, role: string, _id?: string }
   }) {
     localStorage.setItem('auth_token', authResult.access_token);
     localStorage.setItem('email', authResult.user.email);
     localStorage.setItem('role', authResult.user.role);
+    if (authResult.user._id) {
+      localStorage.setItem('user_id', authResult.user._id);
+    }
   }
   redirectAfterLogin(user: { role: string, _id?: string }) {
     const redirectUrl = localStorage.getItem('redirect_url') || 
@@ -56,6 +59,7 @@ export class AuthService {
     localStorage.removeItem('email');
     localStorage.removeItem('role');
     localStorage.removeItem('redirect_url');
+    localStorage.removeItem('user_id');
     this.router.navigate(['/auth']);
   }
 

@@ -1,0 +1,50 @@
+# Backend Implementation for Doctor by Email Endpoint
+
+Add this endpoint to your Flask backend:
+
+```python
+# -------------------------------------------
+# Endpoint to get doctor by email
+# -------------------------------------------
+@app.route('/doctor-by-email/<email>', methods=['GET'])
+@token_required
+def get_doctor_by_email(current_user, email):
+    try:
+        # Check if the requesting user is the same as the doctor being requested
+        if current_user['email'] != email and current_user['role'] != 'admin':
+            return jsonify({
+                'status': 'fail',
+                'message': 'Unauthorized access'
+            }), 403
+        
+        # Find the doctor in the database
+        doctor = db.doctors.find_one({'email': email})
+        
+        if not doctor:
+            return jsonify({
+                'status': 'fail',
+                'message': 'Doctor not found'
+            }), 404
+        
+        # Convert ObjectId to string for JSON serialization
+        doctor['_id'] = str(doctor['_id'])
+        
+        return jsonify({
+            'status': 'success',
+            'doctor': doctor
+        }), 200
+        
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
+```
+
+This endpoint:
+1. Requires authentication via the `token_required` decorator
+2. Ensures only the doctor themselves or an admin can access their data
+3. Looks up the doctor by email in the database
+4. Returns the doctor's details if found
+
+Make sure to add this to your Flask app where other endpoints are defined. 

@@ -1,86 +1,122 @@
 <ion-header class="ion-no-border">
   <div class="bg"></div>
   <ion-item lines="none" class="back">
-    <ion-fab-button slot="end"  size="small"(click)="goToHomePage()">
+    <ion-fab-button slot="end" size="small" (click)="goToHomePage()">
       <ion-icon name="arrow-back-outline" color="black"></ion-icon>
-  </ion-fab-button>
-</ion-item> 
+    </ion-fab-button>
+  </ion-item> 
   <ion-item lines="none" class="profile-info">
     <ion-label color="light">
-    {{ profile.name }}
-    <p>
-      <ion-text color="light">
-        {{ profile.email }}
-      </ion-text>
-    </p>
-  </ion-label>
+      {{ profile.name }}
+      <p>
+        <ion-text color="light">
+          {{ profile.email }}
+        </ion-text>
+      </p>
+      <p>
+        <ion-text color="light">
+          {{ profile.role | titlecase }}
+        </ion-text>
+      </p>
+    </ion-label>
   </ion-item> 
-  <ion-item lines="none" class="avatar"  >
+  <ion-item lines="none" class="avatar">
     <ion-avatar slot="start">
-      <img src="assets/imgs/avatar.jpg">
+      <img [src]="doctorDetails?.imageDoctor || 'assets/imgs/avatar.jpg'">
     </ion-avatar>
   </ion-item>
 </ion-header>
+
 <ion-content [fullscreen]="true">
-<div class="spacing"></div>
-<ion-list lines="full" class="centered-list">
-  <!-- École -->
-  <ion-item lines="none">
-    <div class="icon-container">
-    <ion-icon name="school-outline" slot="start" color="primary"class="custom-icon" ></ion-icon>
-    </div>
-    <ion-label>
-      <p>The Lawrenceville School</p>
-      <ion-text color="black">+1-987654321</ion-text>
-    </ion-label>
-  </ion-item>
-
-  <!-- Email -->
-  <ion-item lines="none">
-    <div class="icon-container">
-    <ion-icon name="mail-outline" slot="start" color="secondary"class="custom-icon" ></ion-icon>
-    </div>
-    <ion-label>
-      <p>Email</p>
-      <ion-text color="black">{{ profile.email }}</ion-text> 
-    </ion-label>
-  </ion-item>
-
-  <!-- Adresse -->
-  <ion-item lines="none">
-    <div class="icon-container">
-      <ion-icon name="location-outline" color="primary" class="custom-icon" ></ion-icon>
-    </div>
-    <ion-label> 
-      <p>Address</p>
-      <ion-text color="black">2500 Main St, Lawrenceville, NJ, USA</ion-text>
-    </ion-label>
-  </ion-item>
-
-  <!-- Phone Number -->
-  <ion-item lines="none">
-    <div class="icon-container">
-    <ion-icon name="call-outline" slot="start" color="tertiary" class="custom-icon"></ion-icon>
+  <!-- Loading indicator -->
+  <div *ngIf="isLoading" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Loading profile...</p>
   </div>
-    <ion-label>
-      <p>Emergency Number</p>
-      <ion-text color="black">50775960</ion-text>
-    </ion-label>
-  </ion-item>
 
-  <!-- Password -->
-  <ion-item lines="none">
-    <div class="icon-container">
-      <ion-icon name="key-outline" slot="start" color="secondary" class="custom-icon"></ion-icon>
+  <!-- Connection error banner -->
+  <div *ngIf="connectionError" class="error-banner">
+    <ion-icon name="alert-circle-outline"></ion-icon>
+    <p>Limited profile information is shown due to connection issues.</p>
+    <ion-button fill="clear" size="small" (click)="loadProfileData()">Retry</ion-button>
   </div>
-    <ion-label class="password-label"> 
-      <p>Password</p>
-      <ion-button color="medium">Change</ion-button>
-    </ion-label>
-  </ion-item>
-</ion-list>
+
+  <div *ngIf="!isLoading">
+    <div class="spacing"></div>
+    <ion-list lines="full" class="centered-list">
+      <!-- Doctor specific information -->
+      <div *ngIf="profile.role === 'doctor' && doctorDetails">
+        <!-- Speciality -->
+        <ion-item lines="none" *ngIf="doctorDetails.speciality">
+          <div class="icon-container">
+            <ion-icon name="medical-outline" slot="start" color="primary" class="custom-icon"></ion-icon>
+          </div>
+          <ion-label>
+            <p>Speciality</p>
+            <ion-text color="black">{{ doctorDetails.speciality }}</ion-text>
+          </ion-label>
+        </ion-item>
+
+        <!-- Medical Office/Location -->
+        <ion-item lines="none" *ngIf="doctorDetails.location">
+          <div class="icon-container">
+            <ion-icon name="business-outline" slot="start" color="secondary" class="custom-icon"></ion-icon>
+          </div>
+          <ion-label>
+            <p>Medical Office</p>
+            <ion-text color="black">{{ doctorDetails.location }}</ion-text>
+          </ion-label>
+        </ion-item>
+        
+        <!-- Phone Number -->
+        <ion-item lines="none" *ngIf="doctorDetails.phone">
+          <div class="icon-container">
+            <ion-icon name="call-outline" slot="start" color="tertiary" class="custom-icon"></ion-icon>
+          </div>
+          <ion-label>
+            <p>Phone Number</p>
+            <ion-text color="black">{{ doctorDetails.phone }}</ion-text>
+          </ion-label>
+        </ion-item>
+        
+        <!-- Description -->
+        <ion-item lines="none" *ngIf="doctorDetails.description">
+          <div class="icon-container">
+            <ion-icon name="information-circle-outline" slot="start" color="success" class="custom-icon"></ion-icon>
+          </div>
+          <ion-label>
+            <p>About</p>
+            <ion-text color="black" class="description-text">{{ doctorDetails.description }}</ion-text>
+          </ion-label>
+        </ion-item>
+      </div>
+
+      <!-- Email -->
+      <ion-item lines="none">
+        <div class="icon-container">
+          <ion-icon name="mail-outline" slot="start" color="secondary" class="custom-icon"></ion-icon>
+        </div>
+        <ion-label>
+          <p>Email</p>
+          <ion-text color="black">{{ profile.email }}</ion-text> 
+        </ion-label>
+      </ion-item>
+
+      <!-- Password -->
+      <ion-item lines="none">
+        <div class="icon-container">
+          <ion-icon name="key-outline" slot="start" color="secondary" class="custom-icon"></ion-icon>
+        </div>
+        <ion-label class="password-label"> 
+          <p>Password</p>
+          <ion-button color="medium">Change</ion-button>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
 </ion-content>
-<ion-footer >
-  <ion-button expand="full" class="edit-profile-button"(click)="editProfile()">Edit Profile</ion-button>
+
+<ion-footer>
+  <ion-button expand="full" class="edit-profile-button" (click)="editProfile()">Edit Profile</ion-button>
 </ion-footer>
 
