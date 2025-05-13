@@ -21,7 +21,7 @@ export class MemberService {
     
     if (!token) {
       this.redirectToLogin();
-      return throwError(() => new Error('Redirection vers la page de login'));
+      return throwError(() => new Error('Redirect to login'));
     }
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`,
