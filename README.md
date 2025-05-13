@@ -26,7 +26,7 @@ Auth & Security: Role-based access, secure file handling
 
 🚀 How to Run It Locally
 1. Clone the repository
-git clone git@github.com:Esra2brahmi/CareMate_ionic.git
+git clone git@github.com:rawia-ghrairi/mobile-app-frontend-ionic7.git
 cd caremate
 
 3. Setup the Backend
